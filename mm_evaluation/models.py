@@ -47,21 +47,20 @@ class FinancesInformation(models.Model):
     pyme_id = models.ForeingKey(pyme,on_delet=models.CASCADE)
     employees_number = models.IntergerField()
     anual_income = models.BigIntergerField()
-    assets = models.IntegerField()
+    assets = models.BigIntegerField()
     liabilities = models.IntergerField()
     monthly_production = models.IntegerField()  
-    #productive_configuration =
+    productive_configuration = models.CharField()
     inventory_politics = models.CharField(max_length=100)
     main_product = models.CharField(max_length=30)
     main_competidor = models.CharField(max_length=30)
-    patrimony = models.Charfield(max_length=300)
-    #Check everything with BigIntegerField
+    patrimony = models.BigIntegerField()
     sales_income = models.BigIntegerField()
     gross_profit = models.BigIntegerField()
     net_profits = models.BigIntegerField()
     fixed_costs_expences = models.BigIntegerField()
     variable_costs_expences = models.BigIntegerField()
-    #ebitda??
+    ebitda = models.IntegerField()
 
     class Meta:
         db_table = 'finances_information'
