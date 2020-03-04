@@ -1,3 +1,4 @@
+
 from django.db import models
 
 class Sector(models.Model):
@@ -67,10 +68,11 @@ class Macroprocess(models.Model):
 
 
 class Process(models.Model):
-    """This is the database table where general information related to each process is stored. 'description' makes reference to the process sspecific description. Weight is needed when computing the macroprocess score. 'macroprocess_id' is the macroprocess to which the process belongs."""
+    """This is the database table where general information related to each process is stored. 'description' makes reference to the process sspecific description. Weight is needed when computing the macroprocess score. 'macroprocess_id' is the macroprocess to which the process belongs, question is an """
     macroprocess_id = models.ForeignKey(Macroprocess, on_delete=models.CASCADE)
     description = models.CharField(max_length=500)
-    weight = models.IntegerField()
+    question = models.CharField(max_length=500, default=' ')
+    weight = models.FloatField()
 
 
     class Meta:
