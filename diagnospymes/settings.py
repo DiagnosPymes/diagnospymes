@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'mm_evaluation.apps.MmEvaluationConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,9 +76,14 @@ WSGI_APPLICATION = 'diagnospymes.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'diagnospymes',
+        'USER': 'diagnospymes_user',
+        'PASSWORD': 'password',
+        'HOST': '',
+        'PORT': '3306'
     }
+
 }
 
 
