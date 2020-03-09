@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('autoevaluation/', include('mm_evaluation.urls')),
+    path('resultadis/', include('mm_autoevaluations.urls'))
 ]
