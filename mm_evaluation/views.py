@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.views.generic import ListView, View, DetailView
 from .models import Process, Macroprocess
 from .models import Autoevaluation as AutoevaluationModel
-
 from django.template.loader import render_to_string
 
 class Autoevaluation(ListView):
@@ -18,6 +17,53 @@ class Autoevaluation(ListView):
     #    context['process_list'] = Process.objects.all()
     #    return context
 
+
+class IndexView(View):
+    template_name = 'mm_evaluation/index.html'
+    context_object_name = 'general_list'
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse(render_to_string(self.template_name))
+
+class Mission(View):
+    template_name = 'mm_evaluation/mission.html'
+    context_object_name = 'general_list'
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse(render_to_string(self.template_name))
+
+class AboutUs(View):
+    template_name = 'mm_evaluation/index.html'
+    context_object_name = 'general_list'
+    
+    def get(self, request, *args, **kwargs):
+        return HttpResponse(render_to_string(self.template_name))
+
+class Vision(View):
+    template_name = 'mm_evaluation/vision.html'
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse(render_to_string(self.template_name))
+
+class Metodology(View):
+    template_name = 'mm_evaluation/metodology.html'
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse(render_to_string(self.template_name))
+    
+class Requirements(View):
+    template_name = 'mm_evaluation/requirements.html'
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse(render_to_string(self.template_name))
+
+class Instructions(View):
+    template_name = 'mm_evaluation/instructions.html'
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse(render_to_string(self.template_name))
+
+    
 class PreviousResults(ListView):
     template_name = 'mm_evaluation/previousresults.html'
     context_object_name = 'all_previous_results'
@@ -30,11 +76,11 @@ class ResultDetail(DetailView):
     model = AutoevaluationModel
     template_name = 'mm_evaluation/resultdetail.html'
     
-    
-class IndexView(View):
-    template_name = 'mm_evaluation/index.html'
-    context_object_name = 'general_list'
+
+class Resources(View):
+    template_name = 'mm_evaluation/resources.html'
 
     def get(self, request, *args, **kwargs):
         return HttpResponse(render_to_string(self.template_name))
+
 
