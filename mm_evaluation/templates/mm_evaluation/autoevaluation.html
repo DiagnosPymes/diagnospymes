@@ -5,14 +5,29 @@
 <h1>Autoevaluación</h1>
   <ol>
     {% for macroprocess in macroprocesses_list %}
-  <li>
-    <lh>{{ macroprocess.name }}</lh>
-    <ul>
-      {% for process in macroprocess.process_set.all %}
-  <li>{{ process.description }}</li>
-      {% endfor %}
-    </ul>
-  </li>
-  {% endfor %}
+    <li>
+        <lh>{{ macroprocess.name }}</lh>
+        <ul>
+            {% for process in macroprocess.process_set.all %}
+
+            <li>{{ process.description }}</li>
+            <form action="{% url 'mm_evaluation:save_answer' process.id %}" method="post">
+                {% csrf_token %}
+                <p>Puntuación:</p>
+                <select name="score">
+                    <option value ="0">0</option>
+                    <option value ="1">1</option>
+                    <option value ="2">2</option>
+                    <option value ="3">3</option>
+                    <option value ="4">4</option>
+                    <option value ="5">5</option>
+                </select>
+                <p><input type="submit" value="Enviar"></p>
+            </form>
+
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
 </ol>
 </body>
