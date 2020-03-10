@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView, View, DetailView
 from .models import Process, Macroprocess
 from .models import Autoevaluation as AutoevaluationModel
+
 from django.template.loader import render_to_string
 
 class Autoevaluation(ListView):
@@ -24,6 +25,7 @@ class PreviousResults(ListView):
     def get_queryset(self):
         return AutoevaluationModel.objects.filter(pyme_id_id=1,final_score__isnull=False).order_by('last_time_edition')
 
+      
 class ResultDetail(DetailView):
     model = AutoevaluationModel
     template_name = 'mm_evaluation/resultdetail.html'

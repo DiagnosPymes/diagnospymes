@@ -9,4 +9,5 @@ urlpatterns = [
     path('autoevaluacion/', views.Autoevaluation.as_view(), name='autoevaluacion'),
     path('resultados/', views.PreviousResults.as_view(), name='resultados'),
     path('resultados/<int:pk>/', views.ResultDetail.as_view(), name='detalleResultado' )
+    path('autoevaluation/', views.Autoevaluation.as_view()),
 ]
