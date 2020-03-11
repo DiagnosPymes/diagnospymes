@@ -22,7 +22,7 @@ class PYME(models.Model):
     contact_name = models.CharField(max_length=50)
     contact_number = models.CharField(max_length=10)
     contact_sex = models.CharField(max_length=10)
-    contact_birth_day = models.DateTimeField()
+    contact_birth_day = models.DateField()
     contact_id_type = models.CharField(max_length=30)
     contact_id_number = models.CharField(max_length=15)
     contact_education_level = models.CharField(max_length=40)
