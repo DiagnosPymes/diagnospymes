@@ -8,6 +8,7 @@ from django.views.generic import ListView, View, DetailView
 from django.views.generic.base import TemplateView
 
 from .models import Process, Macroprocess, Autoevaluation, Answer, PYME
+from .general_use_functions import *
 
 class AutoevaluationView(ListView):
     model = Macroprocess
@@ -41,7 +42,6 @@ class AutoevaluationView(ListView):
                 except YourModel.DoesNotExist:
                     return render_to_response("There is no full autoevaluation");
 
-
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         allow_empty = self.get_allow_empty()
@@ -62,7 +62,7 @@ class AutoevaluationView(ListView):
         return self.render_to_response(context)
 
     def post(self, request, pk):
-        autoevaluation = self.get_autoevaluation()
+        autoevaluation = get_autoevaluation(1)
         process = get_object_or_404(Process, pk=pk)
         try:
             answer = Answer(autoevaluation_id=autoevaluation, process_id=process, score=request.POST['score'])
