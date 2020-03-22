@@ -1,15 +1,14 @@
 <head>
-  {% block title %}<title>Resultados</title>{% endblock%}
-  {% if all_previous_results %}
+    {% block title %}
+    <title>Resultados</title>{% endblock%}
 </head>
 <body style="background-color:honeydew;">
-  <h1>Resultados</h1>
-  <ul>
-    {% for autoevaluation in all_previous_results %}
-    <li> <a href="{{ autoevaluation.id }}">{{ autoevaluation.last_time_edition }}</a></li>
-    {% endfor %}
-    {% endif %}
-  </ul>
+    <h1>Resultados</h1>
+    <ul>
+      {% if all_previous_results %}
+         {% for autoevaluation in all_previous_results %}
+           <li> <a href="{{ autoevaluation.id }}">{{ autoevaluation.last_time_edition }}</a></li>
+           {% endfor %}
+      {% endif %}
+    </ul>
 </body>
-
-

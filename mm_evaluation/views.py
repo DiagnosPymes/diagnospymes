@@ -31,6 +31,16 @@ class AutoevaluationView(ListView):
                 last_time_edition=timezone.now()
                 )
 
+    def get_last_full_autoevaluation(self, request):
+        autoevaluations_list = Autoevaluation.objects.filter(pyme_id=1).order_by('start_time')
+        for autoevaluation in autoevaluations_list:               
+            if self.is_autoevaluation_filled(autoevaluation):
+                try:
+                    full_autoevaluation = get_object_or_404(Autoevaluation, pk=pk)
+                    return render_to_response('mm_evaluation/autoevaluation.html',{'autoevaluation': full_autoevaluation})
+                except YourModel.DoesNotExist:
+                    return render_to_response("There is no full autoevaluation");
+
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
