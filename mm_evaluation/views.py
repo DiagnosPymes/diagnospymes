@@ -15,6 +15,12 @@ class AutoevaluationView(ListView):
     template_name = 'mm_evaluation/autoevaluation.html'
     context_object_name = 'macroprocesses_list'
 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['autoevaluation'] = get_last_full_autoevaluation(1)
+        return context
+
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         allow_empty = self.get_allow_empty()
@@ -32,7 +38,6 @@ class AutoevaluationView(ListView):
                     'class_name': self.__class__.__name__,
                 })
         context = self.get_context_data()
-        context['autoevalaution'] = get_last_full_autoevaluation(1)
         return self.render_to_response(context)
 
     def post(self, request, pk):

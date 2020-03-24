@@ -28,6 +28,6 @@
         </ul>
     </li>
 {% endfor %}
-	<a href = "resultado/{{autoevaluation.id}}/">Terminar</a>
+<a href = "{% url 'mm_evaluation:autoevaluation_result' autoevaluation.id %}">Terminar</a>
   </ol>
 </body>
