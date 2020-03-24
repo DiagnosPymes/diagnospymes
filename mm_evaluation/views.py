@@ -49,6 +49,7 @@ class AutoevaluationView(ListView):
                     'class_name': self.__class__.__name__,
                 })
         context = self.get_context_data()
+        context['autoevalaution'] = get_last_full_autoevaluation()
         return self.render_to_response(context)
 
     def post(self, request, pk):
@@ -71,8 +72,8 @@ class AutoevaluationView(ListView):
         autoevaluations_list = Autoevaluation.objects.filter(pyme_id=1).order_by('start_time')
         for autoevalution in autoevaluations_list:
             if is_autoevaluation_filled(autoevaluation):
-                full_autoevalution = autoevaluation
-        return render_to_response('mm_evaluation/autoevaluation.html', {'autoevaluation':full_autoevalution})
+                full_autoevaluation = autoevaluation
+        return full_autoevaluation
 
 
 class ProcessAlreadyAnswerView(TemplateView):
