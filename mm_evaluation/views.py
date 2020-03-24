@@ -67,6 +67,13 @@ class AutoevaluationView(ListView):
             # user hits the Back button.
             return HttpResponseRedirect(reverse('mm_evaluation:autoevaluation'))
 
+    def get_last_full_autoevalution(self):
+        autoevaluations_list = Autoevaluation.objects.filter(pyme_id=1).order_by('start_time')
+        for autoevalution in autoevaluations_list:
+            if is_autoevaluation_filled(autoevaluation):
+                full_autoevalution = autoevaluation
+        return render_to_response('mm_evaluation/autoevaluation.html', {'autoevaluation':full_autoevalution})
+
 
 class ProcessAlreadyAnswerView(TemplateView):
     template_name = 'mm_evaluation/process_already_answer.html'
@@ -139,12 +146,3 @@ class Resources(View):
         return HttpResponse(render_to_string(self.template_name))
 
 
-class ViewResult(DetailView):
-    model = Autoevaluation
-    template_name = 'mm_evaluation/resultdetail.html'
-    context_object_name = 'full_autoevaluation'
-
-    def get_context_data(self, **kwards):
-        context = super().get_context_data(**kwards)
-        context['full_autoevaluation']  = Autoevaluation.objects.filter(pyme_id=1, final_score__isnull=False).order_by('start_time').reverse()[0]
-        return render_to_response(context)
