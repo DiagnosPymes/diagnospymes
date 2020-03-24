@@ -85,7 +85,7 @@ class Macroprocess(models.Model):
     """Name contains the macroprocess' high level name."""
     name = models.CharField(max_length = 50)
     """Number of the macroprocess. """
-    number = models.IntegerField(choices=VALID_MACROPROCESS)
+#    number = models.IntegerField(choices=VALID_MACROPROCESS, null=True)
 
     class Meta:
         db_table = 'macroprocess'
