@@ -27,7 +27,9 @@
             {% endfor %}
         </ul>
     </li>
-    {% endfor %}
-	<a href = "resultados/{{full_autoevaluation.id}}/">Terminar</a>
+	{% endfor %}
+	{% for autoevaluation in full_autoevaluation %}
+	<a href = "resultado/{{full_autoevaluation.id}}/">Terminar</a>
+	{% endfor %}
   </ol>
 </body>
