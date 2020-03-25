@@ -11,7 +11,7 @@
                 {% for process in macroprocess.process_set.all %}
 
                 <li>{{ process.guiding_question }}</li>
-                <form action="{% url 'mm_evaluation:save_answer' process.id %}" method="post">
+                <form action="{% url 'mm_evaluation:save_answer' process.id autoevaluation.id %}" method="post">
                     {% csrf_token %}
                     <p>Puntuación:</p>
                     <select name="score">

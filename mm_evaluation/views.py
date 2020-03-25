@@ -7,11 +7,20 @@ from django.utils import timezone
 from django.views.generic import ListView, View, DetailView
 from django.views.generic.base import TemplateView
 
+import plotly.offline as opy
+import plotly.graph_objs as go
+
 from .models import Process, Macroprocess, Autoevaluation, Answer, PYME
 from .general_use_functions import *
 
-import plotly.offline as opy
-import plotly.graph_objs as go
+
+
+def begin_or_continue_autoevaluation(request):
+    autoevaluation = get_autoevaluation(1)
+    autoevaluation.save()
+    return HttpResponseRedirect(
+            reverse('mm_evaluation:autoevaluation', args=(autoevaluation.id,))
+            )
 
 class AutoevaluationView(ListView):
     model = Macroprocess
@@ -21,10 +30,11 @@ class AutoevaluationView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['autoevaluation'] = get_last_full_autoevaluation(1)
+        context['autoevaluation'] = self.autoevaluation
         return context
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, pk, *args, **kwargs):
+        self.autoevaluation = get_object_or_404(Autoevaluation, pk=pk)
         self.object_list = self.get_queryset()
         allow_empty = self.get_allow_empty()
 
@@ -43,9 +53,9 @@ class AutoevaluationView(ListView):
         context = self.get_context_data()
         return self.render_to_response(context)
 
-    def post(self, request, pk):
-        autoevaluation = get_autoevaluation(1)
-        process = get_object_or_404(Process, pk=pk)
+    def post(self, request, process_id, autoevaluation_id):
+        process = get_object_or_404(Process, pk=process_id)
+        autoevaluation = get_object_or_404(Autoevaluation, pk=autoevaluation_id)
         try:
             answer = Answer(autoevaluation_id=autoevaluation, process_id=process, score=request.POST['score'])
             autoevaluation.last_time_edition = timezone.now()
@@ -57,7 +67,7 @@ class AutoevaluationView(ListView):
             # Always return an HttpResponseRedirect after successfully dealing
             # with POST data. This prevents data from being posted twice if a
             # user hits the Back button.
-            return HttpResponseRedirect(reverse('mm_evaluation:autoevaluation'))
+            return HttpResponseRedirect(reverse('mm_evaluation:autoevaluation', args=(autoevaluation.id,)))
 
 
 
