@@ -55,7 +55,9 @@ ROOT_URLCONF = 'diagnospymes.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'templates',
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,3 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# When a user logs in or logs out, redirect to home page
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/'
