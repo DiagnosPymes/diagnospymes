@@ -20,4 +20,6 @@ urlpatterns = [
         path('resultados/', views.PreviousResults.as_view(), name='results'),
         path('resultados/<int:pk>/', views.ResultDetail.as_view(), name='result_detail'),
         path('autoevaluacion/resultado/<int:pk>/', views.ResultDetail.as_view(), name='autoevaluation_result'),
+        path('registro/', views.registration, name='registration'),
+        path('registro_exitoso/', views.SuccessfulRegistrationView.as_view(), name='successful_registration'),
         ]
