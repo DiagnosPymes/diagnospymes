@@ -7,7 +7,7 @@ from .models import PYME
 class PYMERegistrationForm(forms.ModelForm):
     class Meta:
         model = PYME
-        exclude = ('user')
+        exclude = ('user',)
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:
