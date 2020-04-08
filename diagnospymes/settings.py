@@ -128,4 +128,4 @@ STATIC_URL = '/static/'
 
 # When a user logs in or logs out, redirect to home page
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/'
+LOGIN_URL = '/login'

@@ -1,4 +1,5 @@
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db import IntegrityError,transaction
@@ -19,15 +20,21 @@ from .models import Answer, Autoevaluation, Macroprocess, Process,  PYME
 
 
 
+
+@login_required
 def begin_or_continue_autoevaluation(request):
-    autoevaluation = get_autoevaluation(1)
+    autoevaluation = get_autoevaluation(request.user.pyme.pk)
     autoevaluation.save()
     return HttpResponseRedirect(
             reverse('mm_evaluation:autoevaluation', args=(autoevaluation.id,))
             )
 
 class AutoevaluationView(LoginRequiredMixin, ListView):
+    # For use in LoginRequiredMixin
     login_url = reverse_lazy('mm_evaluation:login')
+    permission_denied_message = "Debes ingresar a tu cuenta para responder las autoevaluaciones."
+
+    # For use in ListView
     model = Macroprocess
     template_name = 'mm_evaluation/autoevaluation.html'
     context_object_name = 'macroprocesses_list'
@@ -76,7 +83,11 @@ class AutoevaluationView(LoginRequiredMixin, ListView):
 
 
 
-class ProcessAlreadyAnswerView(TemplateView):
+class ProcessAlreadyAnswerView(LoginRequiredMixin, TemplateView):
+    # For use in LoginRequiredMixin
+    login_url = reverse_lazy('mm_evaluation:login')
+    permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
+
     template_name = 'mm_evaluation/process_already_answer.html'
 
 
@@ -127,7 +138,11 @@ class Instructions(View):
         return HttpResponse(render_to_string(self.template_name))
 
     
-class PreviousResults(ListView):
+class PreviousResults(LoginRequiredMixin, ListView):
+    # For use in LoginRequiredMixin
+    login_url = reverse_lazy('mm_evaluation:login')
+    permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
+
     template_name = 'mm_evaluation/previousresults.html'
     context_object_name = 'all_previous_results'
 
@@ -135,7 +150,11 @@ class PreviousResults(ListView):
         return Autoevaluation.objects.filter(pyme_id_id=1,final_score__isnull=False).order_by('last_time_edition')
 
       
-class ResultDetail(DetailView):
+class ResultDetail(LoginRequiredMixin, DetailView):
+    # For use in LoginRequiredMixin
+    login_url = reverse_lazy('mm_evaluation:login')
+    permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
+
     model = Autoevaluation
     template_name = 'mm_evaluation/resultdetail.html'
     
@@ -174,7 +193,11 @@ class Resources(View):
         return HttpResponse(render_to_string(self.template_name))
 
 
-class SuccessfulRegistrationView(TemplateView):
+class SuccessfulRegistrationView(LoginRequiredMixin, TemplateView):
+    # For use in LoginRequiredMixin
+    login_url = reverse_lazy('mm_evaluation:login')
+    permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
+
     template_name = "mm_evaluation/successful_registration.html"
 
 @transaction.atomic
