@@ -1,10 +1,11 @@
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db import IntegrityError,transaction
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, View
 from django.views.generic.base import TemplateView
@@ -25,7 +26,8 @@ def begin_or_continue_autoevaluation(request):
             reverse('mm_evaluation:autoevaluation', args=(autoevaluation.id,))
             )
 
-class AutoevaluationView(ListView):
+class AutoevaluationView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('mm_evaluation:login')
     model = Macroprocess
     template_name = 'mm_evaluation/autoevaluation.html'
     context_object_name = 'macroprocesses_list'
@@ -65,12 +67,12 @@ class AutoevaluationView(ListView):
             autoevaluation.save()
             answer.save()
         except (IntegrityError):
-            return HttpResponseRedirect(reverse('mm_evaluation:process_already_answer'))
+            return HttpResponseRedirect(reverse_lazy('mm_evaluation:process_already_answer'))
         else:
             # Always return an HttpResponseRedirect after successfully dealing
             # with POST data. This prevents data from being posted twice if a
             # user hits the Back button.
-            return HttpResponseRedirect(reverse('mm_evaluation:autoevaluation', args=(autoevaluation.id,)))
+            return HttpResponseRedirect(reverse_lazy('mm_evaluation:autoevaluation', args=(autoevaluation.id,)))
 
 
 
