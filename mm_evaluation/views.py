@@ -202,10 +202,10 @@ class SuccessfulRegistrationView(LoginRequiredMixin, TemplateView):
 
 @transaction.atomic
 def registration(request):
+    user_form = UserRegistrationForm(request.POST, prefix="user")
+    PYME_form = PYMERegistrationForm(request.POST, prefix="PYME")
     # if this is a POST request we need to process the form data
     if request.method == 'POST': # when user sends registration info:
-        user_form = UserRegistrationForm(request.POST, prefix="user")
-        PYME_form = PYMERegistrationForm(request.POST, prefix="PYME")
         if PYME_form.is_valid() and user_form.is_valid():
             user = user_form.save()
 
@@ -223,10 +223,10 @@ def registration(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        user_registration_form = UserRegistrationForm(prefix="user")
-        PYME_registration_form = PYMERegistrationForm(prefix="PYME")
+        user_form = UserRegistrationForm(prefix="user")
+        PYME_form = PYMERegistrationForm(prefix="PYME")
 
     return render(request, 'mm_evaluation/registration.html', {
-        'user_registration_form': user_registration_form,
-        'PYME_registration_form': PYME_registration_form,
+        'user_registration_form': user_form,
+        'PYME_registration_form': PYME_form,
         })
