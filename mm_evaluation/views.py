@@ -147,7 +147,8 @@ class PreviousResults(LoginRequiredMixin, ListView):
     context_object_name = 'all_previous_results'
 
     def get_queryset(self):
-        return Autoevaluation.objects.filter(pyme_id_id=request.user.pyme.pk,final_score__isnull=False).order_by('last_time_edition')
+        self.pyme = get_object_or_404(PYME, user=self.request.user)
+        return Autoevaluation.objects.filter(pyme_id=self.pyme).order_by('last_time_edition')
 
       
 class ResultDetail(LoginRequiredMixin, DetailView):
