@@ -26,6 +26,7 @@ VALID_MACROPROCESS = [
         (10, 10),
         ]
 
+
 class Sector(models.Model):
     """The class Sector is for making a sectors table in MariaDB, based in economic secotrs in Colombia, the fields are: name is the sectors name in wich the company is involve, description is the description of the sector"""
     name = models.CharField(max_length=20)
@@ -100,6 +101,7 @@ class Process(models.Model):
     description = models.CharField(max_length=500)
     guiding_question = models.CharField(max_length=400,default=' ')
     weight = models.FloatField()
+    number = models.FloatField(choices=VALID_PROCESS, null= true)
 
 
     class Meta:

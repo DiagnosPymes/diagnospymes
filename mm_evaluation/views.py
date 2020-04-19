@@ -184,6 +184,9 @@ class ResultDetail(LoginRequiredMixin, DetailView):
         div = opy.plot(figure, auto_open=False, output_type='div')
         context['graph'] = div
 
+        #For Recommendations
+        M1P1 = Answers.objects.filter(autoevaluation_id=current_autoev, proces)
+
         return context
 
 class Resources(View):

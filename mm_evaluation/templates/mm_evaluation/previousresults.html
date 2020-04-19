@@ -1,14 +1,32 @@
 <head>
-    {% block title %}
-    <title>Resultados</title>{% endblock%}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+ 
+    <title>Como integrar Django y Bootstrap 4 </title>
+    
+    {# Cargamos la librería #}
+    {% load bootstrap4 %}
+    
+    {# CSS Bootstrap #}
+   {% bootstrap_css %} 
 </head>
-<body style="background-color:honeydew;">
-    <h1>Resultados</h1>
-    <ul>
-      {% if all_previous_results %}
-         {% for autoevaluation in all_previous_results %}
-           <li> <a href="{% url 'mm_evaluation:autoevaluation_result' autoevaluation.id %}">{{ autoevaluation.last_time_edition }}</a></li>
-           {% endfor %}
-      {% endif %}
-    </ul>
+
+<body>
+  <div class = "container-fluid bg-gradient-success text-white">.bg-gradient-success</div>
+  <h1>Resultados</h1>
+  <ul>
+    {% if all_previous_results %}
+      {% for autoevaluation in all_previous_results %}
+        <li> <a href = "{% url 'mm_evaluation: autoevaluation_result' autoevaluation.id %}"
+        </a> </li>
+      {% endfor %}
+    {% endif %}
+  {# JS y jQuery Bootstrap #}
+{% bootstrap_javascript jquery='full' %}
+  </ul>
 </body>
+
+
