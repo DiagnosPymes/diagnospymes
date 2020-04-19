@@ -36,10 +36,9 @@ class Sector(models.Model):
 
 
 class PYME(models.Model):
-    """the class PYME is for making a PYMES table in MariaDB, the filds are: sector_id refes to the id of sector the company is involve with, email_address refes to the username to login and the email of the company, pyme_name refers to the name of the company, password refers to an encrypted string, nit refers to a tributary number, phone_number refers to the company phone number, address is the companys address, contact_name is the name of the manager of the company, contact_number is the managers phone number, contact_sex is the sex of the maneger of the company, contact_birth_day is the managers birthday, contact_id_type is the managers id type, contact_id_number managers id number, contact_educational_level is the managers educational level, terms_conditions_acceptance a boolean true or false if the company accepts terms and contions, contact_time_on_charge is the managers time on charge of the company"""
+    """the class PYME is for making a PYMES table in MariaDB, the filds are: sector_id refes to the id of sector the company is involve with, pyme_name refers to the name of the company, password refers to an encrypted string, nit refers to a tributary number, phone_number refers to the company phone number, address is the companys address, contact_name is the name of the manager of the company, contact_number is the managers phone number, contact_sex is the sex of the maneger of the company, contact_birth_day is the managers birthday, contact_id_type is the managers id type, contact_id_number managers id number, contact_educational_level is the managers educational level, terms_conditions_acceptance a boolean true or false if the company accepts terms and contions, contact_time_on_charge is the managers time on charge of the company"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     sector_id = models.ForeignKey(Sector, on_delete=models.CASCADE)
-    email_address = models.CharField(max_length=100)
     pyme_name = models.CharField(max_length=100)
     nit = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=10)
