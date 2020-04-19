@@ -43,8 +43,6 @@ class PYME(models.Model):
     nit = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=10)
     address = models.CharField(max_length=50)
-    contact_first_name = models.CharField(max_length=30)
-    contact_last_name = models.CharField(max_length=150)
     contact_number = models.CharField(max_length=10)
     contact_sex = models.CharField(max_length=10)
     contact_birth_day = models.DateField()
