@@ -286,3 +286,82 @@ class AccessDeniedView(TemplateView):
     """
     template_name = "mm_evaluation/denied_access.html"
 
+"""
+class BenchmarkingBest(LoginRequiredMixin, DetailView):
+    # For use in LoginRequiredMixin                                                                                                                                                                                                                                                           
+    login_url = reverse_lazy('mm_evaluation:login')
+    permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
+
+    model = Autoevaluation
+    template_name = 'mm_evaluation/resultdetail.html'
+
+    top = round((Autoevaluation.objects.all().count()) * 0.05)
+    compare_to_query = Autoevaluation.objects.order_by('-final_score')[top]
+
+    mp1_avg = 0
+    mp2_avg = 0
+    mp3_avg = 0
+    mp4_avg = 0
+    mp5_avg = 0
+    mp6_avg = 0
+    mp7_avg = 0
+    mp8_avg = 0
+    mp9_avg = 0
+    mp10_avg = 0
+
+    for autoev in compare_to_query:
+         mp1_avg = autoev.macroprocess_1_score/top
+         mp2_avg = autoev.macroprocess_2_score/top
+         mp3_avg = autoev.macroprocess_3_score/top
+         mp4_avg = autoev.macroprocess_4_score/top
+         mp5_avg = autoev.macroprocess_5_score/top
+         mp6_avg = autoev.macroprocess_6_score/top
+         mp7_avg = autoev.macroprocess_7_score/top
+         mp8_avg = autoev.macroprocess_8_score/top
+         mp9_avg = autoev.macroprocess_9_score/top
+         mp10_avg = autoev.macroprocess_10_score/top
+         
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        self.autoevaluation = super().get_object()
+
+        x = ['MP1', 'MP2', 'MP3', 'MP4', 'MP5', 'MP6', 'MP7', 'MP8', 'MP9', 'MP10']
+        y = []
+        benchmark = [mp1_avg, mp2_avg, mp3_avg, mp4_avg, mp5_avg, mp6_avg, mp7_avg, mp8_avg, mp9_avg, mp10_avg]
+
+        y.append(self.autoevaluation.macroprocess_1_score)
+        y.append(self.autoevaluation.macroprocess_2_score)
+        y.append(self.autoevaluation.macroprocess_3_score)
+        y.append(self.autoevaluation.macroprocess_4_score)
+        y.append(self.autoevaluation.macroprocess_4_score)
+        y.append(self.autoevaluation.macroprocess_5_score)
+        y.append(self.autoevaluation.macroprocess_6_score)
+        y.append(self.autoevaluation.macroprocess_7_score)
+        y.append(self.autoevaluation.macroprocess_8_score)
+        y.append(self.autoevaluation.macroprocess_9_score)
+        y.append(self.autoevaluation.macroprocess_10_score)
+
+        fig = make_subplots(rows=1, cols=2)
+
+        fig.add_trace(
+            go.Scatter(x=x, y=y),
+            row=1, col=1
+        )
+
+        fig.add_trace(
+            go.Scatter(x=x, y=benchmark),
+            row=1, col=2
+        )
+
+        layout = go.Layout(title="Puntaje", xaxis={'title':'Macroproceso'}, yaxis={'title':'Resultado'})
+        div = opy.plot(figure, auto_open=False, output_type='div')
+        context['graph'] = div
+        
+        return context
+
+    def get(self, request, *args, **kwargs):
+        response_class = super().get(request, *args, **kwargs)
+        if not request.user.pyme == self.autoevaluation.pyme:
+            return redirect(reverse('mm_evaluation:denied_access'))
+        return response_class"""

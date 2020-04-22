@@ -1,4 +1,9 @@
 {% if form.errors %}
+<p>Tu usuario o tu contraseña son incorrectos. Intenta de nuevo.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
     <p>Tu cuenta no tiene acceso a esta página,
     por favor acceda con una cuenta que lo tenga.</p>
     {% else %}

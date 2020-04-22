@@ -40,4 +40,8 @@ urlpatterns = [
             ),
             name="password_change"),
         path('contraseña_cambiada/', auth_views.PasswordChangeDoneView.as_view(), name="password_change_done"),
+
+        #The following URLs deal with benchmarking
+        #path('autoevaluacion/resultado/<int:pk>/benchmarking', views.BenchmarkingBest.as_view(), name = 'top_benchmark')
         ]
+
