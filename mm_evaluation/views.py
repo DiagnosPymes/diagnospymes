@@ -1,6 +1,6 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.db import IntegrityError,transaction
 from django.http import HttpResponse,HttpResponseRedirect
@@ -16,13 +16,29 @@ import plotly.offline as opy
 
 from .forms import  PYMERegistrationForm,UserRegistrationForm
 from .general_use_functions import *
-from .models import Answer, Autoevaluation, Macroprocess, Process,  PYME, GeneralPractice
+from .models import Answer, Autoevaluation, Macroprocess, Process,  PYME, GeneralPractice, SpecificPractice
 
 
 
 
 @login_required
 def begin_or_continue_autoevaluation(request):
+    """This view reddirects to the autoevaluation that should be filled.
+
+    This view should allways be accessed before AutoevaluationView, as this view will
+    pass the Autoevaluation instance ID as argument. The objective of this view is to
+    find the first created but not completed autoevaluation belonging to the PYME logged in,
+    and redirect to mm_evaluation:autoevaluation passing the autoevaluation ID as argument.
+    If there are no completed autoevaluations, this view will create one, and pass it instead.
+
+    Args:
+        request (HttpRequest): HttpRequest object holding state and metadata for the request made.
+
+    Returns:
+        HttpResponseReddirect object pointing to AutoevaluationView and passing the ID of the
+        autoevaluation's to be scored as argument.
+
+    """
     autoevaluation = get_autoevaluation(request.user.pyme.pk)
     autoevaluation.save()
     return HttpResponseRedirect(
@@ -30,6 +46,13 @@ def begin_or_continue_autoevaluation(request):
             )
 
 class AutoevaluationView(LoginRequiredMixin, ListView):
+    """View to handle Autoevaluation instances scoring.
+
+    Inherits from LoginRequiredMixin and ListView. Shows processes separated on macroprocesses,
+    and uses pagination for macroprocesses. This is, for each page, one macroprocess and its processes
+    will be displayed. Also, a form to score each process will be rendered.
+
+    """
     # For use in LoginRequiredMixin
     login_url = reverse_lazy('mm_evaluation:login')
     permission_denied_message = "Debes ingresar a tu cuenta para responder las autoevaluaciones."
@@ -39,6 +62,19 @@ class AutoevaluationView(LoginRequiredMixin, ListView):
     template_name = 'mm_evaluation/autoevaluation.html'
     context_object_name = 'macroprocesses_list'
 
+    def test_user_owns_autoevaluation(self, user, autoevaluation):
+        """ Method to test if user owns the autoevaluation that is accessing.
+
+        Args:
+            user (User): the User object that is accessing the autoealuations page.
+            autoevaluation (Autoevaluation): the autoevaluation that the user is trying
+                to access.
+
+        Returns:
+            A boolean, indicating whether the user.pyme object equals autoevaluation.pyme.
+
+        """
+        return user.pyme == autoevaluation.pyme
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -47,6 +83,9 @@ class AutoevaluationView(LoginRequiredMixin, ListView):
 
     def get(self, request, pk, *args, **kwargs):
         self.autoevaluation = get_object_or_404(Autoevaluation, pk=pk)
+        # Check if user owns autoevaluation
+        if not self.test_user_owns_autoevaluation(request.user, self.autoevaluation):
+            return redirect(reverse('mm_evaluation:denied_access'))
         self.object_list = self.get_queryset()
         allow_empty = self.get_allow_empty()
 
@@ -66,30 +105,16 @@ class AutoevaluationView(LoginRequiredMixin, ListView):
         return self.render_to_response(context)
 
     def post(self, request, process_id, autoevaluation_id):
-        process = get_object_or_404(Process, pk=process_id)
         autoevaluation = get_object_or_404(Autoevaluation, pk=autoevaluation_id)
-        try:
-            answer = Answer(autoevaluation_id=autoevaluation, process_id=process, score=request.POST['score'])
-            autoevaluation.last_time_edition = timezone.now()
-            autoevaluation.save()
-            answer.save()
-        except (IntegrityError):
-            return HttpResponseRedirect(reverse_lazy('mm_evaluation:process_already_answer'))
-        else:
-            # Always return an HttpResponseRedirect after successfully dealing
-            # with POST data. This prevents data from being posted twice if a
-            # user hits the Back button.
-            return HttpResponseRedirect(reverse_lazy('mm_evaluation:autoevaluation', args=(autoevaluation.id,)))
-
-
-
-class ProcessAlreadyAnswerView(LoginRequiredMixin, TemplateView):
-    # For use in LoginRequiredMixin
-    login_url = reverse_lazy('mm_evaluation:login')
-    permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
-
-    template_name = 'mm_evaluation/process_already_answer.html'
-
+        # Check if user owns autoevaluation
+        if not self.test_user_owns_autoevaluation(request.user, autoevaluation):
+            return redirect(reverse('mm_evaluation:denied_access'))
+        process = get_object_or_404(Process, pk=process_id)
+        answer = Answer(autoevaluation=autoevaluation, process=process, score=request.POST['score'])
+        autoevaluation.last_time_edition = timezone.now()
+        autoevaluation.save()
+        answer.save()
+        return HttpResponseRedirect(reverse_lazy('mm_evaluation:autoevaluation', args=(autoevaluation.id,)))
 
 
 class IndexView(View):
@@ -120,7 +145,7 @@ class Vision(View):
         return HttpResponse(render_to_string(self.template_name))
 
 class Metodology(View):
-    template_name = 'mm_evaluation/metodology.html'
+    template_name = 'mm_evaluation/methodology.html'
 
     def get(self, request, *args, **kwargs):
         return HttpResponse(render_to_string(self.template_name))
@@ -162,35 +187,35 @@ class ResultDetail(LoginRequiredMixin, DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        current_autoev = super().get_object()
-        context['current_autoev'] = current_autoev
+        self.autoevaluation = super().get_object()
+        context['current_autoev'] = self.autoevaluation
      
         x = ['MP1', 'MP2', 'MP3', 'MP4', 'MP5', 'MP6', 'MP7', 'MP8', 'MP9', 'MP10']
         y = []
 
-        y.append(current_autoev.macroprocess_1_score)
-        y.append(current_autoev.macroprocess_2_score)
-        y.append(current_autoev.macroprocess_3_score)
-        y.append(current_autoev.macroprocess_4_score)
-        y.append(current_autoev.macroprocess_4_score)
-        y.append(current_autoev.macroprocess_5_score)
-        y.append(current_autoev.macroprocess_6_score)
-        y.append(current_autoev.macroprocess_7_score)
-        y.append(current_autoev.macroprocess_8_score)
-        y.append(current_autoev.macroprocess_9_score)
-        y.append(current_autoev.macroprocess_10_score)
+        y.append(self.autoevaluation.macroprocess_1_score)
+        y.append(self.autoevaluation.macroprocess_2_score)
+        y.append(self.autoevaluation.macroprocess_3_score)
+        y.append(self.autoevaluation.macroprocess_4_score)
+        y.append(self.autoevaluation.macroprocess_4_score)
+        y.append(self.autoevaluation.macroprocess_5_score)
+        y.append(self.autoevaluation.macroprocess_6_score)
+        y.append(self.autoevaluation.macroprocess_7_score)
+        y.append(self.autoevaluation.macroprocess_8_score)
+        y.append(self.autoevaluation.macroprocess_9_score)
+        y.append(self.autoevaluation.macroprocess_10_score)
         
         data = [go.Bar(x=x, y=y)]
         layout=go.Layout(title="Puntaje", xaxis={'title':'Macroproceso'}, yaxis={'title':'Resultado'})
         figure=go.Figure(data=data,layout=layout)
         div = opy.plot(figure, auto_open=False, output_type='div')
         context['graph'] = div
+        
         all_macroprocesses = Macroprocess.objects.all()
         context['all_macroprocesses'] = all_macroprocesses
-        final_score = int(current_autoev.final_score)
+        final_score = int(self.autoevaluation.final_score)
 
-        maturity_level=GeneralPractice.objects.get(score=final_score)
+        maturity_level = GeneralPractice.objects.get(score=final_score)
         context['maturity_level']=maturity_level
 
         if (final_score<5):
@@ -201,6 +226,12 @@ class ResultDetail(LoginRequiredMixin, DetailView):
             context['general_recommendation']= "SIGUE ASÍ"
 
         return context
+
+    def get(self, request, *args, **kwargs):
+        response_class = super().get(request, *args, **kwargs)
+        if not request.user.pyme == self.autoevaluation.pyme:
+            return redirect(reverse('mm_evaluation:denied_access'))
+        return response_class
 
 
 class SpecificRecommendationsDetail(DetailView):
@@ -360,7 +391,7 @@ class SpecificRecommendationsDetail(DetailView):
         
         return render(request, 'mm_evaluation/specificrecommendation.html', {'specific_recommendations':specific_recommendations_list , 'current_macroprocess':current_macroprocess, 'graph': div})        
 
-    
+
 class Resources(View):
     template_name = 'mm_evaluation/resources.html'
 
@@ -377,6 +408,20 @@ class SuccessfulRegistrationView(LoginRequiredMixin, TemplateView):
 
 @transaction.atomic
 def registration(request):
+    """This view handles registration page.
+
+    Creates two forms: UserRegistrationForm and PYMERegistrationForm. The former is used 
+    to get information related to the User model and the latter information related to the PYME
+    model.
+
+    Args:
+        request (HttpRequest): HttpRequest object holding state and metadata for the request made.
+
+    Returns:
+        HttpResponse redirecting to home page if registration succeded. If some form fields are
+        invalid, displays the errors and redirects to registration page.
+
+    """
     user_form = UserRegistrationForm(request.POST, prefix="user")
     PYME_form = PYMERegistrationForm(request.POST, prefix="PYME")
     # if this is a POST request we need to process the form data
@@ -405,3 +450,15 @@ def registration(request):
         'user_registration_form': user_form,
         'PYME_registration_form': PYME_form,
         })
+
+
+class AccessDeniedView(TemplateView):
+    """View used when a user is accessing a page that does not belong to him.
+
+    Renders a template that displays an error message and a link to home page.
+    This view should be redirected to whenever a user is trying to access model instances
+    that are not linkes to its PYME object (i.e. user.pyme).
+
+    """
+    template_name = "mm_evaluation/denied_access.html"
+

@@ -23,8 +23,6 @@
         <a href="{% url 'mm_evaluation:autoevaluation_result' autoevaluation.id %}" class="btn btn-success btn-lg active btn-group-justified" role="button" aria-pressed="true">{{ autoevaluation.last_time_edition }}</a>
       {% endfor %}
     {% endif %}
-  {# JS y jQuery Bootstrap #}
-{% bootstrap_javascript jquery='full' %}
   </ul>
   </div>
 </body>
