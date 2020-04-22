@@ -5,7 +5,7 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
  
-    <title>Como integrar Django y Bootstrap 4 </title>
+    <title>Resultados anteriores </title>
     
     {# Cargamos la librería #}
     {% load bootstrap4 %}
@@ -14,19 +14,19 @@
    {% bootstrap_css %} 
 </head>
 
-<body>
-  <div class = "container-fluid bg-gradient-success text-white">.bg-gradient-success</div>
-  <h1>Resultados</h1>
+<body style="background-color:honeydew;">
+  <div class = "container-fluid">
+  <h1 class = "bg-info text-dark">Resultados</h1>
   <ul>
     {% if all_previous_results %}
       {% for autoevaluation in all_previous_results %}
-        <li> <a href = "{% url 'mm_evaluation: autoevaluation_result' autoevaluation.id %}"
-        </a> </li>
+        <a href="{% url 'mm_evaluation:autoevaluation_result' autoevaluation.id %}" class="btn btn-success btn-lg active btn-group-justified" role="button" aria-pressed="true">{{ autoevaluation.last_time_edition }}</a>
       {% endfor %}
     {% endif %}
   {# JS y jQuery Bootstrap #}
 {% bootstrap_javascript jquery='full' %}
   </ul>
+  </div>
 </body>
 
 

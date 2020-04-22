@@ -16,7 +16,7 @@ import plotly.offline as opy
 
 from .forms import  PYMERegistrationForm,UserRegistrationForm
 from .general_use_functions import *
-from .models import Answer, Autoevaluation, Macroprocess, Process,  PYME
+from .models import Answer, Autoevaluation, Macroprocess, Process,  PYME, GeneralPractice
 
 
 
@@ -147,10 +147,12 @@ class PreviousResults(LoginRequiredMixin, ListView):
     context_object_name = 'all_previous_results'
 
     def get_queryset(self):
-        return Autoevaluation.objects.filter(pyme_id_id=request.user.pyme.pk,final_score__isnull=False).order_by('last_time_edition')
+        self.pyme = get_object_or_404(PYME, user=self.request.user)
+        return Autoevaluation.objects.filter(pyme_id=self.pyme).order_by('last_time_edition')
 
       
 class ResultDetail(LoginRequiredMixin, DetailView):
+    """This view shows a graph of the result of every macroprocess in the autoevaluation, also have a query of every macroprocess objec available and a query of the object of GeneralPractice to show the maturity level of the PYME an send it to the template by using context"""
     # For use in LoginRequiredMixin
     login_url = reverse_lazy('mm_evaluation:login')
     permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
@@ -162,6 +164,7 @@ class ResultDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
 
         current_autoev = super().get_object()
+        context['current_autoev'] = current_autoev
      
         x = ['MP1', 'MP2', 'MP3', 'MP4', 'MP5', 'MP6', 'MP7', 'MP8', 'MP9', 'MP10']
         y = []
@@ -183,12 +186,181 @@ class ResultDetail(LoginRequiredMixin, DetailView):
         figure=go.Figure(data=data,layout=layout)
         div = opy.plot(figure, auto_open=False, output_type='div')
         context['graph'] = div
+        all_macroprocesses = Macroprocess.objects.all()
+        context['all_macroprocesses'] = all_macroprocesses
+        final_score = int(current_autoev.final_score)
 
-        #For Recommendations
-        M1P1 = Answers.objects.filter(autoevaluation_id=current_autoev, proces)
+        maturity_level=GeneralPractice.objects.get(score=final_score)
+        context['maturity_level']=maturity_level
+
+        if (final_score<5):
+            final_score += 1
+            general_recommendation = GeneralPractice.objects.get(score=final_score)
+            context['general_recommendation']= general_recommendation
+        else:
+            context['general_recommendation']= "SIGUE ASÍ"
 
         return context
 
+
+class SpecificRecommendationsDetail(DetailView):
+    """This view gets every SpecificPractice of every macroprocess using queries to send to the template"""
+
+    # For use in LoginRequiredMixin
+    login_url = reverse_lazy('mm_evaluation:login')
+    permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
+    
+    template_name = 'mm_evaluation/specificrecommendation.html'
+    model = Autoevaluation
+
+    def get(self, request, pk, ev_pk, *args, **kwargs):
+        self.macroprocess = get_object_or_404(Macroprocess, pk=pk)
+        self.autoevaluation = get_object_or_404(Macroprocess, pk=ev_pk)
+        current_macroprocess = self.macroprocess
+        current_autoevaluation = self.autoevaluation
+        specific_recommendations_list = []
+        x = []
+        y = []
+
+        macroprocess_1 = Macroprocess.objects.get(number=1)
+        processes_of_macroprocess_1 = Process.objects.filter(macroprocess_id=macroprocess_1.id)
+        macroprocess_2 = Macroprocess.objects.get(number=2)
+        processes_of_macroprocess_2 = Process.objects.filter(macroprocess_id=macroprocess_2.id)
+        macroprocess_3 = Macroprocess.objects.get(number=3)
+        processes_of_macroprocess_3 = Process.objects.filter(macroprocess_id=macroprocess_3.id)
+        macroprocess_4 = Macroprocess.objects.get(number=4)
+        processes_of_macroprocess_4 = Process.objects.filter(macroprocess_id=macroprocess_4.id)
+        macroprocess_5 = Macroprocess.objects.get(number=5)
+        processes_of_macroprocess_5 = Process.objects.filter(macroprocess_id=macroprocess_5.id)
+        macroprocess_6 = Macroprocess.objects.get(number=6)
+        processes_of_macroprocess_6 = Process.objects.filter(macroprocess_id=macroprocess_6.id)
+        macroprocess_7 = Macroprocess.objects.get(number=7)
+        processes_of_macroprocess_7 = Process.objects.filter(macroprocess_id=macroprocess_7.id)
+        macroprocess_8 = Macroprocess.objects.get(number=8)
+        processes_of_macroprocess_8 = Process.objects.filter(macroprocess_id=macroprocess_8.id)
+        macroprocess_9 = Macroprocess.objects.get(number=9)
+        processes_of_macroprocess_9 = Process.objects.filter(macroprocess_id=macroprocess_9.id)
+        macroprocess_10 = Macroprocess.objects.get(number=10)
+        processes_of_macroprocess_10 = Process.objects.filter(macroprocess_id=macroprocess_10.id)
+
+        if(current_macroprocess.id == macroprocess_1.id):
+            for process in processes_of_macroprocess_1:
+                answer = Answer.objects.get(process_id=process.id, autoevaluation_id=current_autoevaluation.id)
+                answer_score = answer.score
+                x.append(process.name)
+                y.append(answer_score)
+                if (answer_score<5):
+                    answer_score += 1
+                    specific_recommendation = GeneralPractice.objects.get(score=answer_score)
+                    specific_recommendations_list.append(specific_recommendation)
+            
+        elif(current_macroprocess.id == macroprocess_2.id):
+            for process in processes_of_macroprocess_2:
+                answer = Answer.objects.get(process_id=process.id, autoevaluation_id=current_autoevaluation.id)
+                answer_score = answer.score
+                x.append(process.name)
+                y.append(answer_score)
+                if (answer_score<5):
+                    answer_score += 1
+                    specific_recommendation = GeneralPractice.objects.get(score=answer_score)
+                    specific_recommendations_list.append(specific_recommendation)
+
+        elif(current_macroprocess.id == macroprocess_3.id):
+            for process in processes_of_macroprocess_3:
+                answer = Answer.objects.get(process_id=process.id, autoevaluation_id=current_autoevaluation.id)
+                answer_score = answer.score
+                x.append(process.name)
+                y.append(answer_score)
+                if (answer_score<5):
+                    answer_score += 1
+                    specific_recommendation = GeneralPractice.objects.get(score=answer_score)
+                    specific_recommendations_list.append(specific_recommendation)
+
+        elif(current_macroprocess.id == macroprocess_4.id):
+            for process in processes_of_macroprocess_4:
+                answer = Answer.objects.get(process_id=process.id, autoevaluation_id=current_autoevaluation.id)
+                answer_score = answer.score
+                x.append(process.name)
+                y.append(answer_score)
+                if (answer_score<5):
+                    answer_score += 1
+                    specific_recommendation = GeneralPractice.objects.get(score=answer_score)
+                    specific_recommendations_list.append(specific_recommendation)
+
+        elif(current_macroprocess.id == macroprocess_5.id):
+            for process in processes_of_macroprocess_5:
+                answer = Answer.objects.get(process_id=process.id, autoevaluation_id=current_autoevaluation.id)
+                answer_score = answer.score
+                x.append(process.name)
+                y.append(answer_score)
+                if (answer_score<5):
+                    answer_score += 1
+                    specific_recommendation = GeneralPractice.objects.get(score=answer_score)
+                    specific_recommendations_list.append(specific_recommendation)
+
+        elif(current_macroprocess.id == macroprocess_6.id):
+            for process in processes_of_macroprocess_6:
+                answer = Answer.objects.get(process_id=process.id, autoevaluation_id=current_autoevaluation.id)
+                answer_score = answer.score
+                x.append(process.name)
+                y.append(answer_score)
+                if (answer_score<5):
+                    answer_score += 1
+                    specific_recommendation = GeneralPractice.objects.get(score=answer_score)
+                    specific_recommendations_list.append(specific_recommendation)
+
+        elif(current_macroprocess.id == macroprocess_7.id):
+            for process in processes_of_macroprocess_7:
+                answer = Answer.objects.get(process_id=process.id, autoevaluation_id=current_autoevaluation.id)
+                answer_score = answer.score
+                x.append(process.name)
+                y.append(answer_score)
+                if (answer_score<5):
+                    answer_score += 1
+                    specific_recommendation = GeneralPractice.objects.get(score=answer_score)
+                    specific_recommendations_list.append(specific_recommendation)
+
+        elif(current_macroprocess.id == macroprocess_8.id):
+            for process in processes_of_macroprocess_8:
+                answer = Answer.objects.get(process_id=process.id, autoevaluation_id=current_autoevaluation.id)
+                answer_score = answer.score
+                x.append(process.name)
+                y.append(answer_score)
+                if (answer_score<5):
+                    answer_score += 1
+                    specific_recommendation = GeneralPractice.objects.get(score=answer_score)
+                    specific_recommendations_list.append(specific_recommendation)
+
+        elif(current_macroprocess.id == macroprocess_9.id):
+            for process in processes_of_macroprocess_9:
+                answer = Answer.objects.get(process_id=process.id, autoevaluation_id=current_autoevaluation.id)
+                answer_score = answer.score
+                x.append(process.name)
+                y.append(answer_score)
+                if (answer_score<5):
+                    answer_score += 1
+                    specific_recommendation = GeneralPractice.objects.get(score=answer_score)
+                    specific_recommendations_list.append(specific_recommendation)
+
+        elif(current_macroprocess.id == macroprocess_10.id):
+            for process in processes_of_macroprocess_10:
+                answer = Answer.objects.get(process_id=process.id, autoevaluation_id=current_autoevaluation.id)
+                answer_score = answer.score
+                x.append(process.name)
+                y.append(answer_score)
+                if (answer_score<5):
+                    answer_score += 1
+                    specific_recommendation = GeneralPractice.objects.get(score=answer_score)
+                    specific_recommendations_list.append(specific_recommendation)
+
+        data = [go.Bar(x=x, y=y)]
+        layout=go.Layout(title="Puntaje", xaxis={'title':'Macroproceso'}, yaxis={'title':'Resultado'})
+        figure=go.Figure(data=data,layout=layout)
+        div = opy.plot(figure, auto_open=False, output_type='div')
+        
+        return render(request, 'mm_evaluation/specificrecommendation.html', {'specific_recommendations':specific_recommendations_list , 'current_macroprocess':current_macroprocess, 'graph': div})        
+
+    
 class Resources(View):
     template_name = 'mm_evaluation/resources.html'
 
@@ -205,10 +377,10 @@ class SuccessfulRegistrationView(LoginRequiredMixin, TemplateView):
 
 @transaction.atomic
 def registration(request):
+    user_form = UserRegistrationForm(request.POST, prefix="user")
+    PYME_form = PYMERegistrationForm(request.POST, prefix="PYME")
     # if this is a POST request we need to process the form data
     if request.method == 'POST': # when user sends registration info:
-        user_form = UserRegistrationForm(request.POST, prefix="user")
-        PYME_form = PYMERegistrationForm(request.POST, prefix="PYME")
         if PYME_form.is_valid() and user_form.is_valid():
             user = user_form.save()
 
@@ -226,10 +398,10 @@ def registration(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        user_registration_form = UserRegistrationForm(prefix="user")
-        PYME_registration_form = PYMERegistrationForm(prefix="PYME")
+        user_form = UserRegistrationForm(prefix="user")
+        PYME_form = PYMERegistrationForm(prefix="PYME")
 
     return render(request, 'mm_evaluation/registration.html', {
-        'user_registration_form': user_registration_form,
-        'PYME_registration_form': PYME_registration_form,
+        'user_registration_form': user_form,
+        'PYME_registration_form': PYME_form,
         })
