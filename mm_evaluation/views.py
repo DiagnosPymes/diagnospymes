@@ -61,6 +61,7 @@ class AutoevaluationView(LoginRequiredMixin, ListView):
     model = Macroprocess
     template_name = 'mm_evaluation/autoevaluation.html'
     context_object_name = 'macroprocesses_list'
+    paginate_by = 1
 
     def test_user_owns_autoevaluation(self, user, autoevaluation):
         """ Method to test if user owns the autoevaluation that is accessing.
@@ -79,6 +80,8 @@ class AutoevaluationView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['autoevaluation'] = self.autoevaluation
+        if is_autoevaluation_filled(self.autoevaluation):
+            context['is_autoevaluation_filled'] = True
         return context
 
     def get(self, request, pk, *args, **kwargs):
@@ -104,17 +107,22 @@ class AutoevaluationView(LoginRequiredMixin, ListView):
         context = self.get_context_data()
         return self.render_to_response(context)
 
-    def post(self, request, process_id, autoevaluation_id):
+    def post(self, request,  autoevaluation_id):
         autoevaluation = get_object_or_404(Autoevaluation, pk=autoevaluation_id)
         # Check if user owns autoevaluation
         if not self.test_user_owns_autoevaluation(request.user, autoevaluation):
             return redirect(reverse('mm_evaluation:denied_access'))
-        process = get_object_or_404(Process, pk=process_id)
-        answer = Answer(autoevaluation=autoevaluation, process=process, score=request.POST['score'])
-        autoevaluation.last_time_edition = timezone.now()
-        autoevaluation.save()
-        answer.save()
-        return HttpResponseRedirect(reverse_lazy('mm_evaluation:autoevaluation', args=(autoevaluation.id,)))
+        
+        for key, value in request.POST.items():
+            if 'score_' in key:
+                score = value
+                if score != '':
+                    answer = Answer(autoevaluation=autoevaluation, process=Process.objects.get(id=int(key.split('_')[1])), score=score)
+                    answer.save()
+        if answer.process.macroprocess.number == 10:
+            return HttpResponseRedirect(reverse_lazy('mm_evaluation:autoevaluation_result', args=(autoevaluation.id,)))
+        else:
+            return HttpResponseRedirect(reverse_lazy('mm_evaluation:autoevaluation', args=(autoevaluation.id,))+'?page='+str(answer.process.macroprocess.number))
 
 class IndexView(View):
     template_name = 'mm_evaluation/index.html'
