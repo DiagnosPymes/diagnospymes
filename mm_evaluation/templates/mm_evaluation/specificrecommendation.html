@@ -21,7 +21,7 @@
     {% if specific_recommendations %}
     {% for recommendation in specific_recommendations %}
     <ul class="list-group">
-      <li class="list-group-item">{{ recommendation.recommendation }}</li>
+      <li class="list-group-item">Para llegar al siguiente nivel deberias poder describirte así: {{ recommendation.description }}</li>
     </ul>
     {% endfor %}
     {% endif %}

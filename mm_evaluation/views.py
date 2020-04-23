@@ -177,7 +177,7 @@ class PreviousResults(LoginRequiredMixin, ListView):
 
       
 class ResultDetail(LoginRequiredMixin, DetailView):
-    """This view shows a graph of the result of every macroprocess in the autoevaluation, also have a query of every macroprocess objec available and a query of the object of GeneralPractice to show the maturity level of the PYME an send it to the template by using context"""
+    """This view inherits from LoginRequiredMixin and DetailView. Shows a graph of the result of every macroprocess in the autoevaluation, also have a query of every macroprocess objec available and a query of the object of GeneralPractice to show the maturity level of the PYME an send it to the template by using context"""
     # For use in LoginRequiredMixin
     login_url = reverse_lazy('mm_evaluation:login')
     permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
@@ -190,9 +190,19 @@ class ResultDetail(LoginRequiredMixin, DetailView):
         self.autoevaluation = super().get_object()
         context['current_autoev'] = self.autoevaluation
      
-        x = ['MP1', 'MP2', 'MP3', 'MP4', 'MP5', 'MP6', 'MP7', 'MP8', 'MP9', 'MP10']
+        x = []
         y = []
-
+        x.append(Macroprocess.objects.get(number=1).name)
+        x.append(Macroprocess.objects.get(number=2).name)
+        x.append(Macroprocess.objects.get(number=3).name)
+        x.append(Macroprocess.objects.get(number=4).name)
+        x.append(Macroprocess.objects.get(number=5).name)
+        x.append(Macroprocess.objects.get(number=6).name)
+        x.append(Macroprocess.objects.get(number=7).name)
+        x.append(Macroprocess.objects.get(number=8).name)
+        x.append(Macroprocess.objects.get(number=9).name)
+        x.append(Macroprocess.objects.get(number=10).name)
+        
         y.append(self.autoevaluation.macroprocess_1_score)
         y.append(self.autoevaluation.macroprocess_2_score)
         y.append(self.autoevaluation.macroprocess_3_score)
@@ -213,14 +223,34 @@ class ResultDetail(LoginRequiredMixin, DetailView):
         
         all_macroprocesses = Macroprocess.objects.all()
         context['all_macroprocesses'] = all_macroprocesses
-        final_score = int(self.autoevaluation.final_score)
-
-        maturity_level = GeneralPractice.objects.get(score=final_score)
+        macroprocesses_scores = {}
+        #Macroprocesses dictionary initialization
+        macroprocesses_scores[1]=self.autoevaluation.macroprocess_1_score
+        macroprocesses_scores[2]=self.autoevaluation.macroprocess_2_score
+        macroprocesses_scores[3]=self.autoevaluation.macroprocess_3_score
+        macroprocesses_scores[4]=self.autoevaluation.macroprocess_4_score
+        macroprocesses_scores[5]=self.autoevaluation.macroprocess_5_score
+        macroprocesses_scores[6]=self.autoevaluation.macroprocess_6_score
+        macroprocesses_scores[7]=self.autoevaluation.macroprocess_7_score
+        macroprocesses_scores[8]=self.autoevaluation.macroprocess_8_score
+        macroprocesses_scores[9]=self.autoevaluation.macroprocess_9_score
+        macroprocesses_scores[10]=self.autoevaluation.macroprocess_10_score
+        #Sorted macroprocess dictionary
+        sorted_macroprocesses_scores = sorted(list(macroprocesses_scores.values()))
+        #lowest macroprocess score
+        lowest_score = int(sorted_macroprocesses_scores[0])
+        #The key of the lowest score in macroprocesses dictionary
+        lowest_macroprocess_number = int(get_lowest_macroprocess_number(macroprocesses_scores, lowest_score))
+        #Macroprocess object 
+        lowest_macroprocess = Macroprocess.objects.get(number=lowest_macroprocess_number) #este no trae el objeto
+        context['lowest_macroprocess'] = lowest_macroprocess
+        #General practice object
+        maturity_level = GeneralPractice.objects.get(score=lowest_score)
         context['maturity_level']=maturity_level
 
-        if (final_score<5):
-            final_score += 1
-            general_recommendation = GeneralPractice.objects.get(score=final_score)
+        if (lowest_score<5):
+            lowest_score += 1
+            general_recommendation = GeneralPractice.objects.get(score=lowest_score)
             context['general_recommendation']= general_recommendation
         else:
             context['general_recommendation']= "SIGUE ASÍ"
@@ -235,7 +265,7 @@ class ResultDetail(LoginRequiredMixin, DetailView):
 
 
 class SpecificRecommendationsDetail(DetailView):
-    """This view gets every SpecificPractice of every macroprocess using queries to send to the template"""
+    """This view inherits from LoginRequiredMixin and DetailView. Shows the next level of every SpecificPractice of every macroprocess to use as a recommendation"""
 
     # For use in LoginRequiredMixin
     login_url = reverse_lazy('mm_evaluation:login')

@@ -27,7 +27,8 @@
   <div class = "container-fluid">
     <h1 class = "bg-info">Recomendaciones</h1>
     <h4>Su empresa se encuentra en nivel de madurez {{maturity_level.name}}</h4>
-    <p>Recomendación general: {{ general_recommendation.recommendation }}</p>
+    <p>Su macroproceso mas debil es {{ lowest_macroprocess.name }}</p>
+    <p>Para llegar al siguiente nivel deberias poder describirte así: {{ general_recommendation.description }}</p>
     <ul>
       {% if all_macroprocesses %}
         {% for macroprocess in all_macroprocesses %}
