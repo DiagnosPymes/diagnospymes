@@ -185,7 +185,7 @@ class PreviousResults(LoginRequiredMixin, ListView):
 
       
 class ResultDetail(LoginRequiredMixin, DetailView):
-    """View to handles the detail of the autoevalution ressult
+    """This class is for the detail of autoevaluation ressult view.
     This view inherits from LoginRequiredMixin and DetailView.
     Shows a graph of the result of every macroprocess in the autoevaluation, also have a query of every macroprocess objec available and a query of the object of GeneralPractice to show the maturity level of the PYME an send it to the template by using context"""
     # For use in LoginRequiredMixin
@@ -261,7 +261,7 @@ class ResultDetail(LoginRequiredMixin, DetailView):
             general_recommendation = GeneralPractice.objects.get(score=lowest_score)
             context['general_recommendation']= general_recommendation
         else:
-            context['general_recommendation']= "SIGUE ASÍ"
+            context['general_recommendation']= "¡Sigue así!"
 
         return context
 
@@ -273,7 +273,7 @@ class ResultDetail(LoginRequiredMixin, DetailView):
 
 
 class SpecificRecommendationsDetail(DetailView):
-    """This view handles recommendations per process
+    """This class is for specific recommendations detail view.
     This view inherits from DetailView. 
     Shows the next level of every SpecificPractice of every macroprocess to use as a recommendation
     """
