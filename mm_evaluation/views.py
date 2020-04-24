@@ -13,6 +13,7 @@ from django.views.generic.base import TemplateView
 
 import plotly.graph_objs as go
 import plotly.offline as opy
+from plotly.subplots import make_subplots
 
 from .forms import  PYMERegistrationForm,UserRegistrationForm
 from .general_use_functions import *
@@ -278,57 +279,71 @@ def registration(request):
 
 class AccessDeniedView(TemplateView):
     """View used when a user is accessing a page that does not belong to him.
-
     Renders a template that displays an error message and a link to home page.
     This view should be redirected to whenever a user is trying to access model instances
     that are not linkes to its PYME object (i.e. user.pyme).
-
     """
     template_name = "mm_evaluation/denied_access.html"
 
-"""
-class BenchmarkingBest(LoginRequiredMixin, DetailView):
-    # For use in LoginRequiredMixin                                                                                                                                                                                                                                                           
+class Benchmarking(LoginRequiredMixin, ListView):
+    # For use in LoginRequiredMixin
+    login_url = reverse_lazy('mm_evaluation:login')
+    permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
+
+    template_name = 'mm_evaluation/benchmarking.html'
+    context_object_name = 'all_previous_results'
+
+    def get_queryset(self):
+        self.pyme = get_object_or_404(PYME, user=self.request.user)
+        return Autoevaluation.objects.filter(pyme=self.pyme).order_by('last_time_edition')
+
+    
+class BenchmarkingTop(LoginRequiredMixin,DetailView):
     login_url = reverse_lazy('mm_evaluation:login')
     permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
 
     model = Autoevaluation
-    template_name = 'mm_evaluation/resultdetail.html'
+    template_name = 'mm_evaluation/benchmarkingTop.html'
 
-    top = round((Autoevaluation.objects.all().count()) * 0.05)
-    compare_to_query = Autoevaluation.objects.order_by('-final_score')[top]
-
-    mp1_avg = 0
-    mp2_avg = 0
-    mp3_avg = 0
-    mp4_avg = 0
-    mp5_avg = 0
-    mp6_avg = 0
-    mp7_avg = 0
-    mp8_avg = 0
-    mp9_avg = 0
-    mp10_avg = 0
-
-    for autoev in compare_to_query:
-         mp1_avg = autoev.macroprocess_1_score/top
-         mp2_avg = autoev.macroprocess_2_score/top
-         mp3_avg = autoev.macroprocess_3_score/top
-         mp4_avg = autoev.macroprocess_4_score/top
-         mp5_avg = autoev.macroprocess_5_score/top
-         mp6_avg = autoev.macroprocess_6_score/top
-         mp7_avg = autoev.macroprocess_7_score/top
-         mp8_avg = autoev.macroprocess_8_score/top
-         mp9_avg = autoev.macroprocess_9_score/top
-         mp10_avg = autoev.macroprocess_10_score/top
-         
     def get_context_data(self, **kwargs):
+        """Top autoevaluations query"""
+        top = round(Autoevaluation.objects.all().count() * 0.05) #Finds how many autoevaluations are 5% of the autoevaluations
+        q = Autoevaluation.objects.order_by('-final_score')[0:top] #Finds the top 5% of the autoevaluations
+
+        #Initialices all the aux_variables that will hold the average value of the top 5% of autoevaluations to 0
+        mp1 = 0
+        mp2 = 0
+        mp3 = 0
+        mp4 = 0
+        mp5 = 0
+        mp6 = 0
+        mp7 = 0
+        mp8 = 0
+        mp9 = 0
+        mp10 = 0
+        total = 0
+
+        for a in q:
+            mp1 += (a.macroprocess_1_score / top)
+            mp2 += (a.macroprocess_2_score / top)
+            mp3 += (a.macroprocess_3_score / top)
+            mp4 += (a.macroprocess_4_score / top)
+            mp5 += (a.macroprocess_5_score / top)
+            mp6 += (a.macroprocess_6_score / top)
+            mp7 += (a.macroprocess_7_score / top)
+            mp8 += (a.macroprocess_8_score / top)
+            mp9 += (a.macroprocess_9_score / top)
+            mp10 += (a.macroprocess_10_score / top)
+            total += (a.final_score / top)
+            
+        avg = [mp1, mp2, mp3, mp4, mp5, mp6, mp7, mp8, mp9, mp10]
+
         context = super().get_context_data(**kwargs)
 
         self.autoevaluation = super().get_object()
 
         x = ['MP1', 'MP2', 'MP3', 'MP4', 'MP5', 'MP6', 'MP7', 'MP8', 'MP9', 'MP10']
         y = []
-        benchmark = [mp1_avg, mp2_avg, mp3_avg, mp4_avg, mp5_avg, mp6_avg, mp7_avg, mp8_avg, mp9_avg, mp10_avg]
 
         y.append(self.autoevaluation.macroprocess_1_score)
         y.append(self.autoevaluation.macroprocess_2_score)
@@ -342,26 +357,192 @@ class BenchmarkingBest(LoginRequiredMixin, DetailView):
         y.append(self.autoevaluation.macroprocess_9_score)
         y.append(self.autoevaluation.macroprocess_10_score)
 
-        fig = make_subplots(rows=1, cols=2)
+        fig = make_subplots(specs=[[{"secondary_y": True}]])
 
         fig.add_trace(
-            go.Scatter(x=x, y=y),
-            row=1, col=1
+            go.Scatter(x=x, y=y, name="Mis Resultados"),
+            secondary_y=False,
         )
 
         fig.add_trace(
-            go.Scatter(x=x, y=benchmark),
-            row=1, col=2
+            go.Scatter(x=x, y=avg, name="Los mejores resultados"),
+            secondary_y=True,
         )
 
-        layout = go.Layout(title="Puntaje", xaxis={'title':'Macroproceso'}, yaxis={'title':'Resultado'})
-        div = opy.plot(figure, auto_open=False, output_type='div')
-        context['graph'] = div
+        fig.update_layout(
+            title_text="Comparar con el mejor"
+        )
+
+        fig.update_xaxes(title_text="Nombre macroproceso")
+
+        fig.update_yaxes(title_text="Benchmarking",range=[0, 5.5], secondary_y=False)
+        fig.update_yaxes(title_text="Comparacion con el mejor", range=[0, 5.5], secondary_y=True)
         
+        div = opy.plot(fig, auto_open=False, output_type='div')
+
+        context = {'graph' : div,
+                   'text' : 'Comparar con el mejor',
+	           'total' : total,
+                   'mine' : self.autoevaluation.final_score,
+                   'type' : 'mejor'
+                    }
+
         return context
 
-    def get(self, request, *args, **kwargs):
-        response_class = super().get(request, *args, **kwargs)
-        if not request.user.pyme == self.autoevaluation.pyme:
-            return redirect(reverse('mm_evaluation:denied_access'))
-        return response_class"""
+class BenchmarkingBottom(LoginRequiredMixin,DetailView):
+    login_url = reverse_lazy('mm_evaluation:login')
+    permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
+
+    model = Autoevaluation
+    template_name = 'mm_evaluation/benchmarkingTop.html'
+
+    def get_context_data(self, **kwargs):
+        """Top autoevaluations query"""
+        top = round(Autoevaluation.objects.all().count() * 0.05) #Finds how many autoevaluations are 5% of the autoevaluations
+        q = Autoevaluation.objects.order_by('final_score')[0:top] #Finds the top 5% of the autoevaluations
+
+        #Initialices all the aux_variables that will hold the average value of the top 5% of autoevaluations to 0
+        mp1 = 0
+        mp2 = 0
+        mp3 = 0
+        mp4 = 0
+        mp5 = 0
+        mp6 = 0
+        mp7 = 0
+        mp8 = 0
+        mp9 = 0
+        mp10 = 0
+        total = 0
+
+        for a in q:
+            mp1 += (a.macroprocess_1_score / top)
+            mp2 += (a.macroprocess_2_score / top)
+            mp3 += (a.macroprocess_3_score / top)
+            mp4 += (a.macroprocess_4_score / top)
+            mp5 += (a.macroprocess_5_score / top)
+            mp6 += (a.macroprocess_6_score / top)
+            mp7 += (a.macroprocess_7_score / top)
+            mp8 += (a.macroprocess_8_score / top)
+            mp9 += (a.macroprocess_9_score / top)
+            mp10 += (a.macroprocess_10_score / top)
+            total += (a.final_score / top)
+            
+        avg = [mp1, mp2, mp3, mp4, mp5, mp6, mp7, mp8, mp9, mp10]
+
+        context = super().get_context_data(**kwargs)
+
+        self.autoevaluation = super().get_object()
+
+        x = ['MP1', 'MP2', 'MP3', 'MP4', 'MP5', 'MP6', 'MP7', 'MP8', 'MP9', 'MP10']
+        y = []
+
+        y.append(self.autoevaluation.macroprocess_1_score)
+        y.append(self.autoevaluation.macroprocess_2_score)
+        y.append(self.autoevaluation.macroprocess_3_score)
+        y.append(self.autoevaluation.macroprocess_4_score)
+        y.append(self.autoevaluation.macroprocess_4_score)
+        y.append(self.autoevaluation.macroprocess_5_score)
+        y.append(self.autoevaluation.macroprocess_6_score)
+        y.append(self.autoevaluation.macroprocess_7_score)
+        y.append(self.autoevaluation.macroprocess_8_score)
+        y.append(self.autoevaluation.macroprocess_9_score)
+        y.append(self.autoevaluation.macroprocess_10_score)
+
+        fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+        fig.add_trace(
+            go.Scatter(x=x, y=y, name="Mis Resultados"),
+            secondary_y=False,
+        )
+
+        fig.add_trace(
+            go.Scatter(x=x, y=avg, name="Los peores resultados"),
+            secondary_y=True,
+        )
+
+        fig.update_layout(
+            title_text="Comparar con el peor"
+        )
+
+        fig.update_xaxes(title_text="Nombre macroproceso")
+
+        fig.update_yaxes(title_text="Benchmarking",range=[0, 5.5], secondary_y=False)
+        fig.update_yaxes(title_text="Comparacion con el peor", range=[0, 5.5], secondary_y=True)
+        
+        div = opy.plot(fig, auto_open=False, output_type='div')
+
+        context = {'graph' : div,
+                   'text' : 'Comparar con el peor',
+	           'total' : total,
+                   'mine' : self.autoevaluation.final_score,
+                   'type' : 'peor'
+                    }
+
+        return context
+
+class BenchmarkingAverage(LoginRequiredMixin,DetailView):
+    login_url = reverse_lazy('mm_evaluation:login')
+    permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
+
+    model = Autoevaluation
+    template_name = 'mm_evaluation/benchmarkingTop.html'
+
+    def get_context_data(self, **kwargs):
+        """Top autoevaluations query"""
+        top = round(Autoevaluation.objects.all().count() * 0.5) #Finds how many autoevaluations are 5% of the autoevaluations
+        q = Autoevaluation.objects.order_by('final_score')[top] #Finds the bottom 5% of the autoevaluations
+
+        avg = [q.macroprocess_1_score, q.macroprocess_2_score, q.macroprocess_3_score, q.macroprocess_4_score, q.macroprocess_5_score, q.macroprocess_6_score, q.macroprocess_7_score, q.macroprocess_8_score, q.macroprocess_9_score, q.macroprocess_10_score]
+            
+
+        context = super().get_context_data(**kwargs)
+
+        self.autoevaluation = super().get_object()
+
+        x = ['MP1', 'MP2', 'MP3', 'MP4', 'MP5', 'MP6', 'MP7', 'MP8', 'MP9', 'MP10']
+        y = []
+
+        y.append(self.autoevaluation.macroprocess_1_score)
+        y.append(self.autoevaluation.macroprocess_2_score)
+        y.append(self.autoevaluation.macroprocess_3_score)
+        y.append(self.autoevaluation.macroprocess_4_score)
+        y.append(self.autoevaluation.macroprocess_4_score)
+        y.append(self.autoevaluation.macroprocess_5_score)
+        y.append(self.autoevaluation.macroprocess_6_score)
+        y.append(self.autoevaluation.macroprocess_7_score)
+        y.append(self.autoevaluation.macroprocess_8_score)
+        y.append(self.autoevaluation.macroprocess_9_score)
+        y.append(self.autoevaluation.macroprocess_10_score)
+
+        fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+        fig.add_trace(
+            go.Scatter(x=x, y=y, name="Mis Resultados"),
+            secondary_y=False,
+        )
+
+        fig.add_trace(
+            go.Scatter(x=x, y=avg, name="Los resultados promedio"),
+            secondary_y=True,
+        )
+
+        fig.update_layout(
+            title_text="Comparar con el promedio"
+        )
+
+        fig.update_xaxes(title_text="Nombre macroproceso")
+
+        fig.update_yaxes(title_text="Benchmarking",range=[0, 5.5], secondary_y=False)
+        fig.update_yaxes(title_text="Comparacion con el promedio", range=[0, 5.5], secondary_y=True)
+        
+        div = opy.plot(fig, auto_open=False, output_type='div')
+
+        context = {'graph' : div,
+                   'text' : 'Comparar con el promedio',
+                   'total' : q.final_score,
+                   'mine' : self.autoevaluation.final_score,
+                   'type' : 'promedio'
+                    }
+
+        return context
+

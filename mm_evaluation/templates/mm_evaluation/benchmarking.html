@@ -1,0 +1,17 @@
+<head>
+    {% block title %}
+    <title>Benchmarking</title>{% endblock%}
+</head>
+<body style="background-color:honeydew;">
+  <h1>Benchmarking</h1>
+    <ul>
+        {% if all_previous_results %}
+        {% for autoevaluation in all_previous_results %}
+	    {{ autoevaluation.last_time_edition }}
+            <li> <a href="{% url 'mm_evaluation:benchmarkingTop' autoevaluation.id %}">Comparar contra el mejor</a></li>
+            <li> <a href="{% url 'mm_evaluation:benchmarkingAverage' autoevaluation.id %}">Comparar contra el promedio</a></li>
+	    <li> <a href="{% url 'mm_evaluation:benchmarkingBottom' autoevaluation.id %}">Comparar contra el peor</a></li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+</body>
