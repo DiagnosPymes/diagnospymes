@@ -29,9 +29,6 @@ urlpatterns = [
         # This URL points to the result view of each autoevaluation
         path('autoevaluacion/resultado/<int:pk>/', views.ResultDetail.as_view(), name='autoevaluation_result'),
         path('autoevaluacion/resultado/<int:ev_pk>/recomendacion/<int:pk>', views.SpecificRecommendationsDetail.as_view(), name = 'specific_recommendations'),
-        path('registro/', views.registration, name='registration'),
-        path('registro_exitoso/', views.SuccessfulRegistrationView.as_view(), name='successful_registration'),
-
 
         # The following URLs are used to handle authentication functionalities
         path('registro/', views.registration, name='registration'),
