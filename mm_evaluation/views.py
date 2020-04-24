@@ -185,7 +185,9 @@ class PreviousResults(LoginRequiredMixin, ListView):
 
       
 class ResultDetail(LoginRequiredMixin, DetailView):
-    """This view inherits from LoginRequiredMixin and DetailView. Shows a graph of the result of every macroprocess in the autoevaluation, also have a query of every macroprocess objec available and a query of the object of GeneralPractice to show the maturity level of the PYME an send it to the template by using context"""
+    """View to handles the detail of the autoevalution ressult
+    This view inherits from LoginRequiredMixin and DetailView.
+    Shows a graph of the result of every macroprocess in the autoevaluation, also have a query of every macroprocess objec available and a query of the object of GeneralPractice to show the maturity level of the PYME an send it to the template by using context"""
     # For use in LoginRequiredMixin
     login_url = reverse_lazy('mm_evaluation:login')
     permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
@@ -243,10 +245,8 @@ class ResultDetail(LoginRequiredMixin, DetailView):
         macroprocesses_scores[8]=self.autoevaluation.macroprocess_8_score
         macroprocesses_scores[9]=self.autoevaluation.macroprocess_9_score
         macroprocesses_scores[10]=self.autoevaluation.macroprocess_10_score
-        #Sorted macroprocess dictionary
-        sorted_macroprocesses_scores = sorted(list(macroprocesses_scores.values()))
         #lowest macroprocess score
-        lowest_score = int(sorted_macroprocesses_scores[0])
+        lowest_score = min(list(macroprocesses_scores.values()))
         #The key of the lowest score in macroprocesses dictionary
         lowest_macroprocess_number = int(get_lowest_macroprocess_number(macroprocesses_scores, lowest_score))
         #Macroprocess object 
@@ -273,8 +273,10 @@ class ResultDetail(LoginRequiredMixin, DetailView):
 
 
 class SpecificRecommendationsDetail(DetailView):
-    """This view inherits from LoginRequiredMixin and DetailView. Shows the next level of every SpecificPractice of every macroprocess to use as a recommendation"""
-
+    """This view handles recommendations per process
+    This view inherits from DetailView. 
+    Shows the next level of every SpecificPractice of every macroprocess to use as a recommendation
+    """
     # For use in LoginRequiredMixin
     login_url = reverse_lazy('mm_evaluation:login')
     permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
@@ -283,6 +285,14 @@ class SpecificRecommendationsDetail(DetailView):
     model = Autoevaluation
 
     def get(self, request, pk, ev_pk, *args, **kwargs):
+        """This a function get
+        It gets every process for each macroprocess. 
+        Acording to the autoevaluation results and the macroprocess selected sends the recommendations of each process to the template.
+        Also makes a graph with every process in the selected macroprocess and their respective score.
+        Args:
+            pk: current macroprocess number
+            ev_pk: current autoevalution id
+        """
         self.macroprocess = get_object_or_404(Macroprocess, pk=pk)
         self.autoevaluation = get_object_or_404(Macroprocess, pk=ev_pk)
         current_macroprocess = self.macroprocess
@@ -427,7 +437,7 @@ class SpecificRecommendationsDetail(DetailView):
         figure=go.Figure(data=data,layout=layout)
         div = opy.plot(figure, auto_open=False, output_type='div')
         
-        return render(request, 'mm_evaluation/specificrecommendation.html', {'specific_recommendations':specific_recommendations_list , 'current_macroprocess':current_macroprocess, 'graph': div})        
+        return render(request, 'mm_evaluation/specificrecommendation.html',{'specific_recommendations':specific_recommendations_list , 'current_macroprocess':current_macroprocess, 'graph': div})        
 
 
 class Resources(View):
