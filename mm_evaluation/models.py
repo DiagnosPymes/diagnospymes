@@ -43,14 +43,13 @@ VALID_EDUCATION_LEVEL = [
         ]
 """Valid education level for PYME's contact."""
 
-"""Valid ID type for PYME's contact. """
 VALID_ID_TYPE = [
         ('CC', 'Cédula de Ciudadanía'),
         ('CE', 'Cédula de Extranjería'),
         ('PA', 'Pasaporte'),
         ]
+"""Valid ID type for PYME's contact. """
 
-"""Valid education level for PYME's contact. """
 VALID_EDUCATION_LEVEL = [
         ('primaria', 'Primaria'),
         ('secundaria', 'Secundaria'),
@@ -59,7 +58,7 @@ VALID_EDUCATION_LEVEL = [
         ('universitario', 'Universitario'),
         ('posgrado', 'Posgrado'),
         ]
-
+"""Valid education level for PYME's contact. """
 
 class Sector(models.Model):
     """Sector is the abstraction for economic sectors.
