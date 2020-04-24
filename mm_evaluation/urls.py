@@ -13,7 +13,7 @@ urlpatterns = [
         # This URL points to the page where the autoevaluation is scored
         path('autoevaluacion/<int:pk>/', views.AutoevaluationView.as_view(), name='autoevaluation'),
         # This URL is only accessed when scoring a process on an autoevaluation, and is accessed from the autoevaluation page
-        path('<int:process_id>/<int:autoevaluation_id>/guardar_respuesta/', views.AutoevaluationView.as_view(), name='save_answer'),
+        path('guardar_respuesta/<int:autoevaluation_id>/', views.AutoevaluationView.as_view(), name='save_answer'),
 
         # The following are subsections of home page
         path('mision/', views.Mission.as_view()),

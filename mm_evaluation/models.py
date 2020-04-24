@@ -194,7 +194,8 @@ class Macroprocess(models.Model):
         return self.name
 
     class Meta:
-        db_table = "macroprocess"
+        db_table = 'macroprocess'
+        ordering = ['number']
 
 
 class Process(models.Model):
