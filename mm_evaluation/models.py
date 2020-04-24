@@ -3,49 +3,48 @@ from django.db import models
 
 
 VALID_SCORES = [
-    (0, 0),
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),
-]
+        (0, 0),
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+        ]
 """Valid scores for answer instances."""
 
 VALID_MACROPROCESS = [
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),
-    (6, 6),
-    (7, 7),
-    (8, 8),
-    (9, 9),
-    (10, 10),
-]
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+        (6, 6),
+        (7, 7),
+        (8, 8),
+        (9, 9),
+        (10, 10),
+        ]
 """Valid macroprocesses number."""
 
 VALID_ID_TYPE = [
-    ("CC", "Cédula de Ciudadanía"),
-    ("CE", "Cédula de Extranjería"),
-    ("PA", "Pasaporte"),
-]
+        ('CC', 'Cédula de Ciudadanía'),
+        ('CE', 'Cédula de Extranjería'),
+        ('PA', 'Pasaporte'),
+        ]
 """Valid ID type for PYME's contact."""
 
 VALID_EDUCATION_LEVEL = [
-    ("primaria", "Primaria"),
-    ("secundaria", "Secundaria"),
-    ("tecnica", "Técnica"),
-    ("tecnologo", "Tecnólogo"),
-    ("universitario", "Universitario"),
-    ("posgrado", "Posgrado"),
-]
+        ('primaria', 'Primaria'),
+        ('secundaria', 'Secundaria'),
+        ('tecnica', 'Técnica'),
+        ('tecnologo', 'Tecnólogo'),
+        ('universitario', 'Universitario'),
+        ('posgrado', 'Posgrado'),
+        ]
 """Valid education level for PYME's contact."""
 
-
 class Sector(models.Model):
-    """ Sector is the abstraction for economic sectors.
+    """Sector is the abstraction for economic sectors.
 
     Every PYME has to be related to a Sector.
 
@@ -53,15 +52,14 @@ class Sector(models.Model):
         name (models.CharField): is the sector's name. Maximum is 20 characters.
         description (models.CharField): is the description of the sector. Maximum is 400 characters.
     """
-
-    name = models.CharField(max_length=20)
+    name        = models.CharField(max_length=20)
     description = models.CharField(max_length=400)
 
     def __str__(self):
         return self.name
 
-    class Meta:
-        db_table = "sector"
+    class Meta():
+        db_table = 'sector'
 
 
 class PYME(models.Model):
@@ -84,34 +82,30 @@ class PYME(models.Model):
         terms_conditions_acceptance (models.BooleanField): depends on whether the PYME has accepted our Terms and Conditions or not.
 
     """
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    contact_sex = models.CharField(max_length=10)
-    contact_phone_number = models.CharField(max_length=10)
-    contact_birth_date = models.DateField()
-    contact_id_type = models.CharField(max_length=30, choices=VALID_ID_TYPE)
-    contact_id_number = models.CharField(max_length=15)
-    contact_time_on_charge = models.IntegerField()
-    contact_education_level = models.CharField(
-        max_length=40, choices=VALID_EDUCATION_LEVEL
-    )
-    name = models.CharField(max_length=100)
-    sector = models.ForeignKey(Sector, on_delete=models.CASCADE)
-    nit = models.CharField(max_length=30)
-    address = models.CharField(max_length=50)
-    phone_number = models.CharField(max_length=10)
+    user                        = models.OneToOneField(User, on_delete=models.CASCADE)
+    contact_sex                 = models.CharField(max_length=10)
+    contact_phone_number        = models.CharField(max_length=10)
+    contact_birth_date          = models.DateField()
+    contact_id_type             = models.CharField(max_length=30, choices=VALID_ID_TYPE)
+    contact_id_number           = models.CharField(max_length=15)
+    contact_time_on_charge      = models.IntegerField()
+    contact_education_level     = models.CharField(max_length=40,choices=VALID_EDUCATION_LEVEL)
+    name                        = models.CharField(max_length=100)
+    sector                      = models.ForeignKey(Sector, on_delete=models.CASCADE)
+    nit                         = models.CharField(max_length=30)
+    address                     = models.CharField(max_length=50)
+    phone_number                = models.CharField(max_length=10)
     terms_conditions_acceptance = models.BooleanField()
 
     def __str__(self):
         return self.name
 
     class Meta:
-        db_table = "pyme"
+        db_table = 'pyme'
 
 
 class Autoevaluation(models.Model):
-    """
-    This model contains the summary result autoevaluations.
+    """This model contains the summary result autoevaluations.
 
     This model is related to only one PYME object and as many Answer instances as the number of
     Process instances in existence.
@@ -125,49 +119,26 @@ class Autoevaluation(models.Model):
             been answered) whose Process instance belongs to this Macroprocess.
 
     """
-
-    pyme = models.ForeignKey(PYME, on_delete=models.CASCADE)
-    start_time = models.DateField()
-    last_time_edition = models.DateField()
-    final_score = models.DecimalField(max_digits=3, decimal_places=2, default=0)
-    macroprocess_1_score = models.DecimalField(
-        max_digits=3, decimal_places=2, default=0
-    )
-    macroprocess_2_score = models.DecimalField(
-        max_digits=3, decimal_places=2, default=0
-    )
-    macroprocess_3_score = models.DecimalField(
-        max_digits=3, decimal_places=2, default=0
-    )
-    macroprocess_4_score = models.DecimalField(
-        max_digits=3, decimal_places=2, default=0
-    )
-    macroprocess_5_score = models.DecimalField(
-        max_digits=3, decimal_places=2, default=0
-    )
-    macroprocess_6_score = models.DecimalField(
-        max_digits=3, decimal_places=2, default=0
-    )
-    macroprocess_7_score = models.DecimalField(
-        max_digits=3, decimal_places=2, default=0
-    )
-    macroprocess_8_score = models.DecimalField(
-        max_digits=3, decimal_places=2, default=0
-    )
-    macroprocess_9_score = models.DecimalField(
-        max_digits=3, decimal_places=2, default=0
-    )
-    macroprocess_10_score = models.DecimalField(
-        max_digits=3, decimal_places=2, default=0
-    )
+    pyme                  = models.ForeignKey(PYME, on_delete=models.CASCADE)
+    start_time            = models.DateField()
+    last_time_edition     = models.DateField()
+    final_score           = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    macroprocess_1_score  = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    macroprocess_2_score  = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    macroprocess_3_score  = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    macroprocess_4_score  = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    macroprocess_5_score  = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    macroprocess_6_score  = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    macroprocess_7_score  = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    macroprocess_8_score  = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    macroprocess_9_score  = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    macroprocess_10_score = models.DecimalField(max_digits=3, decimal_places=2, default=0)
 
     def __str__(self):
-        return "Autoevaluation of {} last edited on {}".format(
-            self.pyme.name, self.last_time_edition
-        )
+        return 'Autoevaluation of {} last edited on {}'.format(self.pyme.name, self.last_time_edition)
 
     class Meta:
-        db_table = "autoevaluation"
+        db_table = 'autoevaluation'
 
 
 class Macroprocess(models.Model):
@@ -187,7 +158,7 @@ class Macroprocess(models.Model):
 
     """
 
-    name = models.CharField(max_length=50)
+    name   = models.CharField(max_length = 50)
     number = models.IntegerField(choices=VALID_MACROPROCESS, null=True)
 
     def __str__(self):
@@ -213,18 +184,17 @@ class Process(models.Model):
         weight (models.FloatField): is needed when computing the macroprocess score.
 
     """
-
-    macroprocess = models.ForeignKey(Macroprocess, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50, default="")
-    description = models.CharField(max_length=500)
-    guiding_question = models.CharField(max_length=400, default=" ")
-    weight = models.FloatField()
+    macroprocess     = models.ForeignKey(Macroprocess, on_delete=models.CASCADE)
+    name             = models.CharField(max_length=50, default='')
+    description      = models.CharField(max_length=500)
+    guiding_question = models.CharField(max_length=400,default=' ')
+    weight           = models.FloatField()
 
     def __str__(self):
         return self.name
 
     class Meta:
-        db_table = "process"
+        db_table = 'process'
 
 
 class Answer(models.Model):
@@ -238,23 +208,18 @@ class Answer(models.Model):
         score (models.IntegerField): is the score given by the user.
 
     """
-
-    process = models.ForeignKey(Process, on_delete=models.CASCADE)
+    process        = models.ForeignKey(Process, on_delete=models.CASCADE)
     autoevaluation = models.ForeignKey(Autoevaluation, on_delete=models.CASCADE)
-    score = models.IntegerField(choices=VALID_SCORES)
+    score          = models.IntegerField(choices=VALID_SCORES)
 
     def __str__(self):
-        return 'Answer from {} to "{}" in autoevalution with id {}'.format(
-            self.autoevaluation.pyme.name, self.process, self.autoevaluation.id
-        )
+        return 'Answer from {} to "{}" in autoevalution with id {}'.format(self.autoevaluation.pyme.name, self.process, self.autoevaluation.id)
 
     class Meta:
-        db_table = "answer"
+        db_table = 'answer'
         constraints = [
-            models.UniqueConstraint(
-                fields=["autoevaluation", "process"], name="unique_answer"
-            ),
-        ]
+                models.UniqueConstraint(fields=['autoevaluation', 'process'], name='unique_answer'),
+                ]
 
 
 class SpecificPractice(models.Model):
@@ -273,19 +238,16 @@ class SpecificPractice(models.Model):
             specific practice. Maximum is 400 characters.
 
     """
-
-    process = models.ForeignKey(Process, on_delete=models.CASCADE)
-    score = models.IntegerField(choices=VALID_SCORES)
-    description = models.CharField(max_length=400)
-    recommendation = models.CharField(max_length=400)
+    process        = models.ForeignKey(Process,on_delete=models.CASCADE)
+    score          = models.IntegerField(choices=VALID_SCORES)
+    description    = models.CharField(max_length = 400)
+    recommendation = models.CharField(max_length = 400)
 
     def __str__(self):
-        return "Specific practice for process {} on score {}".format(
-            self.process.name, self.process.score
-        )
+        return 'Specific practice for process {} on score {}'.format(self.process.name, self.process.score)
 
     class Meta:
-        db_table = "specific_practice"
+        db_table = 'specific_practice'
 
 
 class GeneralPractice(models.Model):
@@ -304,17 +266,16 @@ class GeneralPractice(models.Model):
             Maximum is 500 characters.
 
     """
-
-    name = models.CharField(max_length=40, default="")
-    score = models.IntegerField(choices=VALID_SCORES)
-    description = models.CharField(max_length=500)
-    recommendation = models.CharField(max_length=500)
+    name           = models.CharField(max_length=40, default='')
+    score          = models.IntegerField(choices=VALID_SCORES)
+    description    = models.CharField(max_length = 500)
+    recommendation = models.CharField(max_length = 500)
 
     def __str__(self):
-        return "General practice {} to score {}".format(self.name, self.score)
+        return 'General practice {} to score {}'.format(self.name, self.score)
 
     class Meta:
-        db_table = "general_practice"
+        db_table = 'general_practice'
 
 
 class Archive(models.Model):
@@ -329,17 +290,16 @@ class Archive(models.Model):
         name (models.CharField): is the name of the file attached. Maximum is 40 characters.
 
     """
-
-    pyme = models.ForeignKey(PYME, on_delete=models.CASCADE)
+    pyme        = models.ForeignKey(PYME,on_delete=models.CASCADE)
     file_object = models.FileField()
-    file_type = models.CharField(max_length=10)
-    name = models.CharField(max_length=40)
+    file_type   = models.CharField(max_length=10)
+    name        = models.CharField(max_length=40)
 
     def __str__(self):
-        return "File with name {} created by {}".format(self.name, self.pyme.name)
+        return 'File with name {} created by {}'.format(self.name, self.pyme.name)
 
     class Meta:
-        db_table = "archive"
+        db_table = 'archive'
 
 
 class FinancesInformation(models.Model):
@@ -368,27 +328,26 @@ class FinancesInformation(models.Model):
         ebitda (models.IntegerField):is the EBITDA of the company
 
     """
-
-    pyme = models.ForeignKey(PYME, on_delete=models.CASCADE)
-    employees_number = models.IntegerField()
-    anual_income = models.BigIntegerField()
-    assets = models.BigIntegerField()
-    liabilities = models.IntegerField()
-    monthly_production = models.BigIntegerField()
+    pyme                     = models.ForeignKey(PYME,on_delete=models.CASCADE)
+    employees_number         = models.IntegerField()
+    anual_income             = models.BigIntegerField()
+    assets                   = models.BigIntegerField()
+    liabilities              = models.IntegerField()
+    monthly_production       = models.BigIntegerField()
     productive_configuration = models.CharField(max_length=300)
-    inventory_politics = models.CharField(max_length=100)
-    main_product = models.CharField(max_length=30)
-    main_competidor = models.CharField(max_length=30)
-    patrimony = models.BigIntegerField()
-    sales_income = models.BigIntegerField()
-    gross_profits = models.BigIntegerField()
-    net_profits = models.BigIntegerField()
-    fixed_costs_expences = models.BigIntegerField()
-    variable_costs_expences = models.BigIntegerField()
-    ebitda = models.IntegerField()
+    inventory_politics       = models.CharField(max_length=100)
+    main_product             = models.CharField(max_length=30)
+    main_competidor          = models.CharField(max_length=30)
+    patrimony                = models.BigIntegerField()
+    sales_income             = models.BigIntegerField()
+    gross_profits            = models.BigIntegerField()
+    net_profits              = models.BigIntegerField()
+    fixed_costs_expences     = models.BigIntegerField()
+    variable_costs_expences  = models.BigIntegerField()
+    ebitda                   = models.IntegerField()
 
     def __str__(self):
-        return "Finances information from {}".format(self.pyme.name)
+        return 'Finances information from {}'.format(self.pyme.name)
 
     class Meta:
-        db_table = "finances_information"
+        db_table = 'finances_information'
