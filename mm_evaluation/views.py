@@ -17,14 +17,14 @@ from plotly.subplots import make_subplots
 
 from .forms import  PYMERegistrationForm,UserRegistrationForm
 from .general_use_functions import *
-<<<<<<< HEAD
-from .models import Answer, Autoevaluation, Macroprocess, Process,  PYME
-=======
+
+
+
 from .models import Answer, Autoevaluation, Macroprocess, Process,  PYME, GeneralPractice, SpecificPractice
 
 
 
->>>>>>> 4ddb2f29a5ac8699bcbf8ad610e358017633f517
+
 
 @login_required
 def begin_or_continue_autoevaluation(request):
@@ -130,51 +130,71 @@ class AutoevaluationView(LoginRequiredMixin, ListView):
         else:
             return HttpResponseRedirect(reverse_lazy('mm_evaluation:autoevaluation', args=(autoevaluation.id,))+'?page='+str(answer.process.macroprocess.number))
 
-class IndexView(View):
+class IndexView(TemplateView):
     template_name = 'mm_evaluation/index.html'
     context_object_name = 'general_list'
 
-    def get(self, request, *args, **kwargs):
-        return HttpResponse(render_to_string(self.template_name))
+    def get_context_data(self, **kwargs):
+        context = {'title' : '¿Quienes somos?',
+		   'content' : 'Somos diagnosPYMES'
+                  }
+        return context
 
-class Mission(View):
-    template_name = 'mm_evaluation/mission.html'
+class Mission(TemplateView):
+    template_name = 'mm_evaluation/index.html'
     context_object_name = 'general_list'
 
-    def get(self, request, *args, **kwargs):
-        return HttpResponse(render_to_string(self.template_name))
+    def get_context_data(self, **kwargs): 
+        context = {'title' : '¿Cual es nuestra misión?',
+                   'content' : 'Nuestra mision es diagnosticar'
+                  }
+        return context
 
-class AboutUs(View):
+class AboutUs(TemplateView):
     template_name = 'mm_evaluation/index.html'
     context_object_name = 'general_list'
     
-    def get(self, request, *args, **kwargs):
-        return HttpResponse(render_to_string(self.template_name))
+    def get_context_data(self, **kwargs):
+        context = {'title' : 'Nuestro equipo',
+                   'content' : 'Nuestro equipo somos nosotros'
+                  }
+        return context
 
-class Vision(View):
-    template_name = 'mm_evaluation/vision.html'
+class Vision(TemplateView):
+    template_name = 'mm_evaluation/index.html'
 
-    def get(self, request, *args, **kwargs):
-        return HttpResponse(render_to_string(self.template_name))
+    def get_context_data(self, **kwargs):
+        context = {'title' : 'Nuestra mision',
+                   'content' : 'Nuestra vision es un mundo diagnosticado'
+                  }
+        return context
 
-class Metodology(View):
-    template_name = 'mm_evaluation/methodology.html'
+class Metodology(TemplateView):
+    template_name = 'mm_evaluation/index.html'
 
-    def get(self, request, *args, **kwargs):
-        return HttpResponse(render_to_string(self.template_name))
-    
-class Requirements(View):
-    template_name = 'mm_evaluation/requirements.html'
+    def get_context_data(self, **kwargs):
+        context = {'title' : 'Nuetra metodología',
+                   'content' : 'Nuestra metodollogía es metodológica'
+                  }
+        return context
 
-    def get(self, request, *args, **kwargs):
-        return HttpResponse(render_to_string(self.template_name))
+class Requirements(TemplateView):
+    template_name = 'mm_evaluation/index.html'
 
-class Instructions(View):
-    template_name = 'mm_evaluation/instructions.html'
+    def get_context_data(self, **kwargs):
+        context = {'title' : 'Requisitos',
+                   'content' : 'El úncico requiito es tener una PYME'
+                  }
+        return context
 
-    def get(self, request, *args, **kwargs):
-        return HttpResponse(render_to_string(self.template_name))
+class Instructions(TemplateView):
+    template_name = 'mm_evaluation/index.html'
 
+    def get_context_data(self, **kwargs):
+        context = {'title' : 'Instrucciones',
+                   'content' : '1) Responde la autoevalución 2) Mira los resultados'
+                  }
+        return context
     
 class PreviousResults(LoginRequiredMixin, ListView):
     # For use in LoginRequiredMixin
