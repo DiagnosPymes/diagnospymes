@@ -96,30 +96,30 @@
     <body style="background-color:honeydew;">
 
         <div class="sidenav">
-            <a href="">Inicio</a>
-            <a href="{% url 'mm_evaluation:registration' %}">Registro</a>
+            <a href="{% url 'mm_evaluation:index' %}">Inicio</a>
             <a href="{% url 'mm_evaluation:login' %}">Login</a>
-            <a href="/empezar_o_continuar_autoevaluacion/">Diagnostico</a>
-            <a href="/recursos/">Recursos</a>
-	    <a href="{% url 'mm_evaluation:results' %}">Resultados</a>
-	    <a href="{% url 'mm_evaluation:benchmarking' %}">Benchmarking</a>
-            <a href="#">Acerca de</a>
+            <a href="{% url 'mm_evaluation:registration' %}">Registro</a>
+            <a href="{% url 'mm_evaluation:begin_or_continue_autoevaluation' %}">Diagnosticar</a>
+            <a href="{% url 'mm_evaluation:results' %}">Resultados</a>
+            <a href="{% url 'mm_evaluation:benchmarking' %}">Benchmarking</a>
+	    <a href="{% url 'mm_evaluation:resources' %}">Recursos</a>
+            <a href="{% url 'mm_evaluation:us' %}">Acerca de nosotros</a>
 	    <a href="{% url 'mm_evaluation:logout' %}">Logout</a>
         </div>
         <div class="main">
             <h1>DiagnosPYMES</h1>
         </div>
         <div class="topnav">
-            <a href="">¿Quienes somos?</a>
-            <a href="/mision/">Mision</a>
-            <a href="/vision/">Vision</a>
-            <a href="/metodologia/">Metodología</a>
-            <a href="/requisitos/">Requisitos</a>
-            <a href="/instrucciones/">Instructivo</a>
+            <a href="{% url 'mm_evaluation:index' %}">¿Quienes somos?</a>
+            <a href="{% url 'mm_evaluation:mission' %}">Mision</a>
+            <a href="{% url 'mm_evaluation:vision' %}">Vision</a>
+            <a href="{% url 'mm_evaluation:methodology' %}">Metodología</a>
+            <a href="{% url 'mm_evaluation:requirements' %}">Requisitos</a>
+            <a href="{% url 'mm_evaluation:instructions' %}">Instructivo</a>
         </div>
         <div class="content">
-            <h2>¿Quienes somos?</h2>
-            <p>Somos diagnosPYMES</p>
+	    <h2>{{ title }}</h2>
+            <p>{{ content }}</p>
         </div>
 
     </body>
