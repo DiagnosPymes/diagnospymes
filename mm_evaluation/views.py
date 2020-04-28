@@ -162,7 +162,9 @@ class IndexView(TemplateView):
     context_object_name = "general_list"
 
     def get_context_data(self, **kwargs):
-        context = {"title": "¿Quienes somos?", "content": "Somos diagnosPYMES"}
+        context = {
+                "title": "¿Quiénes somos?",
+                "content": "Somos diagnosPYMES."}
         return context
 
 
@@ -172,8 +174,8 @@ class Mission(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {
-            "title": "¿Cual es nuestra misión?",
-            "content": "Nuestra mision es diagnosticar",
+            "title": "¿Cuál es nuestra misión?",
+            "content": "Nuestra misión es diagnosticar.",
         }
         return context
 
@@ -185,7 +187,7 @@ class AboutUs(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "Nuestro equipo",
-            "content": "Nuestro equipo somos nosotros",
+            "content": "Nuestro equipo somos nosotros.",
         }
         return context
 
@@ -195,8 +197,8 @@ class Vision(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {
-            "title": "Nuestra mision",
-            "content": "Nuestra vision es un mundo diagnosticado",
+            "title": "Nuestra misión",
+            "content": "Nuestra visión es un mundo diagnosticado.",
         }
         return context
 
@@ -206,8 +208,8 @@ class Metodology(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {
-            "title": "Nuetra metodología",
-            "content": "Nuestra metodollogía es metodológica",
+            "title": "Nuestra metodología",
+            "content": "Nuestra metodología es metodológica.",
         }
         return context
 
@@ -218,7 +220,7 @@ class Requirements(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "Requisitos",
-            "content": "El úncico requisito es tener una PYME",
+            "content": "El único requisito es tener una PYME.",
         }
         return context
 
@@ -228,8 +230,8 @@ class Instructions(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {
-            "title": "Instrucciones",
-            "content": "1) Responde la autoevalución 2) Mira los resultados",
+            "title": "Instructivo",
+            "content": "1) Responde la autoevalución. 2) Mira los resultados.",
         }
         return context
 
@@ -375,7 +377,7 @@ class SpecificRecommendationsDetail(DetailView):
             ev_pk: current autoevalution id
         """
         self.macroprocess = get_object_or_404(Macroprocess, pk=pk)
-        self.autoevaluation = get_object_or_404(Macroprocess, pk=ev_pk)
+        self.autoevaluation = get_object_or_404(Autoevaluation, pk=ev_pk)
         current_macroprocess = self.macroprocess
         current_autoevaluation = self.autoevaluation
         specific_recommendations_list = []

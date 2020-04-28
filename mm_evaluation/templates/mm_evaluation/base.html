@@ -1,15 +1,12 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
-
     <head>
-        {% block title %}<title>DiagnosPYMES</title>{% endblock %}
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
 /* Add a black background color to the top navigation */
 .topnav {
     background-color: #4CAF50;
     overflow: hidden;
-    margin-left: 180px;
+    margin-left: 60px;
 }
 
      .topnav a {
@@ -61,69 +58,74 @@
      }
 
      .main {
-         margin-left: 180px; /* Same as the width of the sidenav */
+         margin-left: 60px; /* Same as the width of the sidenav */
          font-size: 28px; /* Increased text to enable scrolling */
          padding: 0px 10px;
      }
 
      .main h1 {
          color: lightseagreen;
-         font-family: impact;
+         font-family: 'Ubuntu Condensed', sans-serif;
          font-size: 200%;
 
      }
 
      .content {
-         margin-left: 180px;
+         margin-left: 90px;
      }
 
      .content h2 {
          color: lightseagreen;
-         font-family: impact;
+         font-family: 'Ubuntu Condensed', sans-serif;
          font-size: 150%;
+
+     }
+
+     .content h1 {
+         color: lightseagreen;
+         font-family: 'Ubuntu Condensed', sans-serif;
+         font-size: 250%;
 
      }
 
      .content p {
          color: black;
-         font-family: candara;
+         font-family: 'Ubuntu Condensed', sans-serif;
          font-size: 100%;
      }
 
         </style>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Ubuntu+Condensed&display=swap" rel="stylesheet">
+        {% load bootstrap4 %}
+        {% load fontawesome_5 %}
+        {% load static %}
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+        <script type="text/javascript" src="{% static 'mm_evaluation/js/bootstrap-slider.js' %}"></script>
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
 
     <body style="background-color:honeydew;">
-
         <div class="sidenav">
-            <a href="">Inicio</a>
-            <a href="{% url 'mm_evaluation:registration' %}">Registro</a>
+            <a href="{% url 'mm_evaluation:index' %}">Inicio</a>
             <a href="{% url 'mm_evaluation:login' %}">Login</a>
-            <a href="/empezar_o_continuar_autoevaluacion/">Diagnostico</a>
-            <a href="/recursos/">Recursos</a>
-	    <a href="{% url 'mm_evaluation:results' %}">Resultados</a>
+            <a href="{% url 'mm_evaluation:registration' %}">Registro</a>
+            <a href="{% url 'mm_evaluation:begin_or_continue_autoevaluation' %}">Diagnosticar</a>
+            <a href="{% url 'mm_evaluation:results' %}">Resultados</a>
             <a href="{% url 'mm_evaluation:benchmarking' %}">Benchmarking</a>
-            <a href="#">Acerca de</a>
-	    <a href="{% url 'mm_evaluation:logout' %}">Logout</a>
-        </div>
-        <div class="main">
-            <h1>DiagnosPYMES</h1>
-        </div>
-        <div class="topnav">
-            <a href="/nosotros/">¿Quienes somos?</a>
-            <a href="/mision/">Mision</a>
-            <a href="/vision/">Vision</a>
-            <a href="/metodologia/">Metodología</a>
-            <a href="/requisitos/">Requisitos</a>
-            <a href="/instrucciones/">Instructivo</a>
+            <a href="{% url 'mm_evaluation:resources' %}">Recursos</a>
+            <a href="{% url 'mm_evaluation:us' %}">Acerca de nosotros</a>
+            <a href="{% url 'mm_evaluation:password_change' %}">Cambiar contraseña</a>
+            <a href="{% url 'mm_evaluation:logout' %}">Logout</a>
         </div>
         <div class="content">
-            <h2>Nuestra misión</h2>
-            <p>Nnuestra misión es diagnosticar las PYMES.</p>
+            <div class="col-md-12">
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
-
     </body>
 </html>
-
-
-
