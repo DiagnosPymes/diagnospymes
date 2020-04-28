@@ -13,7 +13,10 @@ from django.views.generic.base import TemplateView
 
 import plotly.graph_objs as go
 import plotly.offline as opy
+import plotly.express as px
 from plotly.subplots import make_subplots
+
+import pandas as pd
 
 from .forms import  PYMERegistrationForm,UserRegistrationForm
 from .general_use_functions import *
@@ -183,7 +186,7 @@ class Requirements(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {'title' : 'Requisitos',
-                   'content' : 'El úncico requiito es tener una PYME'
+                   'content' : 'El úncico requisito es tener una PYME'
                   }
         return context
 
@@ -254,6 +257,8 @@ class ResultDetail(LoginRequiredMixin, DetailView):
         figure=go.Figure(data=data,layout=layout)
         div = opy.plot(figure, auto_open=False, output_type='div')
         context['graph'] = div
+
+        
         
         all_macroprocesses = Macroprocess.objects.all()
         context['all_macroprocesses'] = all_macroprocesses
