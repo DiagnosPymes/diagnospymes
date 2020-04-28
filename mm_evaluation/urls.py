@@ -16,19 +16,22 @@ urlpatterns = [
         path('guardar_respuesta/<int:autoevaluation_id>/', views.AutoevaluationView.as_view(), name='save_answer'),
 
         # The following are subsections of home page
-        path('mision/', views.Mission.as_view()),
-        path('nosotros/', views.AboutUs.as_view()),
-        path('vision/', views.Vision.as_view()),
-        path('metodologia/', views.Metodology.as_view()),
-        path('requisitos/', views.Requirements.as_view()),
-        path('instrucciones/', views.Instructions.as_view()),
-        path('recursos/', views.Resources.as_view()),
+        path('mision/', views.Mission.as_view(), name = 'mission'),
+        path('nosotros/', views.AboutUs.as_view(), name = 'us'),
+        path('vision/', views.Vision.as_view(), name = 'vision'),
+        path('metodologia/', views.Metodology.as_view(), name = 'methodology'),
+        path('requisitos/', views.Requirements.as_view(), name = 'requirements'),
+        path('instrucciones/', views.Instructions.as_view(), name = 'instructions'),
+        path('recursos/', views.Resources.as_view(), name = 'resources'),
 
         # This URL points to the page where the autoevaluations of the PYME accessing it will be displayed
         path('resultados/', views.PreviousResults.as_view(), name='results'),
         # This URL points to the result view of each autoevaluation
         path('autoevaluacion/resultado/<int:pk>/', views.ResultDetail.as_view(), name='autoevaluation_result'),
+
+
         path('autoevaluacion/resultado/<int:ev_pk>/recomendacion/<int:pk>', views.SpecificRecommendationsDetail.as_view(), name = 'specific_recommendations'),
+
 
         # The following URLs are used to handle authentication functionalities
         path('registro/', views.registration, name='registration'),
