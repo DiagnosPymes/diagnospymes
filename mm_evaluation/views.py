@@ -293,7 +293,7 @@ class AccessDeniedView(TemplateView):
     """
     template_name = "mm_evaluation/denied_access.html"
 
-class Benchmarking(LoginRequiredMixin, ListView):
+class BenchmarkingView(LoginRequiredMixin, ListView):
     # For use in LoginRequiredMixin
     login_url = reverse_lazy('mm_evaluation:login')
     permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
@@ -306,7 +306,7 @@ class Benchmarking(LoginRequiredMixin, ListView):
         return Autoevaluation.objects.filter(pyme=self.pyme).order_by('last_time_edition')
 
     
-class BenchmarkingTop(LoginRequiredMixin,DetailView):
+class BenchmarkingTopView(LoginRequiredMixin,DetailView):
     login_url = reverse_lazy('mm_evaluation:login')
     permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
 
@@ -397,7 +397,7 @@ class BenchmarkingTop(LoginRequiredMixin,DetailView):
 
         return context
 
-class BenchmarkingBottom(LoginRequiredMixin,DetailView):
+class BenchmarkingBottomView(LoginRequiredMixin,DetailView):
     login_url = reverse_lazy('mm_evaluation:login')
     permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
 
@@ -488,7 +488,7 @@ class BenchmarkingBottom(LoginRequiredMixin,DetailView):
 
         return context
 
-class BenchmarkingAverage(LoginRequiredMixin,DetailView):
+class BenchmarkingAverageView(LoginRequiredMixin,DetailView):
     login_url = reverse_lazy('mm_evaluation:login')
     permission_denied_message = "Debes ingresar a tu cuenta para acceder a esta sección."
 
