@@ -294,7 +294,7 @@ class SpecificRecommendationsDetail(DetailView):
             ev_pk: current autoevalution id
         """
         self.macroprocess = get_object_or_404(Macroprocess, pk=pk)
-        self.autoevaluation = get_object_or_404(Macroprocess, pk=ev_pk)
+        self.autoevaluation = get_object_or_404(Autoevaluation, pk=ev_pk)
         current_macroprocess = self.macroprocess
         current_autoevaluation = self.autoevaluation
         specific_recommendations_list = []
