@@ -17,6 +17,7 @@ from mm_evaluation.models import *
 mps = [None for i in range(11)]
 pcs = []
 s_pc = []
+gps = []
 
 mps[1] = Macroprocess(name='Manejo del Almacén', number=1)
 
@@ -1949,6 +1950,46 @@ s_pc.append(
     description='Participación constante y activa de iniciativas, ferias y eventos importantes tanto nacionales como internacionales"')
     )
 
+gps.append(
+    GeneralPractice(name='Inicial',
+        score=0,
+        description='Considera un proceso que es totalmente caótico y apenas funciona correctamente. Son procesos con altos niveles de desperdicios, ineficiencias, fallas y problemas.',
+        recommendation='Tiene en cuenta aquellos procesos donde existe un poco de experiencia en su manejo pero no lo suficiente para disminuir la gran variabilidad que se tiene en los resultados. Estos procesos no son del conocimiento claro de la empresa, no se ha investigado en lo absoluto. ')
+
+    )
+gps.append(
+    GeneralPractice(name='Reactivo',
+        score=1,
+        description='Tiene en cuenta aquellos procesos donde existe un poco de experiencia en su manejo pero no lo suficiente para disminuir la gran variabilidad que se tiene en los resultados. Estos procesos no son del conocimiento claro de la empresa, no se ha investigado en lo absoluto. ',
+        recommendation='Considera aquellos procesos con los cuales ya se cuenta con suficiente experiencia como para planearlos y generar una documentación básica que asegure unos estándares mínimos de cumplimiento.')
+    )
+gps.append(
+    GeneralPractice(name='Manejado',
+        score=2,
+        description='Considera aquellos procesos con los cuales ya se cuenta con suficiente experiencia como para planearlos y generar una documentación básica que asegure unos estándares mínimos de cumplimiento.',
+        recommendation='Tiene en cuenta procesos donde cada vez se cuenta con conocimientos más profundos, menos errores en su ejecución y su ejecución se hace más fácil para la empresa.')
+    )
+gps.append(
+    GeneralPractice(name='Estable',
+        score=3,
+        description='Tiene en cuenta procesos donde cada vez se cuenta con conocimientos más profundos, menos errores en su ejecución y su ejecución se hace más fácil para la empresa.',
+        recommendation='Son procesos en los cuales se cuenta con una gestión por procesos bien definida, se conocen las entradas y salidas, así como el uso de indicadores para medir su desempeño. Igualmente se cuentan con estrategias y actividades planeadas y/o en ejecución para la mejora de los indicadores planteados para el proceso.')
+    )
+gps.append(
+    GeneralPractice(name='Administrado cuantitativamente',
+        score=4,
+        description='Son procesos en los cuales se cuenta con una gestión por procesos bien definida, se conocen las entradas y salidas, así como el uso de indicadores para medir su desempeño. Igualmente se cuentan con estrategias y actividades planeadas y/o en ejecución para la mejora de los indicadores planteados para el proceso.',
+        recommendation='Son procesos que se asemejan a los de una gran empresa, donde la tecnología, la innovación, la mejora continua y la participación de múltiples empresas e individuos aseguran el éxito de este. Procesos en este nivel aseguran una alta satisfacción, productividad, competitividad y calidad del producto y de la empresa')
+    )
+gps.append(
+    GeneralPractice(name='En optimización / Mejor en su clase',
+        score=5,
+        description='Son procesos que se asemejan a los de una gran empresa, donde la tecnología, la innovación, la mejora continua y la participación de múltiples empresas e individuos aseguran el éxito de este. Procesos en este nivel aseguran una alta satisfacción, productividad, competitividad y calidad del producto y de la empresa',
+        recommendation='')
+    )
+
+for gp in gps:
+    gp.save()
 
 for mp in mps[1:]:
     mp.save()
