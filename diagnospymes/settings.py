@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'og9eok@42e5gnuu%j50@mwkvlj-bptzywd!nnjhtz!2__$=9r9'
+SECRET_KEY = os.environ['DIAGNOSPYMES_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['diagnospymes.dis.eafit.edu.co', '192.168.10.182']
 
 
 # Application definition
@@ -76,12 +76,15 @@ WSGI_APPLICATION = 'diagnospymes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+DB = os.environ['DIAGNOSPYMES_DB']
+DB_USER = os.environ['DIAGNOSPYMES_USER']
+DB_PASS = os.environ['DIAGNOSPYMES_USER_PASSWORD']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'diagnospymes',
-        'USER': 'diagnospymes_user',
-        'PASSWORD': 'password',
+        'NAME': DB,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASS,
         'HOST': '',
         'PORT': '3306'
     }
@@ -126,6 +129,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_URL = '/static/'
 
+# The absolute path to the directory where collectstatic will collect static files for deployment.
+STATIC_ROOT = '/var/www/diagnospymes/static/'
+
 # When a user logs in or logs out, redirect to home page
 LOGIN_REDIRECT_URL = '/'
 
@@ -140,7 +146,7 @@ BOOTSTRAP4 = {
     # Note that a URL can be either a string,
     # e.g. "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
     # or a dict like the default value below.
-    "css_url": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
+    "css_url": "/static/mm_evaluation/css/diagnospymes.css ",
 
     # The complete URL to the Bootstrap JavaScript file
     "javascript_url": {
@@ -150,7 +156,7 @@ BOOTSTRAP4 = {
     },
 
     # The complete URL to the Bootstrap CSS file (None means no theme)
-    "theme_url": None,
+    "theme_url": "/static/mm_evaluation/css/bootstrap-slider.css",
 
     # The URL to the jQuery JavaScript file (full)
     "jquery_url": {
