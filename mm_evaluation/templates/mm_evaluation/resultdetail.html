@@ -5,6 +5,23 @@
 
   {% load bootstrap4 %}
   {% bootstrap_css %}
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("select").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".box").not("." + optionValue).hide();
+                $("." + optionValue).show();
+            } else{
+                $(".box").hide();
+            }
+        });
+    }).change();
+});
+</script>
 </head>
 
 <body style="background-color:honeydew;">
@@ -12,18 +29,47 @@
    <h1 class="bg-info">Autoevaluación del {{autoevaluation.last_time_edition}}</h1>
    <h4>Puntaje final: {{autoevaluation.final_score}}</h4>
    </div>
-</body>
 
-{% if graph %}
-<div class="container-fluid" style="width:600;height:500">
-  {{ graph|safe }}
-</div>
-<body>
-  <p>   </p>
-</body>
-{% endif %}
+  <div>
+        <select>
+            <option value="spider">Telaraña</option>
+            <option value="bar">Barra</option>
+            <option value="scatter">Linea</option>
+        </select>
+    </div>
+    <div class="spider box">Gráfica de telaraña con tus resultados:
+      {% if spider_graph %}
+      <div class="container-fluid" style="width:600;height:500">
+        {{ spider_graph|safe }}
+      </div>
+      <body>
+        <p>   </p>
+      </body>
+      {% endif %}
+    </div>
+    <div class="bar box">Gráfica de barras con tus resultados:
+      {% if bar_graph %}
+      <div class="container-fluid" style="width:600;height:500">
+        {{ bar_graph|safe }}
+      </div>
+      <body>
+        <p>   </p>
+      </body>
+      {% endif %}
+    </div>
+    <div class="scatter box">Gráfica de lineas con tus resultados:
+      {% if line_graph %}
+      <div class="container-fluid" style="width:600;height:500">
+        {{ line_graph|safe }}
+      </div>
+      <body>
+        <p>   </p>
+      </body>
+      {% endif %}
+    </div>
 
-<body style="background-color:honeydew;">
+    
+
   <div class = "container-fluid">
     <h1 class = "bg-info">Recomendaciones</h1>
     <h4>Su empresa se encuentra en nivel de madurez {{maturity_level.name}}</h4>
