@@ -4,8 +4,44 @@ from django.contrib.auth.models import User
 import django.forms as forms
 from django.utils.translation import gettext_lazy as _
 
-from .models import PYME
+from .models import PYME, FinancesInformation
 
+
+EMPLOYEES_NUMBER_CHOICES = [
+    "Igual o menos de 10 empleados",
+    "Entre 11 y 50 empleados",
+    "Entre 51 y 200 empleados",
+    "201 o mas empleados",
+    "No sabe/No conoce",
+]
+
+ASSETS_CHOICES = [
+    "Igual o inferior a 500 SMMLV",
+    "Entre 501 y 5000 SMMLV",
+    "Entre 5001 y 30000 SMMLV",
+    "Mas de 30000 SMMLV",
+    "No sabe/No conoce",
+]
+
+PRODUCTIVE_CONFIGURATION_CHOICES = [
+    "Por proyectos",
+    "Job Shop/Taller",
+    "Por lotes",
+    "Linea de ensamble acompasada por empleado",
+    "Linea de ensamble acompasada por maquina",
+    "Flujo continuo",
+    "Flexible",
+    "No sabe/No conoce",
+]
+
+INVENTORY_POLITICS_CHOICES = {
+    "MTS: prducir para inventario",
+    "MTO: producir bajo pedido",
+    "ATO: ensamblar bajo pedido",
+    "ETO: hacer ingenieria bajo pedido",
+    "PTO: pickear bajo pedido",
+    "CTO: configurar planta bajo pedido",
+}
 
 class PYMERegistrationForm(forms.ModelForm):
     """Form to create PYME information in registration form.
@@ -105,3 +141,66 @@ class UserRegistrationForm(UserCreationForm):
             "first_name": _("Nombres"),
             "last_name": _("Apellidos"),
         }
+
+
+class FinancesInformationForm(forms.ModelForm):
+    
+    class Meta:
+        model = FinancesInformation
+        fields = [
+            "pyme",
+            "employees_number",
+            "anual_income",
+            "assets",
+            "liabilities",
+            "monthly_production",
+            "productive_configuration",
+            "inventory_politics",
+            "main_product",
+            "main_competidor",
+            "patrimony",
+            "sales_income",
+            "gross_profits",
+            "net_profits",
+            "fixed_costs_expences",
+            "variable_costs_expences",
+            "ebitda",
+        ]
+        labels = {
+            "employees_number":_("Numero de empleados"),
+            "anual_income":_("Ingreso anual"),
+            "assets":_("Activos"),
+            "liabilities":_("Pasivos"),
+            "monthly_production":_("Producción mensual"),
+            "productive_configuration":_("Configuración productiva"),
+            "inventory_politics":_("Politicas de inventario"),
+            "main_product":_("Producto principal"),
+            "main_copetidor":_("Competencia principal"),
+            "patrimony":_("Patrimonio"),
+            "sales_income":_("Ingresos de ventas"),
+            "gross_profits":_("Ganacia bruta"),
+            "net_profits":_("Ganacia neta"),
+            "fixed_costs_expences":_("Costos y gastos fijos"),
+            "variable_costs_expences":_("Costos y gastos varibales"),
+            "ebitda":_("ebitda"),
+        }
+
+        widgets = {
+            "employees_number": forms.Select(choices=EMPLOYEES_NUMBER_CHOICES),
+            "anual_income": forms.TextInput(attrs={'required':False}),
+            "assets": forms.Select(choices=ASSETS_CHOICES),
+            "liabilities": forms.TextInput(attrs={'required':False}),
+            "monthly_production": forms.TextInput(attrs={'required':False}),
+            "productive_configuration": forms.Select(choices=PRODUCTIVE_CONFIGURATION_CHOICES),
+            "inventory_politics":forms.Select(choices=INVENTORY_POLITICS_CHOICES),
+            "main_product": forms.TextInput(attrs={'required':False}),
+            "main_copetidor": forms.TextInput(attrs={'required':False}),
+            "patrimony": forms.TextInput(attrs={'required':False}),
+            "sales_income": forms.TextInput(attrs={'required':False}), 
+            "gross_profits": forms.TextInput(attrs={'required':False}),
+            "net_profits": forms.TextInput(attrs={'required':False}),
+            "fixed_costs_expences": forms.TextInput(attrs={'required':False}),
+            "variable_costs_expences":forms.TextInput(attrs={'required':False}),
+            "ebitda":forms.TextInput(attrs={'required':False}),
+        }
+    

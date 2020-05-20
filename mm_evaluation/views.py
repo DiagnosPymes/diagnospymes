@@ -18,7 +18,7 @@ from plotly.subplots import make_subplots
 
 import pandas as pd
 
-from .forms import PYMERegistrationForm, UserRegistrationForm
+from .forms import PYMERegistrationForm, UserRegistrationForm, FinancesInformationForm
 from .general_use_functions import *
 
 
@@ -30,6 +30,7 @@ from .models import (
     PYME,
     GeneralPractice,
     SpecificPractice,
+    FinancesInformation,
 )
 
 
@@ -961,3 +962,28 @@ class BenchmarkingAverageView(LoginRequiredMixin, DetailView):
         }
 
         return context
+
+
+class FinancesInformationView(LoginRequiredMixin, ListView):
+    # For use in LoginRequiredMixin
+    login_url = reverse_lazy("mm_evaluation:login")
+    permission_denied_message = (
+        "Debes ingresar a tu cuenta para responder la encuesta financiera."
+    )
+    model = FinancesInformation
+    template = "mm_evaluation/financesinformation.html"
+
+    def post(self, request, pyme_id):
+        pyme = get_object_or_404(PYME, pk=pyme_id)
+        FinancesFormSet = modelformset_factory(FinancesInformation, form=FinancesInformationForm)
+        formset = FinancesFormSet(initial={'pyme': pyme_id})
+        if request.method == 'POST':
+            formset = FinancesFormSet(request.POST)
+            if formset.is_valid():
+                formset.save()
+        else:
+            formset = FinancesFormSet()
+
+        return render(request, 'financesinformation.html', {'formset':formset})
+                
+        
