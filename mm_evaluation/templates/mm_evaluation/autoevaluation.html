@@ -26,26 +26,26 @@
             {% csrf_token %}
             {% for macroprocess in macroprocesses_list %}
             <div class="row justify-content-center align-items-center">
-                <h1>{{macroprocess.number }}. {{ macroprocess.name }}</h1>
+                <h1>{{ macroprocess.name }}</h1>
             </div>
             <div class="row d-flex justify-content-center">
                 <div class="accordion" id="accordion">
                     {% for process in macroprocess.process_set.all %}
                     <div class="card">
                         <div class="card-header" id="heading{{process.id}}">
-                            <h3 class="mb-0">
+                            <h3 class="mb-0 text-center">
                                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{process.id}}" aria-expanded="true" aria-controls="collapse{{process.id}}">
                                     {{ process.id }}. {{ process.name }}
                                 </button>
                             </h3>
                         </div>
-                        <div id="collapse{{process.id}}" class="collapse show" aria-labelledby="heading{{process.id}}" data-parent="#accordion">
+                        <div id="collapse{{process.id}}" class="collapse hide" aria-labelledby="heading{{process.id}}" data-parent="#accordion">
                             <div class="card-body">
                                 <p class="card-text text-center">
                                 {{ process.guiding_question }}<br>
                                 </p>
                                 <div class="card-text text-center">
-                                    <div id = "test" style="position: relative; margin-left: 0px">
+                                    <div id = "emojis" style="position: relative; margin-left: 0px">
                                         <span title="{{ process.sorted_specificpractices.0.description }}" style="color:#ff2a00; margin-left: 0px">
                                             {% fa5_icon 'frown' size='fa-2x' %}
                                         </span>
@@ -71,15 +71,33 @@
                                         name="score_{{ process.id }}"
                                         data-provide="slider"
                                         data-slider-ticks="[0, 1, 2, 3, 4, 5]"
-                                        data-slider-ticks-labels='["0", "1", "2", "3", "4", "5"]'
                                         data-slider-min="0"
                                         data-slider-max="5"
                                         data-slider-step="1"
                                         data-slider-value="2"
                                         data-slider-tooltip="hide"
                                         >
+                                        <div id = "numbers{{ process.id }}" style="position: relative; margin-left: 4px">
+                                        <span title="{{ process.sorted_specificpractices.0.description }}" style="margin-left: 0px">
+                                            0
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.1.description }}" style="margin-left: 32px">
+                                            1
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.2.description }}" style="margin-left: 32px">
+                                            2
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.3.description }}" style="margin-left: 30px">
+                                            3
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.4.description }}" style="margin-left: 30px">
+                                            4
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.5.description }}" style="margin-left: 30px">
+                                            5
+                                        </span>
+                                    </div>
                                 </div>
-                                    <div class="w-100"></div>
                             </div>
                         </div>
                     </div>
@@ -103,13 +121,6 @@
         </form>
         {% fontawesome_5_static %}
     </body>
-    <div class="col d-flex justify-content-center">
-        <div class="pagination">
-            <span class="step-links">
-                {% bootstrap_pagination page_obj url="?page=1" size="large" %}
-            </span>
-        </div>
-    </div>
 </div>
 <script type="text/javascript" src="{% static 'mm_evaluation/js/bootstrap-slider.js' %}"></script>
 
