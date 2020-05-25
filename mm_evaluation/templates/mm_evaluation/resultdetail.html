@@ -1,40 +1,54 @@
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=devicewidth, initial-scale=1, shrink-to-fit=no">
-  <title> Detalle </title>
+{% extends 'mm_evaluation/base.html' %}
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title> Resultados </title>
 
-  {% load bootstrap4 %}
-  {% bootstrap_css %}
-</head>
+    {% load bootstrap4 %}
+    {% load fontawesome_5 %}
+    {% load static %}
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+    <style>
+      .slider.slider-horizontal .tooltip.tooltip-main.in,
+      .slider.slider-vertical .tooltip.tooltip-main.in { opacity: 1 !important; }
+    </style>
+    <!-- Our Custom CSS -->
+    <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
+  </head>
 
-<body style="background-color:honeydew;">
-   <div class="container-fluid">
-   <h1 class="bg-info">Autoevaluación del {{autoevaluation.last_time_edition}}</h1>
-   <h4>Puntaje final: {{autoevaluation.final_score}}</h4>
-   </div>
-</body>
+  {% block content %}
+  <div>
+    <body>
+      <h1>Autoevaluación del {{autoevaluation.last_time_edition}}</h1>
+      <h4>Puntaje final: {{autoevaluation.final_score}}</h4>
+  </div>
 
-{% if graph %}
-<div class="container-fluid" style="width:600;height:500">
-  {{ graph|safe }}
-</div>
-<body>
-  <p>   </p>
-</body>
-{% endif %}
+  {% if graph %}
+  <div class="container-fluid">
+    {{ graph|safe }}
+  </div><br>
+  {% endif %}
 
-<body style="background-color:honeydew;">
-  <div class = "container-fluid">
-    <h1 class = "bg-info">Recomendaciones</h1>
+  <div>
+    <h1>Recomendaciones</h1>
     <h4>Su empresa se encuentra en nivel de madurez {{maturity_level.name}}</h4>
     <p>Su macroproceso mas debil es {{ lowest_macroprocess.name }}</p>
-    <p>Para llegar al siguiente nivel deberias poder describirte así: {{ general_recommendation.description }}</p>
-    <ul>
-      {% if all_macroprocesses %}
-        {% for macroprocess in all_macroprocesses %}
-           <a href="{% url 'mm_evaluation:specific_recommendations' current_autoev.id macroprocess.id %}" class="btn btn-success bt-lg active btn-group-justified" role="button">{{ macroprocess.name }}</a>
-        {% endfor %}
-      {% endif %}
+    <p>Para llegar al siguiente nivel deberias poder describirte así: {{ general_recommendation.description }}</p><br>
+    <ul class="list-group list-group-green">
+      <div class="center-buttons">
+	{% if all_macroprocesses %}
+	{% for macroprocess in all_macroprocesses %}
+        <a href="{% url 'mm_evaluation:specific_recommendations' current_autoev.id macroprocess.id %}" class="list-group-item list-group-item-action" role="button">{{ macroprocess.name }}</a><br>
+	{% endfor %}
+	{% endif %}
+      </div>
   </div>
 </body>
-
+{% endblock%}
+</html>

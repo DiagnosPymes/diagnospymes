@@ -1,148 +1,119 @@
+<!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html>
     <head>
-        <style>
-/* Add a black background color to the top navigation */
-.topnav {
-    background-color: #4CAF50;
-    overflow: hidden;
-    margin-left: 60px;
-}
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
 
-     .topnav a {
-         float: left;
-         color: #f2f2f2;
-         text-align: center;
-         padding: 14px 16px;
-         text-decoration: none;
-         font-size: 17px;
-     }
-
-     .topnav a:hover {
-         background-color: #C6E170;
-         color: black;
-     }
-
-     .topnav a.active {
-         background-color: #1C344E;
-         color: ;
-     }
-
-     .sidenav {
-         height: 100%;
-         width: 180px;
-         position: fixed;
-         z-index: 1;
-         top: 0;
-         left: 0;
-         background-color: #C6E170;
-         overflow-x: hidden;
-         padding-top: 20px;
-     }
-
-     .sidenav a {
-         padding: 6px 8px 6px 16px;
-         text-decoration: none;
-         font-size: 25px;
-         color: white;
-         display: block;
-     }
-
-     .sidenav a:hover {
-         color: #92C46D;
-     }
-
-     @media screen and (max-height: 450px) {
-         .sidenav {padding-top: 15px;}
-         .sidenav a {font-size: 18px;}
-     }
-
-     .main {
-         margin-left: 60px; /* Same as the width of the sidenav */
-         font-size: 28px; /* Increased text to enable scrolling */
-         padding: 0px 10px;
-     }
-
-     .main h1 {
-         color: lightseagreen;
-         font-family: 'Ubuntu Condensed', sans-serif;
-         font-size: 200%;
-
-     }
-
-     .content {
-         margin-left: 90px;
-     }
-
-     .content h2 {
-         color: lightseagreen;
-         font-family: 'Ubuntu Condensed', sans-serif;
-         font-size: 150%;
-
-     }
-
-     .content h1 {
-         color: #15BFF0;
-         font-family: 'Ubuntu Condensed', sans-serif;
-         font-size: 250%;
-	 margin-left: 80px;
-	 text-align: center;
-     }
-
-     .content p {
-         color: black;
-         font-family: 'Ubuntu Condensed', sans-serif;
-         font-size: 100%;
-     }
-
-     .list-group-macroprocess .list-group-item {
-	 background-color:#7de8dc;
-	 border-top: #7de8dc;
-	 border-left-color: #7de8dc;
-	 border-right-color: #7de8dc;
-	 border-radius: 15px;
-	 text-align: center;
-     }
-
-     .list-group-macroprocess .list-group-item:hover {
-	 background-color: #20b3a1;
-     }
-        </style>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Ubuntu+Condensed&display=swap" rel="stylesheet">
+        <!--<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Ubuntu+Condensed&display=swap" rel="stylesheet">-->
         {% load bootstrap4 %}
         {% load fontawesome_5 %}
         {% load static %}
         {# Load CSS and JavaScript #}
         {% bootstrap_css %}
         {% bootstrap_javascript jquery='full' %}
-        <script type="text/javascript" src="{% static 'mm_evaluation/js/bootstrap-slider.js' %}"></script>
         {# Display django.contrib.messages as Bootstrap alerts #}
         {% bootstrap_messages %}
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
-            .slider.slider-horizontal .tooltip.tooltip-main.in,
-            .slider.slider-vertical .tooltip.tooltip-main.in { opacity: 1 !important; }
+.slider.slider-horizontal .tooltip.tooltip-main.in,
+.slider.slider-vertical .tooltip.tooltip-main.in { opacity: 1 !important; }
         </style>
-    </head>
+        <!-- Our Custom CSS -->
+        <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
 
-    <body style="background-color:honeydew;">
-        <div class="sidenav">
-            <a href="{% url 'mm_evaluation:index' %}">Inicio</a>
-            <a href="{% url 'mm_evaluation:login' %}">Login</a>
-            <a href="{% url 'mm_evaluation:registration' %}">Registro</a>
-            <a href="{% url 'mm_evaluation:begin_or_continue_autoevaluation' %}">Diagnosticar</a>
-            <a href="{% url 'mm_evaluation:results' %}">Resultados</a>
-            <a href="{% url 'mm_evaluation:benchmarking' %}">Benchmarking</a>
-            <a href="{% url 'mm_evaluation:resources' %}">Recursos</a>
-            <a href="{% url 'mm_evaluation:us' %}">Acerca de nosotros</a>
-            <a href="{% url 'mm_evaluation:password_change' %}">Cambiar contraseña</a>
-            <a href="{% url 'mm_evaluation:logout' %}">Logout</a>
-        </div>
-        <div class="content">
-            <div class="col-md-12">
+    </head>
+    <body>
+        <div class="wrapper">
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>DiagnosPYMES</h3>
+                </div>
+                <ul class="list-unstyled components">
+                    <li class="active">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Inicio</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li>
+                                <a href="{% url 'mm_evaluation:index' %}">¿Quiénes somos?</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'mm_evaluation:mission' %}">Misión</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'mm_evaluation:vision' %}">Visión</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'mm_evaluation:methodology' %}">Metodología</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'mm_evaluation:requirements' %}">Requisitos</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'mm_evaluation:instructions' %}">Instructivo</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'mm_evaluation:resources' %}">Recursos</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'mm_evaluation:us' %}">Acerca de nosotros</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'mm_evaluation:begin_or_continue_autoevaluation' %}">Diagnosticar</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'mm_evaluation:results' %}">Resultados</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'mm_evaluation:benchmarking' %}">Benchmarking</a>
+                    </li>
+                </ul>
+            </nav>
+            <div id="content">
+                <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+
+                        <button type="button" id="sidebarCollapse" class="navbar-btn">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fas fa-align-justify"></i>
+                        </button>
+                        <!--<img src="{% static 'mm_evaluation/Logo.png' %}" alt="DiagnosPYMES" width="150" height="60">-->
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="nav navbar-nav ml-auto">
+                                {% if user.is_authenticated %}
+                                <a class="btn btn-outline-secondary  disabled" role="button">Usuario: {{ user.username }}</a>
+                                <a class="btn btn-outline-secondary " href="{% url 'mm_evaluation:password_change' %}" role="button">Cambiar contraseña</a>
+                                <a class="btn btn-outline-fourth " href="{% url 'mm_evaluation:logout' %}" role="button">Logout</a>
+                                {% else %}
+                                <a class="btn btn-outline-fourth" href="{% url 'mm_evaluation:login' %}">Ingresar</a>
+                                <a class="btn btn-outline-fourth" href="{% url 'mm_evaluation:registration' %}">Registrarse</a>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
                 {% block content %}
                 {% endblock %}
             </div>
         </div>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                    $(this).toggleClass('active');
+                });
+            });
+        </script>
     </body>
 </html>
+<!--
+-->
