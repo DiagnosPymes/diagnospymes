@@ -86,5 +86,5 @@ urlpatterns = [
         views.BenchmarkingAverageView.as_view(),
         name="benchmarkingAverage",
     ),
-    path("<int:pyme:id>/informacionfinanciera", views.FinancesInformationView.as_view(), name="financesInformation")
+    path("informacionfinanciera/", views.FinancesInformationView.as_view(), name="financesInformation")
 ]

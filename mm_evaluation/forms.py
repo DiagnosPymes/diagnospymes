@@ -1,47 +1,12 @@
+
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 import django.forms as forms
 from django.utils.translation import gettext_lazy as _
 
-from .models import PYME, FinancesInformation
+from .models import PYME, FinancesInformation, VALID_EMPLOYEES_NUMBER, VALID_ASSETS, VALID_PRODUCTIVE_CONFIGURATION, VALID_INVENTORY_POLITICS
 
-
-EMPLOYEES_NUMBER_CHOICES = [
-    "Igual o menos de 10 empleados",
-    "Entre 11 y 50 empleados",
-    "Entre 51 y 200 empleados",
-    "201 o mas empleados",
-    "No sabe/No conoce",
-]
-
-ASSETS_CHOICES = [
-    "Igual o inferior a 500 SMMLV",
-    "Entre 501 y 5000 SMMLV",
-    "Entre 5001 y 30000 SMMLV",
-    "Mas de 30000 SMMLV",
-    "No sabe/No conoce",
-]
-
-PRODUCTIVE_CONFIGURATION_CHOICES = [
-    "Por proyectos",
-    "Job Shop/Taller",
-    "Por lotes",
-    "Linea de ensamble acompasada por empleado",
-    "Linea de ensamble acompasada por maquina",
-    "Flujo continuo",
-    "Flexible",
-    "No sabe/No conoce",
-]
-
-INVENTORY_POLITICS_CHOICES = {
-    "MTS: prducir para inventario",
-    "MTO: producir bajo pedido",
-    "ATO: ensamblar bajo pedido",
-    "ETO: hacer ingenieria bajo pedido",
-    "PTO: pickear bajo pedido",
-    "CTO: configurar planta bajo pedido",
-}
 
 class PYMERegistrationForm(forms.ModelForm):
     """Form to create PYME information in registration form.
@@ -148,7 +113,6 @@ class FinancesInformationForm(forms.ModelForm):
     class Meta:
         model = FinancesInformation
         fields = [
-            "pyme",
             "employees_number",
             "anual_income",
             "assets",
@@ -164,8 +128,27 @@ class FinancesInformationForm(forms.ModelForm):
             "net_profits",
             "fixed_costs_expences",
             "variable_costs_expences",
-            "ebitda",
+            "ebitda"
         ]
+
+        widgets = {
+            "employees_number": forms.Select(choices=VALID_EMPLOYEES_NUMBER),
+            "anual_income": forms.TextInput(attrs={'required':False}),
+            "assets": forms.Select(choices=VALID_ASSETS),
+            "liabilities": forms.TextInput(attrs={'required':False}),
+            "monthly_production": forms.TextInput(attrs={'required':False}),
+            "productive_configuration": forms.Select(choices=VALID_PRODUCTIVE_CONFIGURATION),
+            "inventory_politics":forms.Select(choices=VALID_INVENTORY_POLITICS),
+            "main_product": forms.TextInput(attrs={'required':False}),
+            "main_copetidor": forms.TextInput(attrs={'required':False}),
+            "patrimony": forms.TextInput(attrs={'required':False}),
+            "sales_income": forms.TextInput(attrs={'required':False}), 
+            "gross_profits": forms.TextInput(attrs={'required':False}),
+            "net_profits": forms.TextInput(attrs={'required':False}),
+            "fixed_costs_expences": forms.TextInput(attrs={'required':False}),
+            "variable_costs_expences":forms.TextInput(attrs={'required':False}),
+            "ebitda":forms.TextInput(attrs={'required':False}),
+        }
         labels = {
             "employees_number":_("Numero de empleados"),
             "anual_income":_("Ingreso anual"),
@@ -185,22 +168,5 @@ class FinancesInformationForm(forms.ModelForm):
             "ebitda":_("ebitda"),
         }
 
-        widgets = {
-            "employees_number": forms.Select(choices=EMPLOYEES_NUMBER_CHOICES),
-            "anual_income": forms.TextInput(attrs={'required':False}),
-            "assets": forms.Select(choices=ASSETS_CHOICES),
-            "liabilities": forms.TextInput(attrs={'required':False}),
-            "monthly_production": forms.TextInput(attrs={'required':False}),
-            "productive_configuration": forms.Select(choices=PRODUCTIVE_CONFIGURATION_CHOICES),
-            "inventory_politics":forms.Select(choices=INVENTORY_POLITICS_CHOICES),
-            "main_product": forms.TextInput(attrs={'required':False}),
-            "main_copetidor": forms.TextInput(attrs={'required':False}),
-            "patrimony": forms.TextInput(attrs={'required':False}),
-            "sales_income": forms.TextInput(attrs={'required':False}), 
-            "gross_profits": forms.TextInput(attrs={'required':False}),
-            "net_profits": forms.TextInput(attrs={'required':False}),
-            "fixed_costs_expences": forms.TextInput(attrs={'required':False}),
-            "variable_costs_expences":forms.TextInput(attrs={'required':False}),
-            "ebitda":forms.TextInput(attrs={'required':False}),
-        }
+
     

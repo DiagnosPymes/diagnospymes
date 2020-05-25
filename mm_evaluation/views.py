@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.views.generic import DetailView, ListView, View
+from django.views.generic import DetailView, ListView, View, CreateView
 from django.views.generic.base import TemplateView
 
 import plotly.graph_objs as go
@@ -964,26 +964,25 @@ class BenchmarkingAverageView(LoginRequiredMixin, DetailView):
         return context
 
 
-class FinancesInformationView(LoginRequiredMixin, ListView):
+class FinancesInformationView(LoginRequiredMixin, CreateView):
     # For use in LoginRequiredMixin
     login_url = reverse_lazy("mm_evaluation:login")
     permission_denied_message = (
         "Debes ingresar a tu cuenta para responder la encuesta financiera."
     )
     model = FinancesInformation
-    template = "mm_evaluation/financesinformation.html"
+    template_name = "mm_evaluation/financesinformation.html"
+    form_class = FinancesInformationForm
 
-    def post(self, request, pyme_id):
-        pyme = get_object_or_404(PYME, pk=pyme_id)
-        FinancesFormSet = modelformset_factory(FinancesInformation, form=FinancesInformationForm)
-        formset = FinancesFormSet(initial={'pyme': pyme_id})
+    def finances_information(self, request):
+        self.pyme = get_object_or_404(PYME, user=self.request.user)
+        pyme_finances = get_object_or_404(FinancesInformation, id=self.pyme)
+        finances_form = FinancesInformationForm(initial=[{'pyme': self.pyme}])
         if request.method == 'POST':
-            formset = FinancesFormSet(request.POST)
-            if formset.is_valid():
-                formset.save()
-        else:
-            formset = FinancesFormSet()
-
-        return render(request, 'financesinformation.html', {'formset':formset})
-                
+            finances_form = FinancesInformationForm(request.POST, instance=pyme_finances)
+            if finances_form.is_valid():
+                finances_form.save()
+            
+        context = {'form': finances_form}
+        return render(request, 'mm_evaluation/financesinformation.html', context)
         
