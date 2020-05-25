@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import socket
+
+HOSTNAME = socket.gethostname()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -79,6 +81,7 @@ WSGI_APPLICATION = 'diagnospymes.wsgi.application'
 DB = os.environ['DIAGNOSPYMES_DB']
 DB_USER = os.environ['DIAGNOSPYMES_USER']
 DB_PASS = os.environ['DIAGNOSPYMES_USER_PASSWORD']
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -129,8 +132,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_URL = '/static/'
 
-# The absolute path to the directory where collectstatic will collect static files for deployment.
-STATIC_ROOT = '/var/www/diagnospymes/static/'
+if HOSTNAME == 'diagnospymes':
+    STATIC_ROOT = '/var/www/diagnospymes/static/'
 
 # When a user logs in or logs out, redirect to home page
 LOGIN_REDIRECT_URL = '/'

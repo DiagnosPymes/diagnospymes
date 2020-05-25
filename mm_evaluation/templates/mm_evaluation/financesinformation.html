@@ -1,3 +1,4 @@
+
 <head>
     {% load bootstrap4 %}
     {% load static %}
@@ -18,14 +19,14 @@
 <br><br>  
 <div class="container"
      <div class="row justify-content-center">
-       <div class="col-lg-6 justify-content-center">
+       <div class="col-lg-7 justify-content-center">
 	 <div class="card bg-light">
 	   <header class="card-header">
 	     <a href="{% url 'mm_evaluation:index' %}" class="float-right btn btn-outline-primary mt-1">Omitir</a>
 	     <h4 class="card-title mt-2">Información financiera</h4>
 	   </header>
 	   <article class="card-body">
-	     <form>
+	     <form method='post'>
 	       {% csrf_token %}
 	       <div class="col form-group">
 		 {{ form.as_p }}

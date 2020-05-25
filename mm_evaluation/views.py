@@ -974,10 +974,10 @@ class FinancesInformationView(LoginRequiredMixin, CreateView):
     template_name = "mm_evaluation/financesinformation.html"
     form_class = FinancesInformationForm
 
-    def finances_information(self, request):
+    def post(self, request):
         self.pyme = get_object_or_404(PYME, user=self.request.user)
-        pyme_finances = get_object_or_404(FinancesInformation, id=self.pyme)
-        finances_form = FinancesInformationForm(initial=[{'pyme': self.pyme}])
+        pyme_finances = get_object_or_404(FinancesInformation, id=self.pyme.id)
+        finances_form = FinancesInformationForm(initial={'pyme': self.pyme.id}, instance=pyme_finances)
         if request.method == 'POST':
             finances_form = FinancesInformationForm(request.POST, instance=pyme_finances)
             if finances_form.is_valid():
