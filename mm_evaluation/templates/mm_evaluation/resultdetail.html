@@ -23,21 +23,21 @@
             <option value="scatter">Gráfica de lineas con tus resultados</option>
         </select>
         <br>
-        <div class="spider box">
+        <div class="spider box" style="width:90%;height:700;">
             {% if spider_graph %}
             <div class="container-fluid">
                 {{ spider_graph|safe }}
             </div>
             {% endif %}
         </div>
-        <div class="bar box">
+        <div class="bar box" style="width:90%;height:700;">
             {% if bar_graph %}
             <div class="container-fluid">
                 {{ bar_graph|safe }}
             </div>
             {% endif %}
         </div>
-        <div class="scatter box">
+        <div class="scatter box" style="width:90%;height:700;">
             {% if line_graph %}
             <div class="container-fluid">
                 {{ line_graph|safe }}
@@ -45,7 +45,6 @@
             {% endif %}
         </div>
         <br>
-
         <div>
             <h1>Recomendaciones</h1>
             <p>Su macroproceso más débil es {{ lowest_macroprocess.name }}</p>
