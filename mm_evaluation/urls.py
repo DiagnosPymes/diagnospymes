@@ -86,5 +86,6 @@ urlpatterns = [
         views.BenchmarkingAverageView.as_view(),
         name="benchmarkingAverage",
     ),
+    path("informacionfinanciera/", views.FinancesInformationView.as_view(), name="financesInformation")
 ]
 

@@ -10,29 +10,33 @@
 </head>
 
 {% block content %}
-<div class='content'>
-    {% block title %}<title>Login</title>{% endblock %}
-    {% if form.errors %}
-    {% bootstrap_alert "Tu usuario o tu contraseña son <strong>incorrectos</strong>, por favor intenta de nuevo." alert_type='danger' %}
-    {% endif %}
+{% block title %}<title>Login</title>{% endblock %}
+{% if form.errors %}
+{% bootstrap_alert "Tu usuario o tu contraseña son <strong>incorrectos</strong>, por favor intenta de nuevo." alert_type='danger' %}
+{% endif %}
 
-    {% if next %}
-    {% if user.is_authenticated %}
-    {% bootstrap_alert "Tu cuenta no tiene acceso a esta página, por favor acceda con una cuenta que lo tenga." alert_type='danger' %}
-    {% else %}
-    {% bootstrap_alert "Ingresa con tu cuenta para ver esta página." alert_type='danger' %}
-    {% endif %}
-    {% endif %}
+{% if next %}
+{% if user.is_authenticated %}
+{% bootstrap_alert "Tu cuenta no tiene acceso a esta página, por favor acceda con una cuenta que lo tenga." alert_type='danger' %}
+{% else %}
+{% bootstrap_alert "Ingresa con tu cuenta para ver esta página." alert_type='danger' %}
+{% endif %}
+{% endif %}
 
-    <h1>Login</h1>
-
-    <form method="post" action="{% url 'mm_evaluation:login' %}">
-        {% csrf_token %}
-        {% bootstrap_field form.username show_label=False field_class='col-md-4' %}
-        {% bootstrap_field form.password show_label=False field_class='col-md-4' %}
-
-        {% bootstrap_button content='Ingresar' %}
-        <input type="hidden" name="next" value="{{ next }}">
-    </form>
+<div class="col d-flex justify-content-center">
+    <div class="card text-center w-70">
+        <div class="card-header">
+            <h1 class="card-title">Login</h1>
+        </div>
+        <div class="card-body">
+            <form method="post" action="{% url 'mm_evaluation:login' %}">
+                {% csrf_token %}
+                {% bootstrap_field form.username show_label=False field_class='card-text' %}
+                {% bootstrap_field form.password show_label=False field_class='card-text' %}
+                {% bootstrap_button content='Ingresar' button_class='btn-fourth' %}
+                <input type="hidden" name="next" value="{{ next }}">
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

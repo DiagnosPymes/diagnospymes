@@ -43,6 +43,46 @@ VALID_EDUCATION_LEVEL = [
         ]
 """Valid education level for PYME's contact."""
 
+VALID_EMPLOYEES_NUMBER = [
+    ("<=10","Igual o menos de 10 empleados"),
+    ("11-50","Entre 11 y 50 empleados"),
+    ("51-200","Entre 51 y 200 empleados"),
+    (">201","201 o mas empleados"),
+    ("NS","No sabe/No conoce")
+]
+"""Valid Employees number for finances information"""
+
+VALID_ASSETS = [
+    ("<=500","Igual o inferior a 500 SMMLV"),
+    ("501-500","Entre 501 y 5000 SMMLV"),
+    ("5001-3000","Entre 5001 y 30000 SMMLV"),
+    (">3000","Mas de 30000 SMMLV"),
+    ("NS","No sabe/No conoce")
+]
+"""Valid Assets for finances information"""
+
+VALID_PRODUCTIVE_CONFIGURATION = [
+    ("PP","Por proyectos"),
+    ("JS","Job Shop/Taller"),
+    ("PL","Por lotes"),
+    ("LEAE","Linea de ensamble acompasada por empleado"),
+    ("LEAM","Linea de ensamble acompasada por maquina"),
+    ("FC","Flujo continuo"),
+    ("F","Flexible"),
+    ("NS","No sabe/No conoce")
+]
+"""Valid Productive configuration for finances information"""
+
+VALID_INVENTORY_POLITICS = [
+    ("MTS","MTS: producir para inventario"),
+    ("MTO","MTO: producir bajo pedido"),
+    ("ATO","ATO: ensamblar bajo pedido"),
+    ("ETO","ETO: hacer ingenieria bajo pedido"),
+    ("PTO","PTO: pickear bajo pedido"),
+    ("CTO","CTO: configurar planta bajo pedido"),
+]
+"""Valid inventory politics for finances information"""
+
 class Sector(models.Model):
     """Sector is the abstraction for economic sectors.
 
@@ -332,23 +372,24 @@ class FinancesInformation(models.Model):
         ebitda (models.IntegerField):is the EBITDA of the company
 
     """
-    pyme                     = models.ForeignKey(PYME,on_delete=models.CASCADE)
-    employees_number         = models.IntegerField()
-    anual_income             = models.BigIntegerField()
-    assets                   = models.BigIntegerField()
-    liabilities              = models.IntegerField()
-    monthly_production       = models.BigIntegerField()
-    productive_configuration = models.CharField(max_length=300)
-    inventory_politics       = models.CharField(max_length=100)
-    main_product             = models.CharField(max_length=30)
-    main_competidor          = models.CharField(max_length=30)
-    patrimony                = models.BigIntegerField()
-    sales_income             = models.BigIntegerField()
-    gross_profits            = models.BigIntegerField()
-    net_profits              = models.BigIntegerField()
-    fixed_costs_expences     = models.BigIntegerField()
-    variable_costs_expences  = models.BigIntegerField()
-    ebitda                   = models.IntegerField()
+    
+    pyme                     = models.ForeignKey(PYME, on_delete=models.CASCADE)
+    employees_number         = models.CharField(max_length=100, choices=VALID_EMPLOYEES_NUMBER, null=True, blank=True)
+    anual_income             = models.BigIntegerField(null=True, blank=True)
+    assets                   = models.CharField(max_length=100, choices=VALID_ASSETS, null=True, blank=True)
+    liabilities              = models.IntegerField(null=True, blank=True)
+    monthly_production       = models.BigIntegerField(null=True, blank=True)
+    productive_configuration = models.CharField(max_length=100, choices=VALID_PRODUCTIVE_CONFIGURATION, null=True, blank=True)
+    inventory_politics       = models.CharField(max_length=100, choices=VALID_INVENTORY_POLITICS, null=True, blank=True)
+    main_product             = models.CharField(max_length=30, null=True, blank=True)
+    main_competidor          = models.CharField(max_length=30, null=True, blank=True)
+    patrimony                = models.BigIntegerField(null=True, blank=True)
+    sales_income             = models.BigIntegerField(null=True, blank=True)
+    gross_profits            = models.BigIntegerField(null=True, blank=True)
+    net_profits              = models.BigIntegerField(null=True, blank=True)
+    fixed_costs_expences     = models.BigIntegerField(null=True, blank=True)
+    variable_costs_expences  = models.BigIntegerField(null=True, blank=True)
+    ebitda                   = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return 'Finances information from {}'.format(self.pyme.name)

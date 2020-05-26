@@ -1,34 +1,34 @@
+{% extends 'mm_evaluation/base.html' %}
+
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=devicewidth, initial-scale=1, shrink-to-fit=no">
-  <title> Detalle </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title> Resultados </title>
 
-  {% load bootstrap4 %}
-  {% bootstrap_css %}
-
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script>
-$(document).ready(function(){
-    $("select").change(function(){
-        $(this).find("option:selected").each(function(){
-            var optionValue = $(this).attr("value");
-            if(optionValue){
-                $(".box").not("." + optionValue).hide();
-                $("." + optionValue).show();
-            } else{
-                $(".box").hide();
-            }
-        });
-    }).change();
-});
-</script>
+    {% load bootstrap4 %}
+    {% load fontawesome_5 %}
+    {% load static %}
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+    <style>
+      .slider.slider-horizontal .tooltip.tooltip-main.in,
+      .slider.slider-vertical .tooltip.tooltip-main.in { opacity: 1 !important; }
+    </style>
+    <!-- Our Custom CSS -->
+    <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
+    
 </head>
 
-<body style="background-color:honeydew;">
-   <div class="container-fluid">
-   <h1 class="bg-info">Autoevaluación del {{autoevaluation.last_time_edition}}</h1>
-   <h4>Puntaje final: {{autoevaluation.final_score}}</h4>
-   </div>
+  {% block content %}
+    <body>
+      <h1>Autoevaluación del {{autoevaluation.last_time_edition}}</h1>
+      <h4 style="text-align: center">Su empresa se encuentra en nivel de madurez {{maturity_level.name}}</h4>
+      <h4>Puntaje final: {{autoevaluation.final_score}}</h4>
 
   <div>
         <select>
@@ -68,19 +68,39 @@ $(document).ready(function(){
       {% endif %}
     </div>
 
-    
-
-  <div class = "container-fluid">
-    <h1 class = "bg-info">Recomendaciones</h1>
-    <h4>Su empresa se encuentra en nivel de madurez {{maturity_level.name}}</h4>
+  <div>
+    <h1>Recomendaciones</h1>
     <p>Su macroproceso mas debil es {{ lowest_macroprocess.name }}</p>
-    <p>Para llegar al siguiente nivel deberias poder describirte así: {{ general_recommendation.description }}</p>
-    <ul>
-      {% if all_macroprocesses %}
-        {% for macroprocess in all_macroprocesses %}
-           <a href="{% url 'mm_evaluation:specific_recommendations' current_autoev.id macroprocess.id %}" class="btn btn-success bt-lg active btn-group-justified" role="button">{{ macroprocess.name }}</a>
-        {% endfor %}
-      {% endif %}
-  </div>
-</body>
+    <p>Para llegar al siguiente nivel deberias poder describirte así: {{ general_recommendation.description }}</p><br>
+      <div class="center-buttons">
+    <ul class="list-group list-group-green">
+	{% if all_macroprocesses %}
+	{% for macroprocess in all_macroprocesses %}
+        <a href="{% url 'mm_evaluation:specific_recommendations' current_autoev.id macroprocess.id %}" class="btn btn-third" role="button">{{ macroprocess.name }}</a><br>
+	{% endfor %}
+	{% endif %}
+      </div>
+  </div>  
 
+
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script>
+    $(document).ready(function(){
+	$("select").change(function(){
+            $(this).find("option:selected").each(function(){
+		var optionValue = $(this).attr("value");
+		if(optionValue){
+                    $(".box").not("." + optionValue).hide();
+                    $("." + optionValue).show();
+		} else{
+                    $(".box").hide();
+		}
+            });
+	}).change();
+    });
+  </script>
+
+</body>
+{% endblock%}
+
+</html>
