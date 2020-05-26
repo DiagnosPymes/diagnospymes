@@ -956,6 +956,7 @@ def create_bar_graph(x, y):
         xaxis={"title": "Macroproceso"},
         yaxis={"title": "Resultado",
                "range": [0, 5]},
+        margin=dict(l=20, r=20, t=20, b=20),
     )
     fig = go.Figure(data=data, layout=layout)
     div = opy.plot(fig, auto_open=False, output_type="div")
@@ -975,6 +976,7 @@ def create_spider_graph(x, y):
                 range=[0, 5]
             ),
         ),
+        margin=dict(l=20, r=20, t=20, b=20),
         showlegend=False
     )
     div = opy.plot(fig, auto_open=False, output_type="div")
@@ -987,6 +989,7 @@ def create_line_graph(x, y):
         xaxis={"title": "Macroproceso"},
         yaxis={"title": "Resultado",
                "range": [0, 5]},
+        margin=dict(l=20, r=20, t=20, b=20),
     )
     fig = go.Figure(data=data, layout=layout)
     div = opy.plot(fig, auto_open=False, output_type="div")
