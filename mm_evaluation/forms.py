@@ -113,7 +113,6 @@ class FinancesInformationForm(forms.ModelForm):
     class Meta:
         model = FinancesInformation
         fields = [
-            "pyme",
             "employees_number",
             "anual_income",
             "assets",

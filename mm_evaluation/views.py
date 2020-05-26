@@ -976,13 +976,26 @@ class FinancesInformationView(LoginRequiredMixin, CreateView):
 
     def post(self, request):
         self.pyme = get_object_or_404(PYME, user=self.request.user)
-        pyme_finances = get_object_or_404(FinancesInformation, id=self.pyme.id)
-        finances_form = FinancesInformationForm(initial={'pyme': self.pyme.id}, instance=pyme_finances)
-        if request.method == 'POST':
-            finances_form = FinancesInformationForm(request.POST, instance=pyme_finances)
-            if finances_form.is_valid():
-                finances_form.save()
-            
+        if not FinancesInformation.objects.filter(pyme_id=self.pyme).count() == 0:
+            finances_form = FinancesInformationForm()
+            pyme_finances = get_object_or_404(FinancesInformation, pyme_id=self.pyme.id)
+            if request.method == 'POST':
+                finances_form = FinancesInformationForm(request.POST)
+                if finances_form.is_valid():
+                    finances_form = FinancesInformationForm(request.POST, instance=pyme_finances)
+
+                    finances_form.save()
+
+        else:
+            finances_form = FinancesInformationForm()
+            if request.method == 'POST':
+                finances_form = FinancesInformationForm(request.POST)
+                if finances_form.is_valid():
+                    FFORM = finances_form.save(commit=False)
+                    FFORM.pyme = self.pyme
+
+                    finances_form.save()
+                
         context = {'form': finances_form}
         return render(request, 'mm_evaluation/financesinformation.html', context)
         
