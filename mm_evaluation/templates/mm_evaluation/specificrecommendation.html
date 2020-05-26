@@ -1,23 +1,70 @@
+{% extends 'mm_evaluation/base.html' %}
+
+{% block content %}
+<html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=devicewidth, initial-scale=1, shrink-to-fit=no">
   <title> Recomendaciones </title>
+
   {% load bootstrap4 %}
-  {% bootstrap_css %}
+        {% load fontawesome_5 %}
+        {% load static %}
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+        <style>
+.slider.slider-horizontal .tooltip.tooltip-main.in,
+.slider.slider-vertical .tooltip.tooltip-main.in { opacity: 1 !important; }
+        </style>
+        <!-- Our Custom CSS -->
+        <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
+
 </head>
 
 <body style="background-color:honeydew;">
   <div class="container-fluid">
-    <h1 class="bg-info">{{ current_macroprocess.name }}</h1>
-    {% if graph %}
-    <div class="container-fluid" style="width:600;height:500">
-      {{ graph|safe }}
+    <h1>{{ current_macroprocess.name }}</h1>
+    <div>
+        <select>
+            <option value="spider">Telaraña</option>
+            <option value="bar">Barra</option>
+            <option value="scatter">Linea</option>
+        </select>
     </div>
-    <body>
-      <p>   </p>
-    </body>
-    {% endif %}
-    
+     <div class="spider box">Gráfica de telaraña con tus resultados:
+      {% if spider_graph %}
+      <div class="container-fluid" style="width:600;height:500">
+        {{ spider_graph|safe }}
+      </div>
+      <body>
+        <p>   </p>
+      </body>
+      {% endif %}
+     </div>
+      <div class="bar box">Gráfica de barras con tus resultados:
+      {% if bar_graph %}
+      <div class="container-fluid" style="width:600;height:500">
+        {{ bar_graph|safe }}
+      </div>
+      <body>
+        <p>   </p>
+      </body>
+      {% endif %}
+    </div>
+      <div class="scatter box">Gráfica de lineas con tus resultados:
+      {% if line_graph %}
+      <div class="container-fluid" style="width:600;height:500">
+        {{ line_graph|safe }}
+      </div>
+      <body>
+        <p>   </p>
+      </body>
+      {% endif %}
+    </div>
+
     {% if specific_recommendations %}
     {% for recommendation in specific_recommendations %}
     <ul class="list-group">
@@ -26,6 +73,23 @@
     {% endfor %}
     {% endif %}
   </div>
+  
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script>
+    $(document).ready(function(){
+	$("select").change(function(){
+            $(this).find("option:selected").each(function(){
+		var optionValue = $(this).attr("value");
+		if(optionValue){
+                    $(".box").not("." + optionValue).hide();
+                    $("." + optionValue).show();
+		} else{
+                    $(".box").hide();
+		}
+            });
+	}).change();
+    });
+  </script>
 </body>
-
-	
+{% endblock %}
+</html>	

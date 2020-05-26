@@ -1,6 +1,7 @@
 {% extends 'mm_evaluation/base.html' %}
+
 <html>
-  <head>
+<head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
@@ -20,7 +21,8 @@
     </style>
     <!-- Our Custom CSS -->
     <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
-  </head>
+    
+</head>
 
   {% block content %}
     <body>
@@ -28,11 +30,43 @@
       <h4 style="text-align: center">Su empresa se encuentra en nivel de madurez {{maturity_level.name}}</h4>
       <h4>Puntaje final: {{autoevaluation.final_score}}</h4>
 
-  {% if graph %}
-  <div class="container-fluid">
-    {{ graph|safe }}
-  </div><br>
-  {% endif %}
+  <div>
+        <select>
+            <option value="spider">Telaraña</option>
+            <option value="bar">Barra</option>
+            <option value="scatter">Linea</option>
+        </select>
+    </div>
+    <div class="spider box">Gráfica de telaraña con tus resultados:
+      {% if spider_graph %}
+      <div class="container-fluid" style="width:600;height:500">
+        {{ spider_graph|safe }}
+      </div>
+      <body>
+        <p>   </p>
+      </body>
+      {% endif %}
+    </div>
+    <div class="bar box">Gráfica de barras con tus resultados:
+      {% if bar_graph %}
+      <div class="container-fluid" style="width:600;height:500">
+        {{ bar_graph|safe }}
+      </div>
+      <body>
+        <p>   </p>
+      </body>
+      {% endif %}
+    </div>
+    <div class="scatter box">Gráfica de lineas con tus resultados:
+      {% if line_graph %}
+      <div class="container-fluid" style="width:600;height:500">
+        {{ line_graph|safe }}
+      </div>
+      <body>
+        <p>   </p>
+      </body>
+      {% endif %}
+    </div>
 
   <div>
     <h1>Recomendaciones</h1>
@@ -46,7 +80,27 @@
 	{% endfor %}
 	{% endif %}
       </div>
-  </div>
+  </div>  
+
+
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script>
+    $(document).ready(function(){
+	$("select").change(function(){
+            $(this).find("option:selected").each(function(){
+		var optionValue = $(this).attr("value");
+		if(optionValue){
+                    $(".box").not("." + optionValue).hide();
+                    $("." + optionValue).show();
+		} else{
+                    $(".box").hide();
+		}
+            });
+	}).change();
+    });
+  </script>
+
 </body>
 {% endblock%}
+
 </html>
