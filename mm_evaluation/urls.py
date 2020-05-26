@@ -88,4 +88,3 @@ urlpatterns = [
     ),
     path("informacionfinanciera/", views.FinancesInformationView.as_view(), name="financesInformation")
 ]
-
