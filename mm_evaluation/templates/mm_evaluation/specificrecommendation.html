@@ -1,31 +1,32 @@
+{% extends 'mm_evaluation/base.html' %}
+
+{% block content %}
+<html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=devicewidth, initial-scale=1, shrink-to-fit=no">
   <title> Recomendaciones </title>
-  {% load bootstrap4 %}
-  {% bootstrap_css %}
 
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script>
-$(document).ready(function(){
-    $("select").change(function(){
-        $(this).find("option:selected").each(function(){
-            var optionValue = $(this).attr("value");
-            if(optionValue){
-                $(".box").not("." + optionValue).hide();
-                $("." + optionValue).show();
-            } else{
-                $(".box").hide();
-            }
-        });
-    }).change();
-});
-</script>
+  {% load bootstrap4 %}
+        {% load fontawesome_5 %}
+        {% load static %}
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+        <style>
+.slider.slider-horizontal .tooltip.tooltip-main.in,
+.slider.slider-vertical .tooltip.tooltip-main.in { opacity: 1 !important; }
+        </style>
+        <!-- Our Custom CSS -->
+        <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
+
 </head>
 
 <body style="background-color:honeydew;">
   <div class="container-fluid">
-    <h1 class="bg-info">{{ current_macroprocess.name }}</h1>
+    <h1>{{ current_macroprocess.name }}</h1>
     <div>
         <select>
             <option value="spider">Telaraña</option>
@@ -72,6 +73,23 @@ $(document).ready(function(){
     {% endfor %}
     {% endif %}
   </div>
+  
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script>
+    $(document).ready(function(){
+	$("select").change(function(){
+            $(this).find("option:selected").each(function(){
+		var optionValue = $(this).attr("value");
+		if(optionValue){
+                    $(".box").not("." + optionValue).hide();
+                    $("." + optionValue).show();
+		} else{
+                    $(".box").hide();
+		}
+            });
+	}).change();
+    });
+  </script>
 </body>
-
-	
+{% endblock %}
+</html>	
