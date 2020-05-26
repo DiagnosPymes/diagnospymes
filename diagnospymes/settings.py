@@ -153,8 +153,12 @@ BOOTSTRAP4 = {
     # Note that a URL can be either a string,
     # e.g. "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
     # or a dict like the default value below.
-    "css_url": "/static/mm_evaluation/css/diagnospymes.css ",
-
+    "css_url": {
+        "css_url": "/static/mm_evaluation/css/diagnospymes.css ",
+        "href": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
+        "integrity": "sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB",
+        "crossorigin": "anonymous",
+    },
     # The complete URL to the Bootstrap JavaScript file
     "javascript_url": {
         "url": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js",
