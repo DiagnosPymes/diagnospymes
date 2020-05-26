@@ -3,27 +3,9 @@
 {% load static %}
 <html>
   <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta charset="utf-8">
-        <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
-
-        <!--<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Ubuntu+Condensed&display=swap" rel="stylesheet">-->
         {% load bootstrap4 %}
         {% load fontawesome_5 %}
         {% load static %}
-        {# Load CSS and JavaScript #}
-        {% bootstrap_css %}
-        {% bootstrap_javascript jquery='full' %}
-        {# Display django.contrib.messages as Bootstrap alerts #}
-        {% bootstrap_messages %}
-        <style>
-.slider.slider-horizontal .tooltip.tooltip-main.in,
-.slider.slider-vertical .tooltip.tooltip-main.in { opacity: 1 !important; }
-        </style>
-        <!-- Our Custom CSS -->
-        <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
-
   </head>
 {% block content %}  
   <body>
@@ -40,13 +22,13 @@
 	      <form method='post'>
 		{% csrf_token %}
 		<div class="col form-group">
-          {% bootstrap_field form.employees_number          show_label=True  layout='horizontal' %}
+          {% bootstrap_field form.employees_number          show_label=True  layout='horizontal' label_class="w-25 text-center" %}
           {% bootstrap_field form.anual_income              show_label=False  %}
-          {% bootstrap_field form.assets                    show_label=True  layout='horizontal'  %}
+          {% bootstrap_field form.assets                    show_label=True  layout='horizontal'  label_class="w-25 text-center" %}
           {% bootstrap_field form.liabilities               show_label=False  show_help=False %}
           {% bootstrap_field form.monthly_production        show_label=False  show_help=False %}
-          {% bootstrap_field form.productive_configuration  show_label=True  layout='horizontal' show_help=False %}
-          {% bootstrap_field form.inventory_politics        show_label=True  layout='horizontal' show_help=False %}
+          {% bootstrap_field form.productive_configuration  show_label=True  layout='horizontal' show_help=False label_class="w-25 text-center" %}
+          {% bootstrap_field form.inventory_politics        show_label=True  layout='horizontal' show_help=False label_class="w-25 text-center" %}
           {% bootstrap_field form.main_product              show_label=False  show_help=False %}
           {% bootstrap_field form.main_competidor           show_label=False  show_help=False %}
           {% bootstrap_field form.patrimony                 show_label=False  %}

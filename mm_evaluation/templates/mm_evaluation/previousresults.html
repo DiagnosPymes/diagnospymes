@@ -1,28 +1,26 @@
 {% extends 'mm_evaluation/base.html' %}
 <html>
-  <head>
+    <head>
         {% load bootstrap4 %}
         {% load fontawesome_5 %}
         {% load static %}
-</head>
+    </head>
 
-{% block content %}
-{% block title %}<title>Resultados anteriores</title>{% endblock %}
-<body>
-  <div>
-    <h1>Resultados</h1>
-    <div class="center-buttons">
-      <ul class="list-group list-group-green">
-	{% if all_previous_results %}
-	{% for autoevaluation in all_previous_results %}
-        <a href="{% url 'mm_evaluation:autoevaluation_result' autoevaluation.id %}" class="btn btn-third" role="button" aria-pressed="true">Autoevaluación del {{ autoevaluation.last_time_edition }}</a><br>
-	{% endfor %}
-	{% endif %}
-      </ul>
-    </div>
-  </div>
-</body>
-{% endblock %}
+    {% block content %}
+    {% block title %}<title>Resultados anteriores</title>{% endblock %}
+    <body>
+        <div class="text-center">
+            <h1>Resultados</h1>
+            <ul>
+                {% if all_previous_results %}
+                {% for autoevaluation in all_previous_results %}
+                <a href="{% url 'mm_evaluation:autoevaluation_result' autoevaluation.id %}" class="btn btn-third col-4" role="button" aria-pressed="true">Autoevaluación del {{ autoevaluation.last_time_edition }}</a><br>
+                {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+    </body>
+    {% endblock %}
 </html>
 
 

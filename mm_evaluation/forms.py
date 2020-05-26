@@ -150,13 +150,13 @@ class FinancesInformationForm(forms.ModelForm):
             "ebitda":forms.TextInput(attrs={'required':False}),
         }
         labels = {
-            "employees_number":_("Numero de empleados"),
+            "employees_number":_("Número de empleados"),
             "anual_income":_("Ingreso anual"),
             "assets":_("Activos"),
             "liabilities":_("Pasivos"),
             "monthly_production":_("Producción mensual"),
             "productive_configuration":_("Configuración productiva"),
-            "inventory_politics":_("Politicas de inventario"),
+            "inventory_politics":_("Políticas de inventario"),
             "main_product":_("Producto principal"),
             "main_copetidor":_("Competencia principal"),
             "patrimony":_("Patrimonio"),
@@ -165,7 +165,7 @@ class FinancesInformationForm(forms.ModelForm):
             "net_profits":_("Ganacia neta"),
             "fixed_costs_expences":_("Costos y gastos fijos"),
             "variable_costs_expences":_("Costos y gastos varibales"),
-            "ebitda":_("ebitda"),
+            "ebitda":_("EBITDA"),
         }
 
 

@@ -17,11 +17,17 @@
         <ul>
             {% if all_previous_results %}
             {% for autoevaluation in all_previous_results %}
-            <strong>{{ autoevaluation.last_time_edition }}:</strong>
-	    <br></br>
-	    <a href="{% url 'mm_evaluation:benchmarkingTop' autoevaluation.id %}" class="list-group-item list-group-item-action" role="button" aria-pressed="true">Comparar contra el mejor</a><br>
-	    <a href="{% url 'mm_evaluation:benchmarkingAverage' autoevaluation.id %}" class="list-group-item list-group-item-action" role="button" aria-pressed="true">Comparar contra el promedio</a><br>
-	    <a href="{% url 'mm_evaluation:benchmarkingBottom' autoevaluation.id %}" class="list-group-item list-group-item-action" role="button" aria-pressed="true">Comparar contra el peor</a><br>
+            <h4 style="text-align:center;">
+                Autoevaluación del {{ autoevaluation.last_time_edition }}:
+            </h4>
+            <div class="text-center">
+                    <br>
+                    <a href="{% url 'mm_evaluation:benchmarkingTop' autoevaluation.id %}" class="btn btn-third col-3" role="button" aria-pressed="true">Comparar contra el mejor</a><br>
+                    <a href="{% url 'mm_evaluation:benchmarkingAverage' autoevaluation.id %}" class="btn btn-third col-3" role="button" aria-pressed="true">Comparar contra el promedio</a><br>
+                    <a href="{% url 'mm_evaluation:benchmarkingBottom' autoevaluation.id %}" class="btn btn-third col-3" role="button" aria-pressed="true">Comparar contra el peor</a>
+            </div>
+                    <br>
+
             {% endfor %}
             {% endif %}
         </ul>

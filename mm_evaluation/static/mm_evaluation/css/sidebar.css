@@ -101,6 +101,14 @@ h4 {
     font-family: 'Fjalla One', sans-serif;
 }
 
+.btn-outline-secondary {
+    color: #6c757d;
+    background-color: transparent;
+    background-image: none;
+    border-color: #6c757d;
+    font-family: 'Fjalla One', sans-serif;
+}
+
 .btn-outline-secondary:hover {
     color: #fff;
     background-color: var(--fourth-color);
@@ -299,19 +307,13 @@ h4 {
 /*---------------------------------
 RESULTS
 ----------------------------------*/
-.list-group-green .list-group-item {
-    background-color: var(--third-color);
-    border-top: var(--third-color);
-    border-left-color: var(--third-color);
-    border-right-color: var(--third-color);
+.list-group .list-group-item {
     text-align: center;
     margin: 0;
-    border-radius: 15px;
     font-family: 'Fjalla One', sans-serif;
 }
 
 .list-group-green .list-group-item:hover {
-    background-color: var(--third-hover-color);
     font-family: 'Fjalla One', sans-serif;
 }
 
