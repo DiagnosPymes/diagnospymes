@@ -1,41 +1,53 @@
+{% extends 'mm_evaluation/base.html' %}
+{% load static %}
+<html>
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
 
-<head>
-    {% load bootstrap4 %}
-    {% load static %}
-    {# Display django.contrib.messages as Bootstrap alerts #}
-    {% bootstrap_messages %}
-</head>
+        <!--<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Ubuntu+Condensed&display=swap" rel="stylesheet">-->
+        {% load bootstrap4 %}
+        {% load fontawesome_5 %}
+        {% load static %}
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+        <style>
+.slider.slider-horizontal .tooltip.tooltip-main.in,
+.slider.slider-vertical .tooltip.tooltip-main.in { opacity: 1 !important; }
+        </style>
+        <!-- Our Custom CSS -->
+        <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<style>
-  row{
-      text-align:center;
-  }
-</style>
-
-<body style="background-color:honeydew">
-<br><br>  
-<div class="container"
-     <div class="row justify-content-center">
-       <div class="col-lg-7 justify-content-center">
-	 <div class="card bg-light">
-	   <header class="card-header">
-	     <a href="{% url 'mm_evaluation:index' %}" class="float-right btn btn-outline-primary mt-1">Omitir</a>
-	     <h4 class="card-title mt-2">Información financiera</h4>
-	   </header>
-	   <article class="card-body">
-	     <form method='post'>
-	       {% csrf_token %}
-	       <div class="col form-group">
-		 {{ form.as_p }}
-		 <input type='submit' value='Guardar' />
-	       </div>
-	     </form>
-	   </article>
-	 </div> <!-- card.// -->
-       </div> <!-- col.//-->
-     </div> <!-- row.//-->
-</div>
-</body>
+  </head>
+{% block content %}  
+  <body>
+    <br><br>  
+    <div>
+      <div class="row justify-content-center">
+	<div class="col-lg-7 justify-content-center">
+	  <div class="card">
+	    <header class="card-header">
+	      <a href="{% url 'mm_evaluation:index' %}" class="float-right btn btn-outline-primary mt-1">Omitir</a>
+	      <h4 class="card-title mt-2">Información financiera</h4>
+	    </header>
+	    <article class="card-body">
+	      <form method='post'>
+		{% csrf_token %}
+		<div class="col form-group">
+		  {{ form.as_p }}
+		  <input type='submit' value='Guardar' />
+		</div>
+	      </form>
+	    </article>
+	  </div> <!-- card.// -->
+	</div> <!-- col.//-->
+      </div> <!-- row.//-->
+    </div>
+  </body>
+  {% endblock %}
+</html>
