@@ -91,8 +91,8 @@
                                 <a class="btn btn-outline-secondary " href="{% url 'mm_evaluation:password_change' %}" role="button" style="margin:5px;">Cambiar contraseña</a>
                                 <a class="btn btn-outline-fourth " href="{% url 'mm_evaluation:logout' %}" role="button" style="margin:5px;">Logout</a>
                                 {% else %}
-                                <a class="btn btn-outline-fourth" href="{% url 'mm_evaluation:login' %}">Ingresar</a>
-                                <a class="btn btn-outline-fourth" href="{% url 'mm_evaluation:registration' %}">Registrarse</a>
+                                <a class="btn btn-outline-fourth" href="{% url 'mm_evaluation:login' %}" style="margin:5px;">Ingresar</a>
+                                <a class="btn btn-outline-fourth" href="{% url 'mm_evaluation:registration' %}" style="margin:5px;">Registrarse</a>
                                 {% endif %}
                             </ul>
                         </div>
