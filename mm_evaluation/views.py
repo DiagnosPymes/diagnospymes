@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.views.generic import DetailView, ListView, View
+from django.views.generic import DetailView, ListView, View, CreateView
 from django.views.generic.base import TemplateView
 
 import plotly.graph_objs as go
@@ -18,7 +18,7 @@ from plotly.subplots import make_subplots
 
 import pandas as pd
 
-from .forms import PYMERegistrationForm, UserRegistrationForm
+from .forms import PYMERegistrationForm, UserRegistrationForm, FinancesInformationForm
 from .general_use_functions import *
 
 
@@ -30,6 +30,7 @@ from .models import (
     PYME,
     GeneralPractice,
     SpecificPractice,
+    FinancesInformation,
 )
 
 
@@ -297,16 +298,10 @@ class ResultDetail(LoginRequiredMixin, DetailView):
         y.append(self.autoevaluation.macroprocess_9_score)
         y.append(self.autoevaluation.macroprocess_10_score)
 
-        data = [go.Bar(x=x, y=y)]
-        layout = go.Layout(
-            title="Puntaje",
-            xaxis={"title": "Macroproceso"},
-            yaxis={"title": "Resultado"},
-        )
-        figure = go.Figure(data=data, layout=layout)
-        div = opy.plot(figure, auto_open=False, output_type="div")
-        context["graph"] = div
-
+        context["bar_graph"] = create_bar_graph(x, y)
+        context["spider_graph"] = create_spider_graph(x, y)
+        context["line_graph"] = create_line_graph(x, y)
+        
         all_macroprocesses = Macroprocess.objects.all()
         context["all_macroprocesses"] = all_macroprocesses
         macroprocesses_scores = {}
@@ -574,23 +569,15 @@ class SpecificRecommendationsDetail(DetailView):
                         score=answer_score
                     )
                     specific_recommendations_list.append(specific_recommendation)
-
-        data = [go.Bar(x=x, y=y)]
-        layout = go.Layout(
-            title="Puntaje",
-            xaxis={"title": "Macroproceso"},
-            yaxis={"title": "Resultado"},
-        )
-        figure = go.Figure(data=data, layout=layout)
-        div = opy.plot(figure, auto_open=False, output_type="div")
-
         return render(
             request,
             "mm_evaluation/specificrecommendation.html",
             {
                 "specific_recommendations": specific_recommendations_list,
                 "current_macroprocess": current_macroprocess,
-                "graph": div,
+                "bar_graph": create_bar_graph(x, y),
+                "spider_graph": create_spider_graph(x, y),
+                "line_graph":create_line_graph(x, y),
             },
         )
 
@@ -961,3 +948,84 @@ class BenchmarkingAverageView(LoginRequiredMixin, DetailView):
         }
 
         return context
+
+def create_bar_graph(x, y):
+    data = [go.Bar(x=x, y=y)]
+    layout = go.Layout(
+        title="Puntaje",
+        xaxis={"title": "Macroproceso"},
+        yaxis={"title": "Resultado",
+               "range": [0, 5]},
+        margin=dict(l=20, r=20, t=20, b=20),
+    )
+    fig = go.Figure(data=data, layout=layout)
+    div = opy.plot(fig, auto_open=False, output_type="div")
+    return div
+
+def create_spider_graph(x, y):
+    fig = go.Figure(data=go.Scatterpolar(
+        r=y,
+        theta=x,
+        fill='toself'
+    ))
+
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(
+                visible=True,
+                range=[0, 5]
+            ),
+        ),
+        margin=dict(l=20, r=20, t=20, b=20),
+        showlegend=False
+    )
+    div = opy.plot(fig, auto_open=False, output_type="div")
+    return div 
+
+def create_line_graph(x, y):
+    data = [go.Scatter(x=x, y=y)]
+    layout = go.Layout(
+        title="Puntaje",
+        xaxis={"title": "Macroproceso"},
+        yaxis={"title": "Resultado",
+               "range": [0, 5]},
+        margin=dict(l=20, r=20, t=20, b=20),
+    )
+    fig = go.Figure(data=data, layout=layout)
+    div = opy.plot(fig, auto_open=False, output_type="div")
+    return div
+
+class FinancesInformationView(LoginRequiredMixin, CreateView):
+    # For use in LoginRequiredMixin
+    login_url = reverse_lazy("mm_evaluation:login")
+    permission_denied_message = (
+        "Debes ingresar a tu cuenta para responder la encuesta financiera."
+    )
+    model = FinancesInformation
+    template_name = "mm_evaluation/financesinformation.html"
+    form_class = FinancesInformationForm
+
+    def post(self, request):
+        self.pyme = self.request.user.pyme
+        if not FinancesInformation.objects.filter(pyme_id=self.pyme).count() == 0:
+            finances_form = FinancesInformationForm()
+            pyme_finances = get_object_or_404(FinancesInformation, pyme_id=self.pyme.id)
+            if request.method == 'POST':
+                finances_form = FinancesInformationForm(request.POST)
+                if finances_form.is_valid():
+                    finances_form = FinancesInformationForm(request.POST, instance=pyme_finances)
+
+                    finances_form.save()
+
+        else:
+            finances_form = FinancesInformationForm()
+            if request.method == 'POST':
+                finances_form = FinancesInformationForm(request.POST)
+                if finances_form.is_valid():
+                    FFORM = finances_form.save(commit=False)
+                    FFORM.pyme = self.pyme
+
+                    finances_form.save()
+                
+        context = {'form': finances_form}
+        return render(request, 'mm_evaluation/financesinformation.html', context)

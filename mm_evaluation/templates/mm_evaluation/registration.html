@@ -9,81 +9,81 @@
 
 {% block content %}
 <title>Registro</title>
-<div class='content'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
 
-    {% if user_registration_form.errors %}
-    <h1>ERROR</h1>
-    {% for field in user_registration_form %}
-    {% for error in field.errors %}
-    <div class="alert alert-danger">
-        <strong>{{ error|escape }}</strong>
-    </div>
-    {% endfor %}
-    {% endfor %}
-    {% for error in user_registration_form.non_field_errors %}
-    <div class="alert alert-danger">
-        <strong>{{ error|escape }}</strong>
-    </div>
-    {% endfor %}
-    {% endif %}
-
-    {% if PYME_registration_form.errors %}
-    <h1>ERROR</h1>
-    {% for field in PYME_registration_form %}
-    {% for error in field.errors %}
-    <div class="alert alert-danger">
-        <strong>{{ error|escape }}</strong>
-    </div>
-    {% endfor %}
-    {% endfor %}
-    {% for error in PYME_registration_form.non_field_errors %}
-    <div class="alert alert-danger">
-        <strong>{{ error|escape }}</strong>
-    </div>
-    {% endfor %}
-    {% endif %}
-
-    <form role="form" class="form-horizontal" action="{% url 'mm_evaluation:registration' %}" method="post" >
-        {% csrf_token %}
-        <div class="container">
-            <h1>Datos de la empresa</h1>
-            <div class="form-row">
-                {% bootstrap_field user_registration_form.username                show_label=False field_class='col' %}
-                {% bootstrap_field PYME_registration_form.name                    show_label=False field_class='col-12' %}
-            </div>
-            {% bootstrap_field PYME_registration_form.phone_number            show_label=False field_class='col-4' %}
-            {% bootstrap_field user_registration_form.password1               show_label=False field_class='col-4' %}
-            {% bootstrap_field user_registration_form.password2               show_label=False field_class='col-4' %}
-            <div class="form-row">
-                {% bootstrap_field PYME_registration_form.address                 show_label=False field_class='col' %}
-                {% bootstrap_field PYME_registration_form.sector                  show_label=True  layout='horizontal' field_class='col' %}
-                {% bootstrap_field PYME_registration_form.nit                     show_label=False field_class='col' %}
-            </div>
-            <h1>Datos del contacto de la empresa</h1>
-            <div class="form-row">
-                {% bootstrap_field user_registration_form.first_name              show_label=False field_class='col-12' %}
-                {% bootstrap_field user_registration_form.last_name               show_label=False field_class='col' %}
-                {% bootstrap_field user_registration_form.email                   show_label=False field_class='col' %}
-            </div>
-            {% bootstrap_field PYME_registration_form.contact_birth_date          show_label=False field_class='col-4' %}
-            {% bootstrap_field PYME_registration_form.contact_phone_number        show_label=False field_class='col-4' %}
-            {% bootstrap_field PYME_registration_form.contact_sex                 show_label=False field_class='col-4' %}
-            <div class="form-row">
-                {% bootstrap_field PYME_registration_form.contact_id_type         show_label=True  layout='horizontal' field_class='col' %}
-                {% bootstrap_field PYME_registration_form.contact_id_number       show_label=False field_class='col-11' %}
-            </div>
-            <div class="form-row">
-                {% bootstrap_field PYME_registration_form.contact_education_level     show_label=True field_class='col' layout='horizontal' %}
-                {% bootstrap_field PYME_registration_form.contact_time_on_charge      show_label=False field_class='col-12' %}
-            </div>
-            {% bootstrap_field PYME_registration_form.terms_conditions_acceptance show_label=False %}
-
-            {% bootstrap_button content='Terminar registro' %}
+<div class="col d-flex justify-content-center">
+    <div class="card text-center">
+        <div class="card-header">
+            <h1 class="card-title">Registro</h1>
         </div>
-    </form>
+        <div class="card-body">
+            {% if user_registration_form.errors %}
+            <h1>ERROR</h1>
+            {% for field in user_registration_form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% for error in user_registration_form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if PYME_registration_form.errors %}
+            <h1>ERROR</h1>
+            {% for field in PYME_registration_form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% for error in PYME_registration_form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <form role="form" action="{% url 'mm_evaluation:registration' %}" method="post" >
+                {% csrf_token %}
+                <div class="container">
+                    <h2 class="card-title">Datos de la empresa</h2>
+                    <div class="row justify-content-center align-items-center">
+                        {% bootstrap_field user_registration_form.username                    show_label=False field_class='col' show_help=False %}
+                        {% bootstrap_field PYME_registration_form.name                        show_label=False field_class='col' %}
+                        {% bootstrap_field user_registration_form.password1                   show_label=False field_class='col' show_help=False %}
+                        {% bootstrap_field user_registration_form.password2                   show_label=False field_class='col' %}
+                        {% bootstrap_field PYME_registration_form.sector                      show_label=True  layout='horizontal' form_group_class='col-lg-5' %}
+                        {% bootstrap_field PYME_registration_form.address                     show_label=False field_class='col' %}
+                        {% bootstrap_field PYME_registration_form.nit                         show_label=False field_class='col' %}
+                        {% bootstrap_field PYME_registration_form.phone_number                show_label=False field_class='col' %}
+                    </div>
+                    <h2 class="card-title">Datos del contacto de la empresa</h2>
+                    <div class="row justify-content-center align-items-center">
+                        {% bootstrap_field user_registration_form.first_name                  show_label=False field_class='col' %}
+                        {% bootstrap_field user_registration_form.last_name                   show_label=False field_class='col' %}
+                        {% bootstrap_field user_registration_form.email                       show_label=False field_class='col' %}
+                        {% bootstrap_field PYME_registration_form.contact_birth_date          show_label=False field_class='col' %}
+                        {% bootstrap_field PYME_registration_form.contact_phone_number        show_label=False field_class='col' %}
+                        {% bootstrap_field PYME_registration_form.contact_sex                 show_label=False field_class='col' %}
+                        {% bootstrap_field PYME_registration_form.contact_id_type             show_label=True  layout='horizontal' form_group_class='col-lg-7' %}
+                        {% bootstrap_field PYME_registration_form.contact_id_number           show_label=False field_class='col' %}
+                        {% bootstrap_field PYME_registration_form.contact_education_level     show_label=True layout='horizontal' form_group_class='col-lg-7' %}
+                        {% bootstrap_field PYME_registration_form.contact_time_on_charge      show_label=False field_class='col' %}
+                        {% bootstrap_field PYME_registration_form.terms_conditions_acceptance show_label=False %}
+                    </div>
+                    {% bootstrap_button content='Terminar registro' button_class='btn-third' %}
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
 <script>
     $(function () {
         $("#id_PYME-contact_birth_date").datepicker({

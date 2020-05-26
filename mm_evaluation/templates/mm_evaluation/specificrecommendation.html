@@ -1,31 +1,82 @@
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=devicewidth, initial-scale=1, shrink-to-fit=no">
-  <title> Recomendaciones </title>
-  {% load bootstrap4 %}
-  {% bootstrap_css %}
-</head>
+{% extends 'mm_evaluation/base.html' %}
 
-<body style="background-color:honeydew;">
-  <div class="container-fluid">
-    <h1 class="bg-info">{{ current_macroprocess.name }}</h1>
-    {% if graph %}
-    <div class="container-fluid" style="width:600;height:500">
-      {{ graph|safe }}
-    </div>
+{% block content %}
+<html>
+    <head>
+        <title> Recomendaciones </title>
+
+        {% load bootstrap4 %}
+        {% load fontawesome_5 %}
+        {% load static %}
+    </head>
+
     <body>
-      <p>   </p>
-    </body>
-    {% endif %}
-    
-    {% if specific_recommendations %}
-    {% for recommendation in specific_recommendations %}
-    <ul class="list-group">
-      <li class="list-group-item">Para llegar al siguiente nivel deberias poder describirte así: {{ recommendation.description }}</li>
-    </ul>
-    {% endfor %}
-    {% endif %}
-  </div>
-</body>
+        <div class="container-fluid">
+            <h1>{{ current_macroprocess.name }}</h1>
+            <div class="text-center">
+                <select class="form-control col-5">
+                    <option value="spider">Gráfica de telaraña con tus resultados</option>
+                    <option value="bar">Gráfica de barras con tus resultados</option>
+                    <option value="scatter">Gráfica de lineas con tus resultados</option>
+                </select>
 
-	
+            </div>
+            <div class="spider box">
+                {% if spider_graph %}
+                <div class="container-fluid" style="width:80%;height:500;text-align: center">
+                    {{ spider_graph|safe }}
+                </div>
+                <body>
+                    <p>   </p>
+                </body>
+                {% endif %}
+            </div>
+            <div class="bar box">
+                {% if bar_graph %}
+                <div class="container-fluid" style="width:80%;height:500;text-align: center">
+                    {{ bar_graph|safe }}
+                </div>
+                <body>
+                    <p>   </p>
+                </body>
+                {% endif %}
+            </div>
+            <div class="scatter box">
+                {% if line_graph %}
+                <div class="container-fluid" style="width:80%;height:500;text-align: center">
+                    {{ line_graph|safe }}
+                </div>
+                <body>
+                    <p>   </p>
+                </body>
+                {% endif %}
+            </div>
+
+            {% if specific_recommendations %}
+            {% for recommendation in specific_recommendations %}
+            <ul class="list-group">
+                <li class="list-group-item">Para llegar al siguiente nivel deberías poder describirte así: {{ recommendation.description }}</li><br>
+            </ul>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("select").change(function(){
+                    $(this).find("option:selected").each(function(){
+                        var optionValue = $(this).attr("value");
+                        if(optionValue){
+                            $(".box").not("." + optionValue).hide();
+                            $("." + optionValue).show();
+                        } else{
+                            $(".box").hide();
+                        }
+                    });
+                }).change();
+            });
+        </script>
+    </body>
+    {% endblock %}
+</html>

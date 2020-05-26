@@ -2,99 +2,126 @@
 
 <head>
     {% load bootstrap4 %}
+    {% load static %}
     {% load fontawesome_5 %}
     {# Display django.contrib.messages as Bootstrap alerts #}
     {% bootstrap_messages %}
+
 </head>
 
 
 {% block content %}
 {% block title %}<title>Autoevaluación</title>{% endblock %}
 <div class="content">
-    <body style="background-color:honeydew;">
+    <body>
+        <div class="col d-flex justify-content-center">
+            <div class="pagination">
+                <span class="step-links">
+                    {% bootstrap_pagination page_obj url="?page=1" size="large" %}
+                </span>
+            </div>
+        </div>
+
         <form action="{% url 'mm_evaluation:save_answer' autoevaluation.id %}" method="post">
             {% csrf_token %}
             {% for macroprocess in macroprocesses_list %}
-            <div class="mx-auto" style="width: 400px;">
-                <h1>{{macroprocess.number }}. {{ macroprocess.name }}</h1>
+            <div class="row justify-content-center align-items-center">
+                <h1>{{ macroprocess.name }}</h1>
             </div>
-            <div class="container">
-                <div class="row justify-content-between">
+            <div class="row d-flex justify-content-center">
+                <div class="accordion" id="accordion">
                     {% for process in macroprocess.process_set.all %}
-                    <div class="col-md-auto h3">
-                        <h2>{{ process.id }}.</h2>
+                    <div class="card">
+                        <div class="card-header" id="heading{{process.id}}">
+                            <h3 class="mb-0 text-center">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{process.id}}" aria-expanded="true" aria-controls="collapse{{process.id}}">
+                                    {{ process.id }}. {{ process.name }}
+                                </button>
+                            </h3>
+                        </div>
+                        <div id="collapse{{process.id}}" class="collapse hide" aria-labelledby="heading{{process.id}}" data-parent="#accordion">
+                            <div class="card-body">
+                                <p class="card-text text-center">
+                                {{ process.guiding_question }}<br>
+                                </p>
+                                <div class="card-text text-center">
+                                    <div id = "emojis" style="position: relative; margin-left: 0px">
+                                        <span title="{{ process.sorted_specificpractices.0.description }}" style="color:#ff2a00; margin-left: 0px">
+                                            {% fa5_icon 'frown' size='fa-2x' %}
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.1.description }}" style="color:#d13111; margin-left: 7px">
+                                            {% fa5_icon 'frown-open' size='fa-2x' %}
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.2.description }}" style="color:#e37d09; margin-left: 7px">
+                                            {% fa5_icon 'meh' size='fa-2x' %}
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.3.description }}" style="color:#bec400; margin-left: 7px">
+                                            {% fa5_icon 'meh-rolling-eyes' size='fa-2x' %}
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.4.description }}" style="color:#0e6100; margin-left: 7px">
+                                            {% fa5_icon 'smile-beam' size='fa-2x' %}
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.5.description }}" style="color:#1ab000; margin-left: 7px">
+                                            {% fa5_icon 'laugh-beam' size='fa-2x'%}
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        id="slider_{{ process.id }}"
+                                        name="score_{{ process.id }}"
+                                        data-provide="slider"
+                                        data-slider-ticks="[0, 1, 2, 3, 4, 5]"
+                                        data-slider-min="0"
+                                        data-slider-max="5"
+                                        data-slider-step="1"
+                                        data-slider-value="2"
+                                        data-slider-tooltip="hide"
+                                        >
+                                        <div id = "numbers{{ process.id }}" style="position: relative; margin-left: 4px">
+                                        <span title="{{ process.sorted_specificpractices.0.description }}" style="margin-left: 0px">
+                                            0
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.1.description }}" style="margin-left: 32px">
+                                            1
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.2.description }}" style="margin-left: 32px">
+                                            2
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.3.description }}" style="margin-left: 30px">
+                                            3
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.4.description }}" style="margin-left: 30px">
+                                            4
+                                        </span>
+                                        <span title="{{ process.sorted_specificpractices.5.description }}" style="margin-left: 30px">
+                                            5
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        {{ process.guiding_question }}<br><br><br><br>
-                    </div>
-                    <div class="col-5">
-                            <div id = "test" style="color:#ff2a00; margin-top: 2px; margin-left: -17px;  position: absolute;">
-                                <span title="{{ process.sorted_specificpractices.0.description }}">
-                                    {% fa5_icon 'frown' size='fa-2x' %}
-                                </span>
-                            </div>
-                            <div id = "test" style="color:#d13111; margin-top: 2px; margin-left: 26;  position: absolute;">
-                                <span title="{{ process.sorted_specificpractices.1.description }}">
-                                    {% fa5_icon 'frown-open' size='fa-2x' %}
-                                </span>
-                            </div>
-                            <div id = "test" style="color:#e37d09; margin-top: 2px; margin-left: 68px;  position: absolute;">
-                                <span title="{{ process.sorted_specificpractices.2.description }}">
-                                    {% fa5_icon 'meh' size='fa-2x' %}
-                                </span>
-                            </div>
-                            <div id = "test" style="color:#bec400; margin-top: 2px; margin-left: 110px;  position: absolute;">
-                                <span title="{{ process.sorted_specificpractices.3.description }}">
-                                    {% fa5_icon 'meh-rolling-eyes' size='fa-2x' %}
-                                </span>
-                            </div>
-                            <div id = "test" style="color:#0e6100; margin-top: 2px; margin-left: 151px;  position: absolute;">
-                                <span title="{{ process.sorted_specificpractices.4.description }}">
-                                    {% fa5_icon 'smile-beam' size='fa-2x' %}
-                                </span>
-                            </div>
-                            <div id = "test" style="color:#1ab000; margin-top: 2px; margin-left: 194px;  position: relative;">
-                                <span title="{{ process.sorted_specificpractices.5.description }}">
-                                    {% fa5_icon 'laugh-beam' size='fa-2x'%}
-                                </span>
-                            </div>
-                        <input
-                            type="text"
-                            id="slider_{{ process.id }}"
-                            name="score_{{ process.id }}"
-                            data-provide="slider"
-                            data-slider-ticks="[0, 1, 2, 3, 4, 5]"
-                            data-slider-ticks-labels='["0", "1", "2", "3", "4", "5"]'
-                            data-slider-min="0"
-                            data-slider-max="5"
-                            data-slider-step="1"
-                            data-slider-value="2"
-                            data-slider-tooltip="hide"
-                            >
-                    </div>
-                    <div class="w-100"></div>
                     {% endfor %}
                 </div>
+
             </div>
-
             {% endfor %}
-
-            {% buttons %}
-            <button type="submit" class="btn btn-primary">
-                {% if page_obj.number == 10 %}
-                Guardar y terminar
-                {% else %}
-                Guardar
-                {% endif %}
-            </button>
-            {% endbuttons %}
+            <br>
+            <div class="col d-flex justify-content-center">
+                {% buttons %}
+                <button type="submit" class="btn btn-third">
+                    {% if page_obj.number == 10 %}
+                    Guardar y terminar
+                    {% else %}
+                    Guardar
+                    {% endif %}
+                </button>
+                {% endbuttons %}
+            </div>
         </form>
         {% fontawesome_5_static %}
     </body>
-    <div class="pagination">
-        <span class="step-links">
-            {% bootstrap_pagination page_obj url="?page=1" size="large" %}
-        </span>
-    </div>
 </div>
+<script type="text/javascript" src="{% static 'mm_evaluation/js/bootstrap-slider.js' %}"></script>
+
 {% endblock %}

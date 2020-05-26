@@ -1,9 +1,11 @@
 from django.contrib.auth import views as auth_views
-from django.urls import path, reverse_lazy
+from django.urls import path, reverse_lazy, re_path
+from django.views.generic.base import RedirectView
 
 from . import views
 
 
+favicon_view = RedirectView.as_view(url='static/mm_evaluation/Espiral.png', permanent=True)
 app_name = "mm_evaluation"
 urlpatterns = [
     # This URL points to the home page
@@ -86,4 +88,6 @@ urlpatterns = [
         views.BenchmarkingAverageView.as_view(),
         name="benchmarkingAverage",
     ),
+    path("informacionfinanciera/", views.FinancesInformationView.as_view(), name="financesInformation"),
+    re_path(r'^favicon\.ico$', favicon_view),
 ]
