@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.views.generic import DetailView, ListView, View
+from django.views.generic import DetailView, ListView, View, CreateView
 from django.views.generic.base import TemplateView
 
 import plotly.graph_objs as go
@@ -18,7 +18,7 @@ from plotly.subplots import make_subplots
 
 import pandas as pd
 
-from .forms import PYMERegistrationForm, UserRegistrationForm
+from .forms import PYMERegistrationForm, UserRegistrationForm, FinancesInformationForm
 from .general_use_functions import *
 
 
@@ -30,6 +30,7 @@ from .models import (
     PYME,
     GeneralPractice,
     SpecificPractice,
+    FinancesInformation,
 )
 
 
@@ -961,3 +962,40 @@ class BenchmarkingAverageView(LoginRequiredMixin, DetailView):
         }
 
         return context
+
+
+class FinancesInformationView(LoginRequiredMixin, CreateView):
+    # For use in LoginRequiredMixin
+    login_url = reverse_lazy("mm_evaluation:login")
+    permission_denied_message = (
+        "Debes ingresar a tu cuenta para responder la encuesta financiera."
+    )
+    model = FinancesInformation
+    template_name = "mm_evaluation/financesinformation.html"
+    form_class = FinancesInformationForm
+
+    def post(self, request):
+        self.pyme = get_object_or_404(PYME, user=self.request.user)
+        if not FinancesInformation.objects.filter(pyme_id=self.pyme).count() == 0:
+            finances_form = FinancesInformationForm()
+            pyme_finances = get_object_or_404(FinancesInformation, pyme_id=self.pyme.id)
+            if request.method == 'POST':
+                finances_form = FinancesInformationForm(request.POST)
+                if finances_form.is_valid():
+                    finances_form = FinancesInformationForm(request.POST, instance=pyme_finances)
+
+                    finances_form.save()
+
+        else:
+            finances_form = FinancesInformationForm()
+            if request.method == 'POST':
+                finances_form = FinancesInformationForm(request.POST)
+                if finances_form.is_valid():
+                    FFORM = finances_form.save(commit=False)
+                    FFORM.pyme = self.pyme
+
+                    finances_form.save()
+                
+        context = {'form': finances_form}
+        return render(request, 'mm_evaluation/financesinformation.html', context)
+        
