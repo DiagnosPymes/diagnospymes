@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <title> Resultados </title>
+    {% block title %}<title> Resultados </title>{% endblock title %}
 
     {% load bootstrap4 %}
     {% load fontawesome_5 %}
@@ -18,6 +18,7 @@
     <style>
       .slider.slider-horizontal .tooltip.tooltip-main.in,
       .slider.slider-vertical .tooltip.tooltip-main.in { opacity: 1 !important; }
+
     </style>
     <!-- Our Custom CSS -->
     <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
@@ -38,33 +39,30 @@
         </select>
     </div>
     <div class="spider box">Gráfica de telaraña con tus resultados:
+      <br>
       {% if spider_graph %}
-      <div class="container-fluid" style="width:600;height:500">
+      <div class="container-fluid" style="width:90%;height:700;">
         {{ spider_graph|safe }}
       </div>
-      <body>
-        <p>   </p>
-      </body>
+      <br>
       {% endif %}
     </div>
     <div class="bar box">Gráfica de barras con tus resultados:
+      <br>
       {% if bar_graph %}
-      <div class="container-fluid" style="width:600;height:500">
+      <div class="container-fluid" style="width:90%;height:700;">
         {{ bar_graph|safe }}
       </div>
-      <body>
-        <p>   </p>
-      </body>
+      <br>
       {% endif %}
     </div>
     <div class="scatter box">Gráfica de lineas con tus resultados:
+      <br>
       {% if line_graph %}
-      <div class="container-fluid" style="width:600;height:500">
+      <div class="container-fluid" style="width:90%;height:700;">
         {{ line_graph|safe }}
       </div>
-      <body>
-        <p>   </p>
-      </body>
+      <br>
       {% endif %}
     </div>
 
