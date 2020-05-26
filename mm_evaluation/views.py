@@ -1006,7 +1006,7 @@ class FinancesInformationView(LoginRequiredMixin, CreateView):
     form_class = FinancesInformationForm
 
     def post(self, request):
-        self.pyme = get_object_or_404(PYME, user=self.request.user)
+        self.pyme = self.request.user.pyme
         if not FinancesInformation.objects.filter(pyme_id=self.pyme).count() == 0:
             finances_form = FinancesInformationForm()
             pyme_finances = get_object_or_404(FinancesInformation, pyme_id=self.pyme.id)
