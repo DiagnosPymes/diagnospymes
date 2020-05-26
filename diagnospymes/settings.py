@@ -154,7 +154,6 @@ BOOTSTRAP4 = {
     # e.g. "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
     # or a dict like the default value below.
     "css_url": {
-        "css_url": "/static/mm_evaluation/css/diagnospymes.css ",
         "href": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
         "integrity": "sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB",
         "crossorigin": "anonymous",
