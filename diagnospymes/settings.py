@@ -158,8 +158,6 @@ BOOTSTRAP4 = {
         "integrity": "sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB",
         "crossorigin": "anonymous",
     },
-
-
     # The complete URL to the Bootstrap JavaScript file
     "javascript_url": {
         "url": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js",

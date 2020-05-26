@@ -34,6 +34,11 @@ a, a:hover, a:focus {
     transition: all 0.3s;
 }
 
+h1 {
+    color: var(--first-color);
+    text-align: center;
+}
+
 .navbar {
     padding: 3px 3px;
     background: #fff;
@@ -238,6 +243,28 @@ a, a:hover, a:focus {
   cursor: pointer;
 }
 
+/*---------------------------------
+  RESULTS
+----------------------------------*/
+.list-group-green .list-group-item {
+  background-color: var(--third-color);
+  border-top: var(--third-color);
+  border-left-color: var(--third-color);
+  border-right-color: var(--third-color);
+  text-align: center;
+  margin: 0;
+  border-radius: 15px;
+}
+
+.list-group-green .list-group-item:hover {
+  background-color: var(--third-hover-color);
+}
+
+.center-buttons {
+  margin: auto;
+  width: 45%;
+  padding: 10px;
+}
 
 
 /* ---------------------------------------------------
