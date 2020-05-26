@@ -23,11 +23,10 @@
   </head>
 
   {% block content %}
-  <div>
     <body>
       <h1>Autoevaluación del {{autoevaluation.last_time_edition}}</h1>
+      <h4 style="text-align: center">Su empresa se encuentra en nivel de madurez {{maturity_level.name}}</h4>
       <h4>Puntaje final: {{autoevaluation.final_score}}</h4>
-  </div>
 
   {% if graph %}
   <div class="container-fluid">
@@ -37,14 +36,13 @@
 
   <div>
     <h1>Recomendaciones</h1>
-    <h4>Su empresa se encuentra en nivel de madurez {{maturity_level.name}}</h4>
     <p>Su macroproceso mas debil es {{ lowest_macroprocess.name }}</p>
     <p>Para llegar al siguiente nivel deberias poder describirte así: {{ general_recommendation.description }}</p><br>
-    <ul class="list-group list-group-green">
       <div class="center-buttons">
+    <ul class="list-group list-group-green">
 	{% if all_macroprocesses %}
 	{% for macroprocess in all_macroprocesses %}
-        <a href="{% url 'mm_evaluation:specific_recommendations' current_autoev.id macroprocess.id %}" class="list-group-item list-group-item-action" role="button">{{ macroprocess.name }}</a><br>
+        <a href="{% url 'mm_evaluation:specific_recommendations' current_autoev.id macroprocess.id %}" class="btn btn-third" role="button">{{ macroprocess.name }}</a><br>
 	{% endfor %}
 	{% endif %}
       </div>
