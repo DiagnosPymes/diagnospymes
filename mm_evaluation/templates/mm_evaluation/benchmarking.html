@@ -18,9 +18,10 @@
             {% if all_previous_results %}
             {% for autoevaluation in all_previous_results %}
             <strong>{{ autoevaluation.last_time_edition }}:</strong>
-            <li> <a href="{% url 'mm_evaluation:benchmarkingTop' autoevaluation.id %}">Comparar contra el mejor</a></li>
-            <li> <a href="{% url 'mm_evaluation:benchmarkingAverage' autoevaluation.id %}">Comparar contra el promedio</a></li>
-            <li> <a href="{% url 'mm_evaluation:benchmarkingBottom' autoevaluation.id %}">Comparar contra el peor</a></li>
+	    <br></br>
+	    <a href="{% url 'mm_evaluation:benchmarkingTop' autoevaluation.id %}" class="list-group-item list-group-item-action" role="button" aria-pressed="true">Comparar contra el mejor</a><br>
+	    <a href="{% url 'mm_evaluation:benchmarkingAverage' autoevaluation.id %}" class="list-group-item list-group-item-action" role="button" aria-pressed="true">Comparar contra el promedio</a><br>
+	    <a href="{% url 'mm_evaluation:benchmarkingBottom' autoevaluation.id %}" class="list-group-item list-group-item-action" role="button" aria-pressed="true">Comparar contra el peor</a><br>
             {% endfor %}
             {% endif %}
         </ul>
