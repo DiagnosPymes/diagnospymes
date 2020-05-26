@@ -18,16 +18,15 @@ HOSTNAME = socket.gethostname()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+if HOSTNAME == 'diagnospymes':
+    SECRET_KEY = os.environ['DIAGNOSPYMES_SECRET_KEY']
+    DEBUG = False
+    ALLOWED_HOSTS = ['diagnospymes.dis.eafit.edu.co', '192.168.10.182']
+else:
+    SECRET_KEY = 'og9eok@42e5gnuu%j50@mwkvlj-bptzywd!nnjhtz!2__$=9r9'
+    DEBUG = True
+    ALLOWED_HOSTS = []
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['DIAGNOSPYMES_SECRET_KEY']
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['diagnospymes.dis.eafit.edu.co', '192.168.10.182', '127.0.0.1']
 
 
 # Application definition
@@ -78,9 +77,14 @@ WSGI_APPLICATION = 'diagnospymes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DB = os.environ['DIAGNOSPYMES_DB']
-DB_USER = os.environ['DIAGNOSPYMES_USER']
-DB_PASS = os.environ['DIAGNOSPYMES_USER_PASSWORD']
+if HOSTNAME == 'diagnospymes':
+    DB = os.environ['DIAGNOSPYMES_DB']
+    DB_USER = os.environ['DIAGNOSPYMES_USER']
+    DB_PASS = os.environ['DIAGNOSPYMES_USER_PASSWORD']
+else:
+    DB = 'diagnospymes'
+    DB_USER = 'diagnospymes_user'
+    DB_PASS = 'password'
 
 DATABASES = {
     'default': {
@@ -149,12 +153,7 @@ BOOTSTRAP4 = {
     # Note that a URL can be either a string,
     # e.g. "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
     # or a dict like the default value below.
-    "css_url": {
-        "href": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
-        "integrity": "sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB",
-        "crossorigin": "anonymous",
-    },
-
+    "css_url": "/static/mm_evaluation/css/diagnospymes.css ",
 
     # The complete URL to the Bootstrap JavaScript file
     "javascript_url": {
