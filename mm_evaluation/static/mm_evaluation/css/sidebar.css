@@ -13,6 +13,9 @@
     --fourth-hover-color:#c97100;
     --fourth-border-color:#f7e0c3;
     --dark-color:#344A58;
+    --dark-p-color:#6e93aa;
+    --dark-hover-color:#c97100;
+    --dark-border-color:#f7e0c3;
 }
 
 body {
@@ -25,7 +28,7 @@ p {
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
-    color: #999;
+    color: var(--dark-p-color);
 }
 
 a, a:hover, a:focus {
@@ -37,6 +40,10 @@ a, a:hover, a:focus {
 h1 {
     color: var(--first-color);
     text-align: center;
+}
+
+h4 {
+    color: var(--dark-color);
 }
 
 .navbar {
@@ -262,7 +269,7 @@ h1 {
 
 .center-buttons {
   margin: auto;
-  width: 45%;
+  width: 50%;
   padding: 10px;
 }
 

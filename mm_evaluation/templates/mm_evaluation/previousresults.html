@@ -30,7 +30,7 @@
       <ul class="list-group list-group-green">
 	{% if all_previous_results %}
 	{% for autoevaluation in all_previous_results %}
-        <a href="{% url 'mm_evaluation:autoevaluation_result' autoevaluation.id %}" class="list-group-item list-group-item-action" role="button" aria-pressed="true">Autoevaluación del {{ autoevaluation.last_time_edition }}</a><br>
+        <a href="{% url 'mm_evaluation:autoevaluation_result' autoevaluation.id %}" class="btn btn-third" role="button" aria-pressed="true">Autoevaluación del {{ autoevaluation.last_time_edition }}</a><br>
 	{% endfor %}
 	{% endif %}
       </ul>

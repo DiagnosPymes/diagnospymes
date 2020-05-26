@@ -32,16 +32,33 @@
       <div class="row justify-content-center">
 	<div class="col-lg-7 justify-content-center">
 	  <div class="card">
-	    <header class="card-header">
-	      <a href="{% url 'mm_evaluation:index' %}" class="float-right btn btn-outline-primary mt-1">Omitir</a>
+	    <header class="card-header text-center">
+	      <a href="{% url 'mm_evaluation:index' %}" class="float-right btn btn-outline-fourth mt-1">Omitir</a>
 	      <h4 class="card-title mt-2">Información financiera</h4>
 	    </header>
 	    <article class="card-body">
 	      <form method='post'>
 		{% csrf_token %}
 		<div class="col form-group">
-		  {{ form.as_p }}
-		  <input type='submit' value='Guardar' />
+          {% bootstrap_field form.employees_number          show_label=True  layout='horizontal' %}
+          {% bootstrap_field form.anual_income              show_label=False  %}
+          {% bootstrap_field form.assets                    show_label=True  layout='horizontal'  %}
+          {% bootstrap_field form.liabilities               show_label=False  show_help=False %}
+          {% bootstrap_field form.monthly_production        show_label=False  show_help=False %}
+          {% bootstrap_field form.productive_configuration  show_label=True  layout='horizontal' show_help=False %}
+          {% bootstrap_field form.inventory_politics        show_label=True  layout='horizontal' show_help=False %}
+          {% bootstrap_field form.main_product              show_label=False  show_help=False %}
+          {% bootstrap_field form.main_competidor           show_label=False  show_help=False %}
+          {% bootstrap_field form.patrimony                 show_label=False  %}
+          {% bootstrap_field form.sales_income              show_label=False  %}
+          {% bootstrap_field form.gross_profits             show_label=False  layout='horizontal'  %}
+          {% bootstrap_field form.net_profits               show_label=False  %}
+          {% bootstrap_field form.fixed_costs_expences      show_label=False  layout='horizontal'  %}
+          {% bootstrap_field form.variable_costs_expences   show_label=False  %}
+          {% bootstrap_field form.ebitda                    show_label=False  layout='horizontal'  %}
+          <span style="  display: flex; justify-content: center; align-items: center;">
+		  {% bootstrap_button content='Guardar' button_class='btn-third' %}
+          </span>
 		</div>
 	      </form>
 	    </article>
