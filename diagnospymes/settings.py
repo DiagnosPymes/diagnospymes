@@ -18,17 +18,7 @@ HOSTNAME = socket.gethostname()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-if HOSTNAME == 'diagnospymes':
-    SECRET_KEY = os.environ['DIAGNOSPYMES_SECRET_KEY']
-    DEBUG = False
-    ALLOWED_HOSTS = ['diagnospymes.dis.eafit.edu.co', '192.168.10.182']
-else:
-    SECRET_KEY = 'og9eok@42e5gnuu%j50@mwkvlj-bptzywd!nnjhtz!2__$=9r9'
-    DEBUG = True
-    ALLOWED_HOSTS = []
-
-
-
+DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -77,14 +67,10 @@ WSGI_APPLICATION = 'diagnospymes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-if HOSTNAME == 'diagnospymes':
-    DB = os.environ['DIAGNOSPYMES_DB']
-    DB_USER = os.environ['DIAGNOSPYMES_USER']
-    DB_PASS = os.environ['DIAGNOSPYMES_USER_PASSWORD']
-else:
-    DB = 'diagnospymes'
-    DB_USER = 'diagnospymes_user'
-    DB_PASS = 'password'
+DB = os.environ['DIAGNOSPYMES_DB']
+DB_USER = os.environ['DIAGNOSPYMES_USER']
+DB_PASS = os.environ['DIAGNOSPYMES_USER_PASSWORD']
+SECRET_KEY = os.environ['DIAGNOSPYMES_SECRET_KEY']
 
 DATABASES = {
     'default': {

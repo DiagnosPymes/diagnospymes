@@ -23,6 +23,7 @@ admin.site.register(GeneralPractice)
 admin.site.register(Sector)
 admin.site.register(Autoevaluation)
 admin.site.register(Answer)
+admin.site.register(FinancesInformation)
 
 # Auxiliary class to edit PYME objects in 'edit User' page
 class PYMEInline(admin.StackedInline):
