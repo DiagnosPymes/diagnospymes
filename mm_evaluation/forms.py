@@ -64,7 +64,7 @@ class UserRegistrationForm(UserCreationForm):
 
     Fields:
         username (forms.CharField): username to be created in registration page.
-        email (forms.CharField): email to be created in registrtion page.
+        email (forms.CharField): email to be created in registration page.
         first_name (forms.CharField):
         last_name (forms.CharField):
         password1 (forms.CharField): password to be created in registration form.
@@ -109,6 +109,30 @@ class UserRegistrationForm(UserCreationForm):
 
 
 class FinancesInformationForm(forms.ModelForm):
+    """Form to create a Finances form.
+
+    Inherits from ModelForm, and uses Django's FinacesInformation model.
+    Labels for each field are defined in order to display form in spanish.
+
+    Fields:
+        employees_number (forms.ChoiceField): is the number of current employees in the company.
+        anual_income (forms.BigIntegerField): is the anual income of a company in Colombian pesos.
+        assets (forms.ChoiceField): are the assets of the company in Colombian pesos.
+        liabilities (forms.IntegerField): are the liabilities of the company in Colombian pesos.
+        monthly_production (forms.BigIntegerField): is the monthly production of the company in units or Colombian pesos.
+        productive_configuration (forms.ChoiceField): is the productive configuration of the company.
+        inventory_politics (forms.ChoiceField): are the inventory politics of the company.
+        main_product (forms.CharField): is the main product the company sells.
+        main_competidor (forms.CharField): is the main competidor of the company.
+        patrimony (forms.BigIntegerField): is the patrimony of the company in Colombian pesos.
+        sales_income (froms.BigIntegerField): is the sales income of the company in Colombian pesos.
+        gross_profits (forms.BigIntegerField): are the gross profit of the company in Colombian pesos.
+        net_profits (forms.BigIntegerField): are the net profits of the company in Colombian pesos.
+        fixed_costs_expences (models.BigIntegerField): are the fixed cost and expenses of the company
+        variable_costs_expences (forms.BigIntegerField): are the variable costs and expences of the company.
+        ebitda (forms.IntegerField):is the EBITDA of the company
+
+"""
     
     class Meta:
         model = FinancesInformation
@@ -131,24 +155,6 @@ class FinancesInformationForm(forms.ModelForm):
             "ebitda"
         ]
 
-        widgets = {
-            "employees_number": forms.Select(choices=VALID_EMPLOYEES_NUMBER),
-            "anual_income": forms.TextInput(attrs={'required':False}),
-            "assets": forms.Select(choices=VALID_ASSETS),
-            "liabilities": forms.TextInput(attrs={'required':False}),
-            "monthly_production": forms.TextInput(attrs={'required':False}),
-            "productive_configuration": forms.Select(choices=VALID_PRODUCTIVE_CONFIGURATION),
-            "inventory_politics":forms.Select(choices=VALID_INVENTORY_POLITICS),
-            "main_product": forms.TextInput(attrs={'required':False}),
-            "main_copetidor": forms.TextInput(attrs={'required':False}),
-            "patrimony": forms.TextInput(attrs={'required':False}),
-            "sales_income": forms.TextInput(attrs={'required':False}), 
-            "gross_profits": forms.TextInput(attrs={'required':False}),
-            "net_profits": forms.TextInput(attrs={'required':False}),
-            "fixed_costs_expences": forms.TextInput(attrs={'required':False}),
-            "variable_costs_expences":forms.TextInput(attrs={'required':False}),
-            "ebitda":forms.TextInput(attrs={'required':False}),
-        }
         labels = {
             "employees_number":_("Número de empleados"),
             "anual_income":_("Ingreso anual"),
@@ -167,6 +173,3 @@ class FinancesInformationForm(forms.ModelForm):
             "variable_costs_expences":_("Costos y gastos varibales"),
             "ebitda":_("EBITDA"),
         }
-
-
-    

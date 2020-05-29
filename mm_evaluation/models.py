@@ -354,22 +354,22 @@ class FinancesInformation(models.Model):
 
     Fields:
         pyme (models.ForeignKey): is the PYME for whom this information belongs.
-        employees_number (models.IntegerField): is the number of current employees in the company.
-        anual_income (models.BigIntegerField): is the anual income of a company in Colombian pesos.
-        assets (models.BigIntegerFields): are the assets of the company in Colombian pesos.
-        liabilities (models.IntegerField): are the liabilities of the company in Colombian pesos.
-        monthly_production (models.BigIntegerField): is the monthly production of the company in units or Colombian pesos.
-        productive_configuration (models.CharField): is the productive configuration of the company. Maximum is 300 characters.
-        inventory_politics (models.CharField): are the inventory politics of the company. Maximum is 100 characters.
-        main_product (models.CharField): is the main product the company sells. Maximum is 30 characters.
-        main_competidor (models.CharField): is the main competidor of the company. Maximum is 30 characters.
-        patrimony (models.BigIntegerField): is the patrimony of the company in Colombian pesos.
-        sales_income (models.BigIntegerField): is the sales income of the company in Colombian pesos.
-        gross_profits (models.BigIntegerField): are the gross profit of the company in Colombian pesos.
-        net_profits (models.BigIntegerField): are the net profits of the company in Colombian pesos.
-        fixed_costs_expences (models.BigIntegerField): are the fixed cost and expenses of the company
-        variable_costs_expences (models.BigIntegerField): are the variable costs and expences of the company.
-        ebitda (models.IntegerField):is the EBITDA of the company
+        employees_number (models.IntegerField): is the number of current employees in the company. Can be null and blank
+        anual_income (models.BigIntegerField): is the anual income of a company in Colombian pesos.Can be null and blank
+        assets (models.BigIntegerFields): are the assets of the company in Colombian pesos. Can be null and blank
+        liabilities (models.IntegerField): are the liabilities of the company in Colombian pesos. Can be null and blank
+        monthly_production (models.BigIntegerField): is the monthly production of the company in units or Colombian pesos. Can be null and blank
+        productive_configuration (models.CharField): is the productive configuration of the company. Maximum is 300 characters. Can be null and blank
+        inventory_politics (models.CharField): are the inventory politics of the company. Maximum is 100 characters. Can be null and blank
+        main_product (models.CharField): is the main product the company sells. Maximum is 30 characters. Can be null and blank
+        main_competidor (models.CharField): is the main competidor of the company. Maximum is 30 characters. Can be null and blank
+        patrimony (models.BigIntegerField): is the patrimony of the company in Colombian pesos. Can be null and blank
+        sales_income (models.BigIntegerField): is the sales income of the company in Colombian pesos. Can be null and blank
+        gross_profits (models.BigIntegerField): are the gross profit of the company in Colombian pesos. Can be null and blank
+        net_profits (models.BigIntegerField): are the net profits of the company in Colombian pesos. Can be null and blank
+        fixed_costs_expences (models.BigIntegerField): are the fixed cost and expenses of the company. Can be null and blank
+        variable_costs_expences (models.BigIntegerField): are the variable costs and expences of the company. Can be null and blank
+        ebitda (models.IntegerField):is the EBITDA of the company. Can be null and blank
 
     """
     
