@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'bootstrap4',
     'fontawesome_5',
     'django.contrib.admindocs',
-    'django.contrib.admindocs.middleware.XViewMiddleware',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.admindocs.middleware.XViewMiddleware',
 ]
 
 ROOT_URLCONF = 'diagnospymes.urls'
