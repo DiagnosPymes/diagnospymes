@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'fontawesome_5',
+    'django.contrib.admindocs',
+    'django.contrib.admindocs.middleware.XViewMiddleware',
 ]
 
 MIDDLEWARE = [
