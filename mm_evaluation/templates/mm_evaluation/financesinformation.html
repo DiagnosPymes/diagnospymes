@@ -22,22 +22,22 @@
 	      <form method='post'>
 		{% csrf_token %}
 		<div class="col form-group">
-          {% bootstrap_field form.employees_number          show_label=True  layout='horizontal' label_class="w-25 text-center" %}
-          {% bootstrap_field form.anual_income              show_label=False  %}
-          {% bootstrap_field form.assets                    show_label=True  layout='horizontal'  label_class="w-25 text-center" %}
+          {% bootstrap_field form.employees_number          show_label=True show_help=False  layout='horizontal' label_class="w-25 text-center" %}
+          {% bootstrap_field form.anual_income              show_label=False show_help=False  %}
+          {% bootstrap_field form.assets                    show_label=True show_help=False  layout='horizontal'  label_class="w-25 text-center" %}
           {% bootstrap_field form.liabilities               show_label=False  show_help=False %}
           {% bootstrap_field form.monthly_production        show_label=False  show_help=False %}
           {% bootstrap_field form.productive_configuration  show_label=True  layout='horizontal' show_help=False label_class="w-25 text-center" %}
           {% bootstrap_field form.inventory_politics        show_label=True  layout='horizontal' show_help=False label_class="w-25 text-center" %}
           {% bootstrap_field form.main_product              show_label=False  show_help=False %}
           {% bootstrap_field form.main_competidor           show_label=False  show_help=False %}
-          {% bootstrap_field form.patrimony                 show_label=False  %}
-          {% bootstrap_field form.sales_income              show_label=False  %}
-          {% bootstrap_field form.gross_profits             show_label=False  layout='horizontal'  %}
-          {% bootstrap_field form.net_profits               show_label=False  %}
-          {% bootstrap_field form.fixed_costs_expences      show_label=False  layout='horizontal'  %}
-          {% bootstrap_field form.variable_costs_expences   show_label=False  %}
-          {% bootstrap_field form.ebitda                    show_label=False  layout='horizontal'  %}
+          {% bootstrap_field form.patrimony                 show_label=False show_help=False  %}
+          {% bootstrap_field form.sales_income              show_label=False show_help=False  %}
+          {% bootstrap_field form.gross_profits             show_label=False show_help=False  layout='horizontal'  %}
+          {% bootstrap_field form.net_profits               show_label=False show_help=False  %}
+          {% bootstrap_field form.fixed_costs_expences      show_label=False show_help=False  layout='horizontal'  %}
+          {% bootstrap_field form.variable_costs_expences   show_label=False show_help=False  %}
+          {% bootstrap_field form.ebitda                    show_label=False show_help=False  layout='horizontal'  %}
           <span style="  display: flex; justify-content: center; align-items: center;">
 		  {% bootstrap_button content='Guardar' button_class='btn-third' %}
           </span>
