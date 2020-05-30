@@ -1,104 +1,81 @@
 {% extends 'mm_evaluation/base.html' %}
 
 <html>
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    {% block title %}<title> Resultados </title>{% endblock title %}
+    <head>
+        {% load bootstrap4 %}
+        {% load fontawesome_5 %}
+        {% load static %}
+        {# Load CSS and JavaScript #}
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+    </head>
 
-    {% load bootstrap4 %}
-    {% load fontawesome_5 %}
-    {% load static %}
-    {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
-    {# Display django.contrib.messages as Bootstrap alerts #}
-    {% bootstrap_messages %}
-    <style>
-      .slider.slider-horizontal .tooltip.tooltip-main.in,
-      .slider.slider-vertical .tooltip.tooltip-main.in { opacity: 1 !important; }
+    {% block content %}
 
-    </style>
-    <!-- Our Custom CSS -->
-    <link href="{% static 'mm_evaluation/css/sidebar.css' %}" rel="stylesheet">
-    
-</head>
-
-  {% block content %}
+    {% block title %}<title>Autoevaluación del {{autoevaluation.last_time_edition}}</title>{% endblock %}
     <body>
-      <h1>Autoevaluación del {{autoevaluation.last_time_edition}}</h1>
-      <h4 style="text-align: center">Su empresa se encuentra en nivel de madurez {{maturity_level.name}}</h4>
-      <h4>Puntaje final: {{autoevaluation.final_score}}</h4>
-
-  <div>
-        <select>
-            <option value="spider">Telaraña</option>
-            <option value="bar">Barra</option>
-            <option value="scatter">Linea</option>
+        <h1>Autoevaluación del {{autoevaluation.last_time_edition}}</h1>
+        <h4 style="text-align: center">Su empresa se encuentra en nivel de madurez {{maturity_level.name}}</h4>
+        <h4>Puntaje final: {{autoevaluation.final_score}}<br></h4>
+        <select class="form-control col-5">
+            <option value="spider">Gráfica de telaraña con tus resultados</option>
+            <option value="bar">Gráfica de barras con tus resultados</option>
+            <option value="scatter">Gráfica de lineas con tus resultados</option>
         </select>
-    </div>
-    <div class="spider box">Gráfica de telaraña con tus resultados:
-      <br>
-      {% if spider_graph %}
-      <div class="container-fluid" style="width:90%;height:700;">
-        {{ spider_graph|safe }}
-      </div>
-      <br>
-      {% endif %}
-    </div>
-    <div class="bar box">Gráfica de barras con tus resultados:
-      <br>
-      {% if bar_graph %}
-      <div class="container-fluid" style="width:90%;height:700;">
-        {{ bar_graph|safe }}
-      </div>
-      <br>
-      {% endif %}
-    </div>
-    <div class="scatter box">Gráfica de lineas con tus resultados:
-      <br>
-      {% if line_graph %}
-      <div class="container-fluid" style="width:90%;height:700;">
-        {{ line_graph|safe }}
-      </div>
-      <br>
-      {% endif %}
-    </div>
-
-  <div>
-    <h1>Recomendaciones</h1>
-    <p>Su macroproceso mas debil es {{ lowest_macroprocess.name }}</p>
-    <p>Para llegar al siguiente nivel deberias poder describirte así: {{ general_recommendation.description }}</p><br>
-      <div class="center-buttons">
-    <ul class="list-group list-group-green">
-	{% if all_macroprocesses %}
-	{% for macroprocess in all_macroprocesses %}
-        <a href="{% url 'mm_evaluation:specific_recommendations' current_autoev.id macroprocess.id %}" class="btn btn-third" role="button">{{ macroprocess.name }}</a><br>
-	{% endfor %}
-	{% endif %}
-      </div>
-  </div>  
-
-
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-  <script>
-    $(document).ready(function(){
-	$("select").change(function(){
-            $(this).find("option:selected").each(function(){
-		var optionValue = $(this).attr("value");
-		if(optionValue){
-                    $(".box").not("." + optionValue).hide();
-                    $("." + optionValue).show();
-		} else{
-                    $(".box").hide();
-		}
+        <br>
+        <div class="spider box" style="width:90%;height:700;">
+            {% if spider_graph %}
+            <div class="container-fluid">
+                {{ spider_graph|safe }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="bar box" style="width:90%;height:700;">
+            {% if bar_graph %}
+            <div class="container-fluid">
+                {{ bar_graph|safe }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="scatter box" style="width:90%;height:700;">
+            {% if line_graph %}
+            <div class="container-fluid">
+                {{ line_graph|safe }}
+            </div>
+            {% endif %}
+        </div>
+        <br>
+        <div>
+            <h1>Recomendaciones</h1>
+            <p>Su macroproceso más débil es {{ lowest_macroprocess.name }}</p>
+            <p>Para llegar al siguiente nivel deberías poder describirte así: {{ general_recommendation.description }}</p>
+            <div class="center-buttons">
+                <ul class="list-group list-group-green">
+                    {% if all_macroprocesses %}
+                    {% for macroprocess in all_macroprocesses %}
+                    <a href="{% url 'mm_evaluation:specific_recommendations' current_autoev.id macroprocess.id %}" class="btn btn-third" role="button">{{ macroprocess.name }}</a><br>
+                    {% endfor %}
+                    {% endif %}
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("select").change(function(){
+                    $(this).find("option:selected").each(function(){
+                        var optionValue = $(this).attr("value");
+                        if(optionValue){
+                            $(".box").not("." + optionValue).hide();
+                            $("." + optionValue).show();
+                        } else{
+                            $(".box").hide();
+                        }
+                    });
+                }).change();
             });
-	}).change();
-    });
-  </script>
+        </script>
 
-</body>
-{% endblock%}
+    </body>
+    {% endblock%}
 
 </html>

@@ -996,6 +996,17 @@ def create_line_graph(x, y):
     return div
 
 class FinancesInformationView(LoginRequiredMixin, CreateView):
+    """This view class is for finances information view.
+
+    Creates a form: FinancesInformationForm. The former is used to get information related to the finances information  model.
+
+    Args:
+        request (HttpRequest): HttpRequest object holding state and metadata for the request made.
+
+    Returns:
+        HttpResponse redirecting to financesInformation page.
+"""
+
     # For use in LoginRequiredMixin
     login_url = reverse_lazy("mm_evaluation:login")
     permission_denied_message = (

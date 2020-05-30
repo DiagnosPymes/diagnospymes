@@ -1,14 +1,18 @@
 /*
-    DEMO STYLE
-*/
+DEMO STYLE
+ */
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+@import "https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap";
+
 
 :root {
     --first-color:#20B3A1;
     --second-color:#15BFF0;
+    --second-border-color:#9fe5f9;
+    --second-hover-color:#0b86a8;
     --third-color:#4AD18E;
-    --third-border-color:#c5e3d4;
-    --third-hover-color:#008f47;
+    --third-border-color:#aeeacc;
+    --third-hover-color:#258e59;
     --fourth-color:#F09015;
     --fourth-hover-color:#c97100;
     --fourth-border-color:#f7e0c3;
@@ -20,7 +24,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fafafa;
+    background: #ededed;
 }
 
 p {
@@ -28,22 +32,35 @@ p {
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
-    color: var(--dark-p-color);
+    color: var(--dark-color);
 }
 
 a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
+    font-family: 'Poppins', sans-serif;
 }
 
 h1 {
-    color: var(--first-color);
+    color: var(--second-color);
     text-align: center;
+    font-family: 'Fjalla One', sans-serif;
+}
+
+h2 {
+    color: var(--dark-color);
+    font-family: 'Fjalla One', sans-serif;
+}
+
+h3 {
+    color: var(--dark-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 h4 {
     color: var(--dark-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .navbar {
@@ -53,12 +70,14 @@ h4 {
     border-radius: 0;
     margin-bottom: 30px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .navbar-btn {
     box-shadow: none;
     outline: none !important;
     border: none;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .line {
@@ -69,213 +88,245 @@ h4 {
 }
 
 .btn-outline-fourth {
-  color: var(--fourth-color);
-  background-color: transparent;
-  background-image: none;
-  border-color: var(--fourth-color);
+    color: var(--fourth-color);
+    background-color: transparent;
+    background-image: none;
+    border-color: var(--fourth-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-outline-fourth:hover {
-  color: #fff;
-  background-color: var(--fourth-color);
-  border-color: var(--fourth-color);
+    color: #fff;
+    background-color: var(--fourth-color);
+    border-color: var(--fourth-color);
+    font-family: 'Fjalla One', sans-serif;
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    background-color: transparent;
+    background-image: none;
+    border-color: #6c757d;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-outline-secondary:hover {
-  color: #fff;
-  background-color: var(--fourth-color);
-  border-color: var(--fourth-color);
+    color: #fff;
+    background-color: var(--fourth-color);
+    border-color: var(--fourth-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-outline-fourth:focus, .btn-outline-fourth.focus {
-  box-shadow: 0 0 0 0.2rem rgba(240, 144, 21, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(240, 144, 21, 0.5);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-outline-fourth.disabled, .btn-outline-fourth:disabled {
-  color: var(--fourth-color);
-  background-color: transparent;
+    color: var(--fourth-color);
+    background-color: transparent;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-outline-fourth:not(:disabled):not(.disabled):active, .btn-outline-fourth:not(:disabled):not(.disabled).active,
 .show > .btn-outline-fourth.dropdown-toggle {
-  color: #fff;
-  background-color: var(--fourth-color);
-  border-color: var(--fourth-color);
+    color: #fff;
+    background-color: var(--fourth-color);
+    border-color: var(--fourth-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-outline-fourth:not(:disabled):not(.disabled):active:focus, .btn-outline-fourth:not(:disabled):not(.disabled).active:focus,
 .show > .btn-outline-fourth.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(240, 144, 21, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(240, 144, 21, 0.5);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 
 .btn-third {
-  color: #fff;
-  background-color: var(--third-color);
-  border-color: var(--third-border-color);
+    color: #fff;
+    background-color: var(--third-color);
+    border-color: var(--third-border-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-third:hover {
-  color: #fff;
-  background-color: var(--third-hover-color);
-  border-color: var(--third-border-color);
+    color: #fff;
+    background-color: var(--third-hover-color);
+    border-color: var(--third-border-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-third:focus, .btn-third.focus {
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-third.disabled, .btn-third:disabled {
-  color: #fff;
-  background-color: var(--third-hover-color);
-  border-color: var(--third-border-color);
+    color: #fff;
+    background-color: var(--third-hover-color);
+    border-color: var(--third-border-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-third:not(:disabled):not(.disabled):active, .btn-third:not(:disabled):not(.disabled).active,
 .show > .btn-third.dropdown-toggle {
-  color: #fff;
-  background-color: #0062cc;
-  border-color: #005cbf;
+    color: #fff;
+    background-color: #0062cc;
+    border-color: #005cbf;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-third:not(:disabled):not(.disabled):active:focus, .btn-third:not(:disabled):not(.disabled).active:focus,
 .show > .btn-third.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    font-family: 'Fjalla One', sans-serif;
 }
 .btn-fourth {
-  color: #fff;
-  background-color: var(--fourth-color);
-  border-color: var(--fourth-border-color);
+    color: #fff;
+    background-color: var(--fourth-color);
+    border-color: var(--fourth-border-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-fourth:hover {
-  color: #fff;
-  background-color: var(--fourth-hover-color);
-  border-color: var(--fourth-border-color);
+    color: #fff;
+    background-color: var(--fourth-hover-color);
+    border-color: var(--fourth-border-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-fourth:focus, .btn-fourth.focus {
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-fourth.disabled, .btn-fourth:disabled {
-  color: #fff;
-  background-color: var(--fourth-hover-color);
-  border-color: var(--fourth-border-color);
+    color: #fff;
+    background-color: var(--fourth-hover-color);
+    border-color: var(--fourth-border-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-fourth:not(:disabled):not(.disabled):active, .btn-fourth:not(:disabled):not(.disabled).active,
 .show > .btn-fourth.dropdown-toggle {
-  color: #fff;
-  background-color: #0062cc;
-  border-color: #005cbf;
+    color: #fff;
+    background-color: #0062cc;
+    border-color: #005cbf;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-fourth:not(:disabled):not(.disabled):active:focus, .btn-fourth:not(:disabled):not(.disabled).active:focus,
 .show > .btn-fourth.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 
 .flex-container{
-  display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
-  display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
 
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
 
-  width: 400px;
-  height: 200px;
-  background-color: #3498db;
+    width: 400px;
+    height: 200px;
+    background-color: #3498db;
 }
 
 
 .btn-link {
-  font-weight: 400;
-  color: var(--third-hover-color);
-  background-color: transparent;
+    font-weight: 400;
+    color: var(--third-hover-color);
+    background-color: transparent;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-link:hover {
-  color: var(--third-hover-color);
-  text-decoration: underline;
-  background-color: transparent;
-  border-color: transparent;
+    color: var(--third-hover-color);
+    text-decoration: underline;
+    background-color: transparent;
+    border-color: transparent;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-link:focus, .btn-link.focus {
-  text-decoration: underline;
-  border-color: transparent;
-  box-shadow: none;
+    text-decoration: underline;
+    border-color: transparent;
+    box-shadow: none;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .btn-link:disabled, .btn-link.disabled {
-  color: var(--third-hover-color);
-  pointer-events: none;
+    color: var(--third-hover-color);
+    pointer-events: none;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .page-link {
-  position: relative;
-  display: block;
-  padding: 0.5rem 0.75rem;
-  margin-left: -1px;
-  line-height: 1.25;
-  color: var(--third-color);
-  background-color: #fff;
-  border: 1px solid var(--third-border-color);
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: var(--third-color);
+    background-color: #fff;
+    border: 1px solid var(--third-border-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .page-link:hover {
-  z-index: 2;
-  color: var(--third-hover-color);
-  text-decoration: none;
-  background-color: #ebe6e1;
-  border-color: var(--third-border-color);
+    z-index: 2;
+    color: var(--third-hover-color);
+    text-decoration: none;
+    background-color: #ebe6e1;
+    border-color: var(--third-border-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .page-item.active .page-link {
-  z-index: 1;
-  color: #fff;
-  background-color: var(--third-color);
-  border-color: var(--third-border-color);
+    z-index: 1;
+    color: #fff;
+    background-color: var(--third-color);
+    border-color: var(--third-border-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .page-link:focus {
-  z-index: 2;
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    z-index: 2;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .page-link:not(:disabled):not(.disabled) {
-  cursor: pointer;
+    cursor: pointer;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 /*---------------------------------
-  RESULTS
+RESULTS
 ----------------------------------*/
-.list-group-green .list-group-item {
-  background-color: var(--third-color);
-  border-top: var(--third-color);
-  border-left-color: var(--third-color);
-  border-right-color: var(--third-color);
-  text-align: center;
-  margin: 0;
-  border-radius: 15px;
+.list-group .list-group-item {
+    text-align: center;
+    margin: 0;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .list-group-green .list-group-item:hover {
-  background-color: var(--third-hover-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .center-buttons {
-  margin: auto;
-  width: 50%;
-  padding: 10px;
+    margin: auto;
+    width: 50%;
+    padding: 10px;
 }
 
 
 /* ---------------------------------------------------
-    SIDEBAR STYLE
+SIDEBAR STYLE
 ----------------------------------------------------- */
 
 .wrapper {
@@ -293,6 +344,7 @@ h4 {
     color: #fff;
     transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
     transform-origin: bottom left;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 #sidebar.active {
@@ -303,26 +355,31 @@ h4 {
 #sidebar .sidebar-header {
     padding: 20px;
     background: var(--first-color);
+    font-family: 'Fjalla One', sans-serif;
 }
 
 #sidebar ul.components {
     padding: 20px 0;
     border-bottom: 1px solid #47748b;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 #sidebar ul p {
     color: #fff;
     padding: 10px;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 #sidebar ul li a {
     padding: 10px;
     font-size: 1.1em;
     display: block;
+    font-family: 'Fjalla One', sans-serif;
 }
 #sidebar ul li a:hover {
     color: var(--first-color);
     background: #fff;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
@@ -352,7 +409,7 @@ ul ul a {
 
 
 /* ---------------------------------------------------
-    CONTENT STYLE
+CONTENT STYLE
 ----------------------------------------------------- */
 #content {
     width: 100%;
@@ -397,7 +454,7 @@ ul ul a {
 
 
 /* ---------------------------------------------------
-    MEDIAQUERIES
+MEDIAQUERIES
 ----------------------------------------------------- */
 @media (max-width: 768px) {
     #sidebar {
