@@ -4,6 +4,7 @@
     {% load bootstrap4 %}
     {% load static %}
     {% load fontawesome_5 %}
+    {% load autoevaluation_extras %}
     {# Display django.contrib.messages as Bootstrap alerts #}
     {% bootstrap_messages %}
 
@@ -14,6 +15,7 @@
 {% block title %}<title>Autoevaluación</title>{% endblock %}
 <div class="content">
     <body>
+        <h3 class="text-center">{{ autoevaluation_start_time }}</h3>
         <div class="col d-flex justify-content-center">
             <div class="pagination">
                 <span class="step-links">
@@ -21,7 +23,7 @@
                 </span>
             </div>
         </div>
-
+    
         <form action="{% url 'mm_evaluation:save_answer' autoevaluation.id %}" method="post">
             {% csrf_token %}
             {% for macroprocess in macroprocesses_list %}
@@ -35,7 +37,10 @@
                         <div class="card-header" id="heading{{process.id}}">
                             <h3 class="mb-0 text-center">
                                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{process.id}}" aria-expanded="true" aria-controls="collapse{{process.id}}">
-                                    {{ process.id }}. {{ process.name }}
+                                    {{ process.id }}. {{ process.name }}   
+                                    <span class="btn btn-link-fourth" type="button" data-toggle="collapse" data-target="#collapse{{process.id}}" aria-expand    ed="true" aria-controls="collapse{{process.id}}">
+                                        {{ process|get_score:autoevaluation }}
+                                    </span>
                                 </button>
                             </h3>
                         </div>
