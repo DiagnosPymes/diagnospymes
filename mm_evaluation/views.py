@@ -952,7 +952,8 @@ class BenchmarkingAverageView(LoginRequiredMixin, DetailView):
 def create_bar_graph(x, y):
     data = [go.Bar(x=x, y=y)]
     layout = go.Layout(
-        title="Puntaje",
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
         xaxis={"title": "Macroproceso"},
         yaxis={"title": "Resultado",
                "range": [0, 5]},
@@ -970,6 +971,8 @@ def create_spider_graph(x, y):
     ))
 
     fig.update_layout(
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
         polar=dict(
             radialaxis=dict(
                 visible=True,
@@ -985,7 +988,8 @@ def create_spider_graph(x, y):
 def create_line_graph(x, y):
     data = [go.Scatter(x=x, y=y)]
     layout = go.Layout(
-        title="Puntaje",
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
         xaxis={"title": "Macroproceso"},
         yaxis={"title": "Resultado",
                "range": [0, 5]},
