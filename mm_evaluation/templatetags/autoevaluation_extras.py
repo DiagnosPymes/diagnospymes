@@ -6,7 +6,7 @@ register = template.Library()
 @register.filter
 def get_score(p, a):
     try:
-        score = "Puntaje: " + str(Answer.objects.get(autoevaluation=a,process=p).score)
+        score = "Puntaje actual: " + str(Answer.objects.get(autoevaluation=a,process=p).score)
     except Answer.DoesNotExist:
         score = "Sin responder"
     return score
