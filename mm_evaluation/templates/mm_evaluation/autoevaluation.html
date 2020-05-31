@@ -33,6 +33,7 @@
             <div class="row d-flex justify-content-center">
                 <div class="accordion" id="accordion">
                     {% for process in macroprocess.process_set.all %}
+                    {% with pre_score=process|get_score:autoevaluation %}
                     <div class="card">
                         <div class="card-header" id="heading{{process.id}}">
                             <h3 class="mb-0 text-center">
@@ -41,7 +42,7 @@
                                 <button class="btn btn-lg btn-link" type="button" data-toggle="collapse" data-target="#collapse{{process.id}}" aria-expanded="true" aria-controls="collapse{{process.id}}">
                                     {{ process.id }}. {{ process.name }}
                                     <span class="btn btn-link-fourth" type="button" data-toggle="collapse" data-target="#collapse{{process.id}}" aria-expand    ed="true" aria-controls="collapse{{process.id}}">
-                                        {{ process|get_score:autoevaluation }}
+                                        {{ pre_score.0 }}{{ pre_score.1 }}
                                     </span>
                                 </button>
                             </h3>
@@ -81,7 +82,11 @@
                                         data-slider-min="0"
                                         data-slider-max="5"
                                         data-slider-step="1"
+                                        {% if pre_score.1 != "" %}
+                                        data-slider-value="{{ pre_score.1 }}"
+                                        {% else %}
                                         data-slider-value="2"
+                                        {% endif %}
                                         data-slider-tooltip="hide"
                                         >
                                         <!-- -->
@@ -109,6 +114,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endwith %}
                     {% endfor %}
                 </div>
 
