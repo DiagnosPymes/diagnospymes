@@ -134,4 +134,3 @@ mm_evaluation/migrations
 
 # Ignore bootstrap-slider source code
 mm_evaluation/static/mm_evaluation/js/bootstrap-slider.js
-mm_evaluation/static/mm_evaluation/css/bootstrap-slider.css

@@ -10,10 +10,16 @@
 
 {% block content %}
 <div class="container">
-    <div class="row justify-content-center align-items-center" style="height:80vh;">
+    <div class="row justify-content-center align-items-center" style="height:30vh;">
         <div class="col-auto border p-3">
             <h1>Registro exitoso!</h1>
-            <a href="{% url 'mm_evaluation:index' %}">Volver a página principal.</a>
+            <p class="text-center">¡Tu registro ha sido exitoso!.<br>
+            A continuación puedes llenar una encuesta<br>
+            sobre información financiera.<br>
+            Esta encuesta es totalmente opcional,<br>
+            y puedes dejar campos en blanco si crees que es información sensible.<br>
+            <a class="btn btn-link" type="button" href="{% url 'mm_evaluation:financesInformation' %}">Responder la encuesta sobre información financiera.</a>
+            <a class="btn btn-link" type="button" href="{% url 'mm_evaluation:index' %}">Volver a página principal.</a>
         </div>
     </div>
 </div>

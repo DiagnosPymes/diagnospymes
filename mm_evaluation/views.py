@@ -33,6 +33,21 @@ from .models import (
     FinancesInformation,
 )
 
+number_to_month = {
+        1: "enero",
+        2: "febrero",
+        3: "marzo",
+        4: "abril",
+        5: "mayo",
+        6: "junio",
+        7: "julio",
+        8: "agosto",
+        9: "septiembre",
+        10: "octubre",
+        11: "noviembre",
+        12: "diciembre",
+        }
+
 
 @login_required
 def begin_or_continue_autoevaluation(request):
@@ -98,6 +113,8 @@ class AutoevaluationView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["autoevaluation"] = self.autoevaluation
+        month = number_to_month[int(self.autoevaluation.start_time.strftime("%m").lstrip("0"))]
+        context["autoevaluation_start_time"] = self.autoevaluation.start_time.strftime("Autoevaluación iniciada el %d de mes del %Y").replace("mes", month)
         if is_autoevaluation_filled(self.autoevaluation):
             context["is_autoevaluation_filled"] = True
         return context

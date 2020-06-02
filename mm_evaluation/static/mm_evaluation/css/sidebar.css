@@ -264,6 +264,21 @@ h4 {
     font-family: 'Fjalla One', sans-serif;
 }
 
+.btn-link-fourth {
+    font-weight: 400;
+    color: var(--fourth-hover-color);
+    background-color: transparent;
+    font-family: 'Fjalla One', sans-serif;
+}
+
+.btn-link-fourth:hover {
+    color: var(--fourth-hover-color);
+    text-decoration: underline;
+    background-color: transparent;
+    border-color: transparent;
+    font-family: 'Fjalla One', sans-serif;
+}
+
 .page-link {
     position: relative;
     display: block;
