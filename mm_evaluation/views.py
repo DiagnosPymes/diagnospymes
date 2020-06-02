@@ -182,7 +182,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
                 "title": "¿Quiénes somos?",
-                "content": "Somos diagnosPYMES."}
+                "content": "El SFLMM es un modelo liviano que se enfoca en la evaluación de prácticas recomendadas en procesos mayormente logísticos de las empresa, lo anterior con el propósito de implementar hábitos de mejora continua."}
         return context
 
 
@@ -193,7 +193,7 @@ class Mission(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "¿Cuál es nuestra misión?",
-            "content": "Nuestra misión es diagnosticar.",
+            "content": "Apoyar el desarrollo de la competitividad y productividad de las micro y pequeñas organizaciones a través de una evaluación consciente de sus procesos.",
         }
         return context
 
@@ -205,7 +205,7 @@ class AboutUs(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "Nuestro equipo",
-            "content": "Nuestro equipo somos nosotros.",
+            "content": "Falta",
         }
         return context
 
@@ -216,7 +216,7 @@ class Vision(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "Nuestra misión",
-            "content": "Nuestra visión es un mundo diagnosticado.",
+            "content": "Evolucionar como un sistema de autodiagnóstico integrado y personalizado a cada uno de los intereses de las micro y pequeñas organizaciones del Valle de Aburrá.",
         }
         return context
 
@@ -227,7 +227,7 @@ class Metodology(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "Nuestra metodología",
-            "content": "Nuestra metodología es metodológica.",
+            "content": "PEDIR INFOGRAMA GRANDE",
         }
         return context
 
@@ -238,7 +238,7 @@ class Requirements(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "Requisitos",
-            "content": "El único requisito es tener una PYME.",
+            "content": "Diligenciamiento de encuesta Informativa. \n Disposición a brindar datos para el mejoramiento del modelo.",
         }
         return context
 
@@ -249,7 +249,7 @@ class Instructions(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "Instructivo",
-            "content": "1) Responde la autoevalución. 2) Mira los resultados.",
+            "content": "PEDIR INFOGRAMA GRANDE",
         }
         return context
 
@@ -969,7 +969,8 @@ class BenchmarkingAverageView(LoginRequiredMixin, DetailView):
 def create_bar_graph(x, y):
     data = [go.Bar(x=x, y=y)]
     layout = go.Layout(
-        title="Puntaje",
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
         xaxis={"title": "Macroproceso"},
         yaxis={"title": "Resultado",
                "range": [0, 5]},
@@ -987,6 +988,8 @@ def create_spider_graph(x, y):
     ))
 
     fig.update_layout(
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
         polar=dict(
             radialaxis=dict(
                 visible=True,
@@ -1002,7 +1005,8 @@ def create_spider_graph(x, y):
 def create_line_graph(x, y):
     data = [go.Scatter(x=x, y=y)]
     layout = go.Layout(
-        title="Puntaje",
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
         xaxis={"title": "Macroproceso"},
         yaxis={"title": "Resultado",
                "range": [0, 5]},
@@ -1023,6 +1027,7 @@ class FinancesInformationView(LoginRequiredMixin, CreateView):
     Returns:
         HttpResponse redirecting to financesInformation page.
 """
+
     # For use in LoginRequiredMixin
     login_url = reverse_lazy("mm_evaluation:login")
     permission_denied_message = (
