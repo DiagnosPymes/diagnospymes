@@ -227,7 +227,8 @@ class Metodology(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "Nuestra metodología",
-            "content": "PEDIR INFOGRAMA GRANDE",
+            "content": "",
+            "image": "mm_evaluation/methodology.png",
         }
         return context
 
@@ -249,7 +250,8 @@ class Instructions(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "Instructivo",
-            "content": "PEDIR INFOGRAMA GRANDE",
+            "content": "",
+            "image": "mm_evaluation/instructions.jpg",
         }
         return context
 
@@ -599,12 +601,17 @@ class SpecificRecommendationsDetail(DetailView):
         )
 
 
-class Resources(View):
-    template_name = "mm_evaluation/resources.html"
+class Resources(TemplateView):
+    template_name = "mm_evaluation/index.html"
 
-    def get(self, request, *args, **kwargs):
-        return HttpResponse(render_to_string(self.template_name))
-
+    def get_context_data(self, **kwargs):
+        context = {
+            "title": "Recursos",
+            "content": "",
+            "image": "mm_evaluation/resources.jpg",
+        }
+        return context
+    
 
 class SuccessfulRegistrationView(LoginRequiredMixin, TemplateView):
     # For use in LoginRequiredMixin
