@@ -1,5 +1,4 @@
 #!/bin/sh
-# TEXTO AÑADIDO TUTORIAL
 
 CURR_DIR=`pwd`
 STATIC_DIR=$CURR_DIR/mm_evaluation/static/mm_evaluation
