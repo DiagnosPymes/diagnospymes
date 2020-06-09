@@ -82,6 +82,7 @@ VALID_INVENTORY_POLITICS = [
     ("CTO","CTO: configurar planta bajo pedido"),
 ]
 """Valid inventory politics for finances information"""
+"""Every PYME has to be related to a Sector."""
 
 class Sector(models.Model):
     """
