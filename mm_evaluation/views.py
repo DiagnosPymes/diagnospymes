@@ -246,6 +246,7 @@ class Requirements(TemplateView):
 
 class Instructions(TemplateView):
     template_name = "mm_evaluation/index.html"
+    
     def get_context_data(self, **kwargs):
         context = {
             "title": "Instructivo",
