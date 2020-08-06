@@ -246,7 +246,6 @@ class Requirements(TemplateView):
 
 class Instructions(TemplateView):
     template_name = "mm_evaluation/index.html"
-
     def get_context_data(self, **kwargs):
         context = {
             "title": "Instructivo",
@@ -254,7 +253,7 @@ class Instructions(TemplateView):
             "image": "mm_evaluation/instructions.jpg",
         }
         return context
-
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/peoQmrXfmCY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>    
 
 class PreviousResults(LoginRequiredMixin, ListView):
     # For use in LoginRequiredMixin
