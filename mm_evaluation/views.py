@@ -251,6 +251,7 @@ class Instructions(TemplateView):
             "title": "Instructivo",
             "content": "",
             "image": "mm_evaluation/instructions.jpg",
+            "video":"https://www.youtube.com/embed/peoQmrXfmCY",
         }
         return context  
 
