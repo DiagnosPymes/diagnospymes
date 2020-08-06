@@ -235,14 +235,15 @@ class Metodology(TemplateView):
 
 class Requirements(TemplateView):
     template_name = "mm_evaluation/index.html"
-
+    
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/peoQmrXfmCY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    
     def get_context_data(self, **kwargs):
         context = {
             "title": "Requisitos",
             "content": "Diligenciamiento de encuesta Informativa. \n Disposición a brindar datos para el mejoramiento del modelo.",
         }
         return context
-
 
 class Instructions(TemplateView):
     template_name = "mm_evaluation/index.html"
