@@ -49,7 +49,7 @@ class PYMERegistrationForm(forms.ModelForm):
             "contact_birth_date": _("Fecha de nacimiento"),
             "contact_id_type": _("Tipo del documento"),
             "contact_id_number": _("Número del documento"),
-            "contact_time_on_charge": _("Tiempo que lleva a cargo"),
+            "contact_time_on_charge": _("Años que lleva a cargo"),
             "contact_education_level": _("Nivel de educación"),
             "terms_conditions_acceptance": _("Aceptación de Términos y Condiciones"),
         }
