@@ -209,18 +209,6 @@ class AboutUs(TemplateView):
         }
         return context
 
-
-class Vision(TemplateView):
-    template_name = "mm_evaluation/index.html"
-
-    def get_context_data(self, **kwargs):
-        context = {
-            "title": "Nuestra misión",
-            "content": "Evolucionar como un sistema de autodiagnóstico integrado y personalizado a cada uno de los intereses de las micro y pequeñas organizaciones del Valle de Aburrá.",
-        }
-        return context
-
-
 class Metodology(TemplateView):
     template_name = "mm_evaluation/index.html"
 
