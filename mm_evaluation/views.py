@@ -183,7 +183,9 @@ class IndexView(TemplateView):
         context = {
             "title": "¿Quiénes somos?",
             "content": "El SFLMM es un modelo liviano que se enfoca en la evaluación de prácticas recomendadas en procesos mayormente logísticos de las empresa, lo anterior con el propósito de implementar hábitos de mejora continua.",
-      
+            
+            "image": "mm_evaluation/instructions.jpg",
+            
             "title_uno": "¿Cuál es nuestra misión?",
             "content_uno": "Apoyar el desarrollo de la competitividad y productividad de las micro y pequeñas organizaciones a través de una evaluación consciente de sus procesos.",
       
