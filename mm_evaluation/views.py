@@ -189,7 +189,7 @@ class IndexView(TemplateView):
             "title_uno": "¿Cuál es nuestra misión?",
             "content_uno": "Apoyar el desarrollo de la competitividad y productividad de las micro y pequeñas organizaciones a través de una evaluación consciente de sus procesos.",
       
-            "title_dos": "Nuestra misión",
+            "title_dos": "Nuestra visión",
             "content_dos": "Evolucionar como un sistema de autodiagnóstico integrado y personalizado a cada uno de los intereses de las micro y pequeñas organizaciones del Valle de Aburrá.",
         }
         return context
@@ -213,7 +213,7 @@ class AboutUs(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "Nuestro equipo",
-            "content": "Falta",
+            "content": "Somos un grupo de trabajo enfocado al desarrollo de herramientas que permiten la identificación de dificultades dentro de las Pymes de una manera sencilla, rápida y eficaz. La principal característica de nosotros es la integración de diferentes áreas de conocimiento que van desde el área de producción, pasando por comunicaciones hasta el campo de sistemas, lo que permite una visión multidisciplinaria a los problemas que enfrentan las Pymes en el día a día",
         }
         return context
 
