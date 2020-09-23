@@ -20,13 +20,13 @@
     <h2>{{ title_uno }}</h2>
     <p>{{ content_uno }}</p>
     
-     {% if image %}
+     {% if image_uno %}
     {% load static %}
         
        <img src="{% static "" %}{{image}}"> 
     {% endif %}
     
-    {% if video %}
+    {% if video_uno %}
         
        <iframe width="560" height="315" src="{{video}}" frameborder="0" style="float:center;width:420px;height:420px;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
     {% endif %}
@@ -35,13 +35,13 @@
     <h2>{{ title_dos }}</h2>
     <p>{{ content_dos }}</p>
 
-    {% if image %}
+    {% if image_dos %}
     {% load static %}
         
        <img src="{% static "" %}{{image}}"> 
     {% endif %}
     
-    {% if video %}
+    {% if video_dos %}
         
        <iframe width="560" height="315" src="{{video}}" frameborder="0" style="float:center;width:420px;height:420px;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
     {% endif %}
