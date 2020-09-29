@@ -182,7 +182,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "¿Quiénes somos?",
-            "image": "quienes_somos.png",
+            "image": "mm_evaluation/quienes_somos.png",
         }
         return context
 
