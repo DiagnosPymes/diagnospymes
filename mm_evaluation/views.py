@@ -182,15 +182,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "¿Quiénes somos?",
-            "content": "El SFLMM es un modelo liviano que se enfoca en la evaluación de prácticas recomendadas en procesos mayormente logísticos de las empresa, lo anterior con el propósito de implementar hábitos de mejora continua.",
-            
-            "image": "mm_evaluation/instructions.jpg",
-            
-            "title_uno": "¿Cuál es nuestra misión?",
-            "content_uno": "Apoyar el desarrollo de la competitividad y productividad de las micro y pequeñas organizaciones a través de una evaluación consciente de sus procesos.",
-      
-            "title_dos": "Nuestra visión",
-            "content_dos": "Evolucionar como un sistema de autodiagnóstico integrado y personalizado a cada uno de los intereses de las micro y pequeñas organizaciones del Valle de Aburrá.",
+            "image": "quienes_somos.png",
         }
         return context
 
