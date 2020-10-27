@@ -8,9 +8,10 @@
     
     {% if image %}
     {% load static %}
-    {% if medida %}
+    {% if width %}
+    {% if height %}
         
-       <img src="{% static "" %}{{image}}" {{medida}}> 
+       <img src="{% static "" %}{{image}}" width="{{width}}" height="{{height}}" > 
     {% endif %}
     
     {% if video %}
