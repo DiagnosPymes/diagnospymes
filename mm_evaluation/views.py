@@ -183,8 +183,6 @@ class IndexView(TemplateView):
         context = {
             "title": "¿Quiénes somos?",
             "image": "mm_evaluation/quienes_somos.png",
-            "width": "500",
-            "height": "600",
         }
         return context
 
