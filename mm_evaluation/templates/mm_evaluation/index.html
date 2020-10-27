@@ -6,12 +6,10 @@
     <h2>{{ title }}</h2>
     <p>{{ content }}</p>
     
-    {% if image_prueba %}
+    {% if image%}
     {% load static %}
-    {% if width %}
-    {% if height %}
         
-       <img src="{% static "" %}{{image}}" width="{{width}}" height="{{height}}" > 
+       <img src="{% static "" %}{{image}}"> 
     {% endif %}
     
     {% if video %}
