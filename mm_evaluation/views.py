@@ -228,7 +228,7 @@ class Metodology(TemplateView):
         context = {
             "title": "Nuestra metodología",
             "content": "",
-            "image_uno": "mm_evaluation/methodology.png",
+            "image": "mm_evaluation/methodology.png",
         }
         return context
 
