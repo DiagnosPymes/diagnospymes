@@ -9,7 +9,7 @@
     {% if image%}
     {% load static %}
         
-       <img src="{% static "" %}{{image}}" width=80 height=300 > 
+       <img src="{% static "" %}{{image}}"> 
     {% endif %}
    
     {% if video %}
@@ -20,10 +20,10 @@
     <h2>{{ title_uno }}</h2>
     <p>{{ content_uno }}</p>
     
-    {% if image_uno %}
+    {% if image %}
     {% load static %}
         
-       <img src="{% static "" %}{{image_uno}}"> 
+       <img src="{% static "" %}{{image}}"> 
     {% endif %}
     
     {% if video_uno %}
