@@ -51,7 +51,7 @@ class PYMERegistrationForm(forms.ModelForm):
             "contact_id_number": _("Número del documento"),
             "contact_time_on_charge": _("Años que lleva a cargo"),
             "contact_education_level": _("Nivel de educación"),
-            "terms_conditions_acceptance": _("Aceptación de Términos y Condiciones"),
+            "terms_conditions_acceptance": _("Acepto el tratamiento de los datos personales suministrados de conformidad con la política de tratamiento establecida por la Universidad EAFIT"),
         }
 
 
