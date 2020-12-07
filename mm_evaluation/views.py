@@ -250,7 +250,7 @@ class Instructions(TemplateView):
         context = {
             "title": "Instructivo",
             "content": "",
-            "image": "mm_evaluation/instructions.jpg",
+            "image": "mm_evaluation/instructions_1.png",
             "video":"https://www.youtube.com/embed/peoQmrXfmCY",
         }
         return context  
