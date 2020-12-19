@@ -181,7 +181,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {
-            "video":"https://www.youtube.com/embed/peoQmrXfmCY", 
+            "video_uno":"https://www.youtube.com/embed/peoQmrXfmCY", 
             "title": "Introducción",
             "image": "mm_evaluation/quienes_somos.png",
         }
