@@ -6,6 +6,11 @@
     <h2>{{ title }}</h2>
     <p>{{ content }}</p>
     <!-- --> 
+    {% if video_uno %}
+        
+       <div style = "text-align:center;"> <iframe width="560" height="315" src="{{video_uno}}" frameborder="0" ></iframe> </div>
+    {% endif %}
+    
     {% if image%}
     {% load static %}
         
@@ -24,26 +29,6 @@
     {% load static %}
         
        <img src="{% static "" %}{{image_uno}}"> 
-    {% endif %}
-    
-    {% if video_uno %}
-        
-       <iframe width="560" height="315" src="{{video_uno}}" frameborder="0" style="float:center;width:420px;height:420px;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
-    {% endif %}
-
-    
-    <h2>{{ title_dos }}</h2>
-    <p>{{ content_dos }}</p>
-
-    {% if image_dos %}
-    {% load static %}
-        
-       <img src="{% static "" %}{{image_dos}}"> 
-    {% endif %}
-    
-    {% if video_dos %}
-        
-       <iframe width="560" height="315" src="{{video_dos}}" frameborder="0" style="float:center;width:420px;height:420px;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
     {% endif %}
 
 </div>
