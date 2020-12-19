@@ -183,7 +183,7 @@ class IndexView(TemplateView):
         context = {
             "video_uno":"https://www.youtube.com/embed/peoQmrXfmCY", 
             "title": "Introducción",
-            "image": "mm_evaluation/quienes_somos.png",
+            "image": "mm_evaluation/quienes somos_1.png",
         }
         return context
 
