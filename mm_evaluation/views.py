@@ -182,7 +182,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "video_uno":"https://www.youtube.com/embed/peoQmrXfmCY", 
-            "title": "Introducción",
+            "title": "Instrucciones de Uso",
             "image": "mm_evaluation/quienes somos_1.png",
         }
         return context
@@ -252,7 +252,7 @@ class Instructions(TemplateView):
             "title": "Instructivo",
             "content": "",
             "image": "mm_evaluation/instructions_1.png",
-            "video":"https://www.youtube.com/embed/peoQmrXfmCY",
+            "video_uno":"https://www.youtube.com/embed/peoQmrXfmCY",
         }
         return context  
 
