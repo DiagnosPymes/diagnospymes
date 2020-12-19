@@ -181,7 +181,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {
-            "title": "¿Quiénes somos?",
+            "title": "Introducción",
             "image": "mm_evaluation/quienes_somos.png",
         }
         return context
@@ -205,7 +205,7 @@ class AboutUs(TemplateView):
     def get_context_data(self, **kwargs):
         context = {
             "title": "Nuestro equipo",
-            "content": "Somos un grupo de trabajo enfocado al desarrollo de herramientas que permiten la identificación de dificultades dentro de las Pymes de una manera sencilla, rápida y eficaz. La principal característica de nosotros es la integración de diferentes áreas de conocimiento que van desde el área de producción, pasando por comunicaciones hasta el campo de sistemas, lo que permite una visión multidisciplinaria a las soluciones de los problemas que enfrentan las Pymes en el día a día. ¡Esperamos que disfrutes de la herramienta!",
+            "content": "Somos un proyecto de investigación enfocado al desarrollo de herramientas que permiten la identificación de dificultades dentro de las Pymes de una manera sencilla, rápida y eficaz. La principal característica de nosotros es la integración de diferentes áreas de conocimiento que van desde el área de producción, pasando por comunicaciones hasta el campo de sistemas, lo que permite una visión multidisciplinaria a las soluciones de los problemas que enfrentan las Pymes en el día a día. ¡Esperamos que disfrutes de la herramienta!",
         }
         return context
 
